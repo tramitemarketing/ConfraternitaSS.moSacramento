@@ -2,13 +2,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { CroceOrnata } from "./ui/Ornaments";
 
 const links = [
   { href: "/#chi-siamo", label: "Chi Siamo" },
+  { href: "/#galleria", label: "Galleria" },
   { href: "/#attivita", label: "Attività" },
   { href: "/#notizie", label: "Notizie" },
   { href: "/#contatti", label: "Contatti" },
-  { href: "/notizie", label: "Blog" },
 ];
 
 export default function Navbar() {
@@ -23,13 +24,15 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-marrone shadow-md" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-marrone/95 backdrop-blur-sm shadow-lg py-2"
+          : "bg-transparent py-4"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="text-oro text-2xl leading-none">✝</span>
+          <CroceOrnata className="w-5 h-7 text-oro transition-transform duration-500 group-hover:scale-110" />
           <div className="leading-tight">
             <p className="text-crema font-semibold text-sm tracking-wide">
               SS.mo Sacramento
@@ -45,7 +48,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-crema text-sm hover:text-oro transition-colors duration-200 tracking-wide"
+              className="nav-underline text-crema text-sm hover:text-oro transition-colors duration-200 tracking-wide"
             >
               {l.label}
             </Link>
@@ -62,7 +65,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-marrone border-t border-marrone-medio px-6 pb-5 pt-2">
+        <div className="md:hidden bg-marrone border-t border-marrone-medio px-6 pb-5 pt-2 mt-2">
           {links.map((l) => (
             <Link
               key={l.href}

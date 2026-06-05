@@ -15,12 +15,22 @@ function slugify(text: string): string {
 }
 
 const TOOLBAR_ACTIONS = [
-  { label: "G", title: "Grassetto", before: "**", after: "**" },
-  { label: "I", title: "Corsivo", before: "_", after: "_" },
-  { label: "H2", title: "Titolo", before: "\n## ", after: "\n" },
-  { label: "H3", title: "Sottotitolo", before: "\n### ", after: "\n" },
-  { label: "•", title: "Elenco", before: "\n- ", after: "" },
+  { label: "Grassetto", icon: "B", title: "Testo in grassetto", before: "**", after: "**" },
+  { label: "Corsivo", icon: "I", title: "Testo in corsivo", before: "_", after: "_" },
+  { label: "Titolo", icon: "H", title: "Titolo di sezione", before: "\n## ", after: "\n" },
+  { label: "Sottotitolo", icon: "h", title: "Sottotitolo", before: "\n### ", after: "\n" },
+  { label: "Elenco", icon: "•", title: "Punto elenco", before: "\n- ", after: "" },
 ];
+
+const emptyForm = {
+  title: "",
+  slug: "",
+  date: new Date().toISOString().split("T")[0],
+  excerpt: "",
+  content: "",
+  coverImage: "",
+  published: false,
+};
 
 export default function AdminPage() {
   const router = useRouter();
@@ -29,16 +39,10 @@ export default function AdminPage() {
   const [editing, setEditing] = useState<Article | null>(null);
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const [msg, setMsg] = useState("");
 
-  const [form, setForm] = useState({
-    title: "",
-    slug: "",
-    date: new Date().toISOString().split("T")[0],
-    excerpt: "",
-    content: "",
-    published: false,
-  });
+  const [form, setForm] = useState(emptyForm);
 
   const loadArticles = useCallback(async () => {
     const res = await fetch("/api/notizie");
@@ -46,20 +50,23 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    loadArticles();
-  }, [loadArticles]);
+    let active = true;
+    fetch("/api/notizie")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (active) setArticles(data);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   function openNew() {
-    setForm({
-      title: "",
-      slug: "",
-      date: new Date().toISOString().split("T")[0],
-      excerpt: "",
-      content: "",
-      published: false,
-    });
+    setForm({ ...emptyForm, date: new Date().toISOString().split("T")[0] });
     setEditing(null);
     setView("new");
+    setPreview(false);
+    setImgError(false);
     setMsg("");
   }
 
@@ -70,10 +77,13 @@ export default function AdminPage() {
       date: a.date,
       excerpt: a.excerpt,
       content: a.content,
+      coverImage: a.coverImage ?? "",
       published: a.published,
     });
     setEditing(a);
     setView("edit");
+    setPreview(false);
+    setImgError(false);
     setMsg("");
   }
 
@@ -107,17 +117,15 @@ export default function AdminPage() {
 
   async function handleSave() {
     if (!form.title || !form.content || !form.slug) {
-      setMsg("⚠️ Titolo, slug e contenuto sono obbligatori.");
+      setMsg("⚠️ Compila almeno il titolo e il testo dell'articolo.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     setSaving(true);
     setMsg("");
 
     const method = view === "edit" ? "PUT" : "POST";
-    const url =
-      view === "edit"
-        ? `/api/notizie/${editing!.slug}`
-        : "/api/notizie";
+    const url = view === "edit" ? `/api/notizie/${editing!.slug}` : "/api/notizie";
 
     const res = await fetch(url, {
       method,
@@ -137,7 +145,8 @@ export default function AdminPage() {
   }
 
   async function handleDelete(slug: string) {
-    if (!confirm("Sei sicuro di voler eliminare questo articolo?")) return;
+    if (!confirm("Sei sicuro di voler eliminare definitivamente questo articolo?"))
+      return;
     const res = await fetch(`/api/notizie/${slug}`, { method: "DELETE" });
     if (res.ok) {
       setMsg("Articolo eliminato.");
@@ -150,50 +159,82 @@ export default function AdminPage() {
     router.push("/admin/login");
   }
 
-  // Render article list
+  // ============ LISTA ARTICOLI ============
   if (view === "list") {
     return (
       <div className="min-h-screen bg-crema">
-        <div className="bg-marrone text-crema px-6 py-4 flex justify-between items-center">
+        <div className="bg-marrone text-crema px-6 py-4 flex justify-between items-center sticky top-0 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-oro text-xl">✝</span>
-            <span className="font-semibold">Pannello Admin</span>
+            <span className="text-oro text-xl">✚</span>
+            <span className="font-semibold">Pannello Gestione Notizie</span>
           </div>
-          <div className="flex gap-3">
-            <button
-              onClick={openNew}
-              className="px-4 py-2 bg-primario text-crema text-sm rounded-lg hover:bg-primario-scuro transition-colors"
-            >
-              + Nuovo articolo
-            </button>
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 border border-crema opacity-60 hover:opacity-100 text-sm rounded-lg transition-opacity"
-            >
-              Esci
-            </button>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 border border-crema/40 opacity-70 hover:opacity-100 text-sm rounded-lg transition-opacity"
+          >
+            Esci
+          </button>
         </div>
 
         <div className="max-w-5xl mx-auto px-6 py-10">
-          {msg && <p className="mb-6 text-primario font-medium">{msg}</p>}
-          <h1 className="text-3xl text-marrone mb-8">Articoli</h1>
+          {msg && (
+            <p className="mb-6 p-4 bg-oliva-chiaro/40 text-marrone rounded-lg font-medium">
+              {msg}
+            </p>
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h1 className="text-3xl text-marrone">I tuoi articoli</h1>
+              <p className="text-marrone-medio text-sm mt-1">
+                Qui puoi creare, modificare e pubblicare le notizie del sito.
+              </p>
+            </div>
+            <button
+              onClick={openNew}
+              className="px-5 py-3 bg-primario text-crema font-semibold rounded-xl hover:bg-primario-scuro transition-colors shadow-md whitespace-nowrap"
+            >
+              + Scrivi nuovo articolo
+            </button>
+          </div>
 
           {articles.length === 0 ? (
-            <div className="text-center py-20 text-marrone-medio opacity-50">
+            <div className="text-center py-20 text-marrone-medio/60 bg-white rounded-2xl border border-crema-scuro">
               <div className="text-5xl mb-4">📝</div>
-              <p>Nessun articolo. Creane uno nuovo!</p>
+              <p className="text-lg">Non hai ancora scritto nessun articolo.</p>
+              <button
+                onClick={openNew}
+                className="mt-5 px-5 py-2.5 bg-primario text-crema rounded-lg hover:bg-primario-scuro transition-colors"
+              >
+                Inizia ora →
+              </button>
             </div>
           ) : (
             <div className="space-y-4">
               {articles.map((a) => (
                 <div
                   key={a.slug}
-                  className="bg-white rounded-xl p-6 border border-crema-scuro flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="bg-white rounded-2xl p-5 border border-crema-scuro flex flex-col sm:flex-row sm:items-center gap-4"
                 >
+                  {/* Mini cover */}
+                  <div className="w-full sm:w-24 h-24 sm:h-16 rounded-lg overflow-hidden shrink-0 bg-crema-scuro">
+                    {a.coverImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={a.coverImage}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-marrone-medio/40 text-2xl">
+                        ✚
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-marrone font-medium truncate">{a.title}</h3>
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <h3 className="text-marrone font-medium">{a.title}</h3>
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full ${
                           a.published
@@ -201,17 +242,19 @@ export default function AdminPage() {
                             : "bg-crema-scuro text-marrone-medio"
                         }`}
                       >
-                        {a.published ? "Pubblicato" : "Bozza"}
+                        {a.published ? "● Pubblicato" : "○ Bozza"}
                       </span>
                     </div>
-                    <p className="text-sm text-marrone-medio opacity-70">
-                      {new Date(a.date).toLocaleDateString("it-IT")} — {a.excerpt.slice(0, 80)}…
+                    <p className="text-sm text-marrone-medio/70">
+                      {new Date(a.date).toLocaleDateString("it-IT")} —{" "}
+                      {a.excerpt.slice(0, 70)}…
                     </p>
                   </div>
+
                   <div className="flex gap-2 shrink-0">
                     <button
                       onClick={() => openEdit(a)}
-                      className="px-4 py-2 text-sm bg-crema-scuro text-marrone rounded-lg hover:bg-primario-chiaro hover:text-crema transition-colors"
+                      className="px-4 py-2 text-sm bg-crema-scuro text-marrone rounded-lg hover:bg-primario hover:text-crema transition-colors font-medium"
                     >
                       Modifica
                     </button>
@@ -231,16 +274,18 @@ export default function AdminPage() {
     );
   }
 
-  // Render form (new / edit)
+  // ============ FORM (nuovo / modifica) ============
+  const showImgPreview = form.coverImage.trim() !== "" && !imgError;
+
   return (
-    <div className="min-h-screen bg-crema">
-      <div className="bg-marrone text-crema px-6 py-4 flex justify-between items-center">
+    <div className="min-h-screen bg-crema pb-20">
+      <div className="bg-marrone text-crema px-6 py-4 flex justify-between items-center sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setView("list")}
-            className="text-crema opacity-60 hover:opacity-100 transition-opacity"
+            className="text-crema/70 hover:text-crema transition-colors"
           >
-            ← Articoli
+            ← Torna agli articoli
           </button>
           <span className="opacity-30">|</span>
           <span className="font-semibold text-sm">
@@ -252,14 +297,14 @@ export default function AdminPage() {
           disabled={saving}
           className="px-5 py-2 bg-primario text-crema text-sm rounded-lg hover:bg-primario-scuro disabled:opacity-50 transition-colors font-semibold"
         >
-          {saving ? "Salvataggio..." : "Salva"}
+          {saving ? "Salvataggio..." : "💾 Salva"}
         </button>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-10 space-y-6">
+      <div className="max-w-3xl mx-auto px-6 py-10 space-y-8">
         {msg && (
           <p
-            className={`p-4 rounded-lg text-sm font-medium ${
+            className={`p-4 rounded-xl text-sm font-medium ${
               msg.startsWith("✅")
                 ? "bg-oliva-chiaro text-marrone"
                 : "bg-red-50 text-red-700"
@@ -269,144 +314,237 @@ export default function AdminPage() {
           </p>
         )}
 
-        {/* Title */}
-        <div>
-          <label className="block text-xs uppercase tracking-wider text-marrone-medio mb-2">
-            Titolo *
-          </label>
+        {/* PASSO 1 — Titolo */}
+        <Step n={1} titolo="Titolo dell'articolo" obbligatorio>
           <input
             type="text"
             value={form.title}
             onChange={(e) => handleTitleChange(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-lg"
-            placeholder="Titolo dell'articolo..."
+            className="w-full px-4 py-3 rounded-xl border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-lg"
+            placeholder="Es. Adorazione Eucaristica di Giugno"
           />
-        </div>
+        </Step>
 
-        {/* Slug + Date row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-marrone-medio mb-2">
-              Slug (URL) *
-            </label>
-            <input
-              type="text"
-              value={form.slug}
-              onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-              className="w-full px-4 py-2.5 rounded-lg border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm font-mono"
-              placeholder="titolo-dell-articolo"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-marrone-medio mb-2">
-              Data
-            </label>
-            <input
-              type="date"
-              value={form.date}
-              onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-              className="w-full px-4 py-2.5 rounded-lg border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm"
-            />
-          </div>
-        </div>
+        {/* PASSO 2 — Immagine di copertina */}
+        <Step
+          n={2}
+          titolo="Immagine di copertina"
+          aiuto="Incolla qui il link a un'immagine. Puoi caricarla su Google Drive o un sito di hosting immagini e copiare il link diretto. Lascia vuoto per usare una grafica predefinita."
+        >
+          <input
+            type="url"
+            value={form.coverImage}
+            onChange={(e) => {
+              setImgError(false);
+              setForm((f) => ({ ...f, coverImage: e.target.value }));
+            }}
+            className="w-full px-4 py-3 rounded-xl border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm"
+            placeholder="https://esempio.com/foto.jpg"
+          />
+          {form.coverImage.trim() !== "" && (
+            <div className="mt-3">
+              {showImgPreview ? (
+                <div className="rounded-xl overflow-hidden border border-crema-scuro aspect-[16/9] max-w-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={form.coverImage}
+                    alt="Anteprima copertina"
+                    className="w-full h-full object-cover"
+                    onError={() => setImgError(true)}
+                  />
+                </div>
+              ) : (
+                <p className="text-sm text-red-500">
+                  ⚠️ Impossibile caricare questa immagine. Controlla che il link
+                  sia corretto e pubblico.
+                </p>
+              )}
+            </div>
+          )}
+        </Step>
 
-        {/* Excerpt */}
-        <div>
-          <label className="block text-xs uppercase tracking-wider text-marrone-medio mb-2">
-            Breve introduzione
-          </label>
+        {/* PASSO 3 — Introduzione */}
+        <Step
+          n={3}
+          titolo="Breve introduzione"
+          aiuto="Una o due frasi che riassumono l'articolo. Appariranno nell'anteprima in homepage e nella lista notizie."
+        >
           <textarea
             value={form.excerpt}
             onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
             rows={2}
-            className="w-full px-4 py-3 rounded-lg border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm resize-none"
-            placeholder="Una o due frasi che introducono l'articolo..."
+            className="w-full px-4 py-3 rounded-xl border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm resize-none"
+            placeholder="Ci ritroviamo come ogni primo giovedì del mese per l'adorazione..."
           />
-        </div>
+        </Step>
 
-        {/* Content editor */}
-        <div>
+        {/* PASSO 4 — Testo */}
+        <Step n={4} titolo="Testo dell'articolo" obbligatorio>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-xs uppercase tracking-wider text-marrone-medio">
-              Testo dell&apos;articolo *
-            </label>
+            <span className="text-xs text-marrone-medio">
+              {preview ? "Stai vedendo l'anteprima" : "Scrivi il contenuto qui sotto"}
+            </span>
             <button
               onClick={() => setPreview(!preview)}
               className="text-xs text-primario font-semibold hover:underline"
             >
-              {preview ? "← Torna a scrivere" : "Anteprima →"}
+              {preview ? "✏️ Torna a scrivere" : "👁 Vedi anteprima"}
             </button>
           </div>
 
           {!preview ? (
             <>
-              {/* Toolbar */}
-              <div className="flex gap-2 mb-2 flex-wrap">
+              <div className="flex gap-2 mb-2 flex-wrap items-center bg-crema-scuro/50 p-2 rounded-lg">
                 {TOOLBAR_ACTIONS.map((action) => (
                   <button
                     key={action.label}
                     title={action.title}
                     onClick={() => insertFormatting(action.before, action.after)}
-                    className="px-3 py-1.5 bg-crema-scuro text-marrone text-xs font-bold rounded hover:bg-primario-chiaro hover:text-crema transition-colors"
+                    className="px-3 py-1.5 bg-white text-marrone text-xs font-semibold rounded hover:bg-primario hover:text-crema transition-colors flex items-center gap-1.5"
                   >
+                    <span className="font-bold w-3 inline-block text-center">
+                      {action.icon}
+                    </span>
                     {action.label}
                   </button>
                 ))}
-                <span className="text-xs text-marrone-medio opacity-50 self-center ml-2">
-                  Seleziona testo e clicca un pulsante
-                </span>
               </div>
+              <p className="text-xs text-marrone-medio/60 mb-2">
+                💡 Seleziona una parola e clicca un pulsante per formattarla.
+              </p>
               <textarea
                 id="content-area"
                 value={form.content}
-                onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
-                rows={18}
-                className="w-full px-4 py-3 rounded-lg border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm font-mono leading-relaxed resize-y"
-                placeholder="Scrivi il contenuto dell'articolo qui..."
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, content: e.target.value }))
+                }
+                rows={16}
+                className="w-full px-4 py-3 rounded-xl border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm leading-relaxed resize-y"
+                placeholder="Scrivi qui il testo completo dell'articolo..."
               />
             </>
           ) : (
             <div
-              className="prose prose-sm max-w-none bg-white rounded-lg border border-crema-scuro p-6 min-h-64"
+              className="prose prose-sm max-w-none bg-white rounded-xl border border-crema-scuro p-6 min-h-64"
               dangerouslySetInnerHTML={{
                 __html: renderSimpleMarkdown(form.content),
               }}
             />
           )}
-        </div>
+        </Step>
 
-        {/* Published toggle */}
-        <div className="flex items-center gap-3">
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.published}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, published: e.target.checked }))
-              }
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-crema-scuro rounded-full peer peer-checked:bg-primario transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5" />
-          </label>
-          <span className="text-sm text-marrone-medio">
-            {form.published ? (
-              <strong className="text-oliva">Pubblicato</strong>
-            ) : (
-              "Bozza (non visibile sul sito)"
-            )}
-          </span>
-        </div>
+        {/* PASSO 5 — Dettagli e pubblicazione */}
+        <Step n={5} titolo="Pubblicazione">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+            <div>
+              <label className="block text-xs text-marrone-medio mb-2">
+                Data dell&apos;articolo
+              </label>
+              <input
+                type="date"
+                value={form.date}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, date: e.target.value }))
+                }
+                className="w-full px-4 py-2.5 rounded-xl border border-crema-scuro bg-white focus:outline-none focus:border-primario text-marrone text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-marrone-medio mb-2">
+                Indirizzo web (generato dal titolo)
+              </label>
+              <input
+                type="text"
+                value={form.slug}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, slug: e.target.value }))
+                }
+                className="w-full px-4 py-2.5 rounded-xl border border-crema-scuro bg-crema-scuro/30 focus:outline-none focus:border-primario text-marrone-medio text-sm font-mono"
+                placeholder="titolo-articolo"
+              />
+            </div>
+          </div>
 
-        <div className="pt-4 flex justify-end">
+          <div className="flex items-center gap-3 bg-crema-scuro/40 rounded-xl p-4">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.published}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, published: e.target.checked }))
+                }
+                className="sr-only peer"
+              />
+              <div className="w-12 h-6 bg-crema-scuro rounded-full peer peer-checked:bg-oliva transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-6" />
+            </label>
+            <div>
+              <span className="text-sm text-marrone font-medium block">
+                {form.published ? "Pubblicato (visibile a tutti)" : "Bozza (nascosto)"}
+              </span>
+              <span className="text-xs text-marrone-medio/70">
+                {form.published
+                  ? "L'articolo apparirà subito sul sito."
+                  : "Attiva l'interruttore quando vuoi renderlo pubblico."}
+              </span>
+            </div>
+          </div>
+        </Step>
+
+        <div className="flex justify-end gap-3 pt-2">
+          <button
+            onClick={() => setView("list")}
+            className="px-6 py-3 text-marrone-medio hover:text-marrone transition-colors"
+          >
+            Annulla
+          </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-8 py-3 bg-primario text-crema font-semibold rounded-lg hover:bg-primario-scuro disabled:opacity-50 transition-colors"
+            className="px-8 py-3 bg-primario text-crema font-semibold rounded-xl hover:bg-primario-scuro disabled:opacity-50 transition-colors shadow-md"
           >
-            {saving ? "Salvataggio..." : "Salva articolo"}
+            {saving ? "Salvataggio..." : "💾 Salva articolo"}
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* Componente "passo" numerato per guidare l'utente */
+function Step({
+  n,
+  titolo,
+  aiuto,
+  obbligatorio,
+  children,
+}: {
+  n: number;
+  titolo: string;
+  aiuto?: string;
+  obbligatorio?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white rounded-2xl border border-crema-scuro p-6">
+      <div className="flex items-start gap-3 mb-4">
+        <span className="shrink-0 w-7 h-7 rounded-full bg-primario text-crema flex items-center justify-center text-sm font-bold">
+          {n}
+        </span>
+        <div>
+          <h2 className="text-marrone font-semibold">
+            {titolo}{" "}
+            {obbligatorio && (
+              <span className="text-primario text-sm">(obbligatorio)</span>
+            )}
+          </h2>
+          {aiuto && (
+            <p className="text-xs text-marrone-medio/70 mt-1 leading-relaxed">
+              {aiuto}
+            </p>
+          )}
+        </div>
+      </div>
+      {children}
     </div>
   );
 }

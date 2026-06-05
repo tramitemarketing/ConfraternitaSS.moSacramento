@@ -8,6 +8,7 @@ export interface Article {
   excerpt: string;
   content: string;
   published: boolean;
+  coverImage?: string;
 }
 
 const filePath = path.join(process.cwd(), "content", "notizie.json");

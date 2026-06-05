@@ -1,83 +1,94 @@
+import Reveal from "@/components/ui/Reveal";
+import { DivisoreOrnato, AngoloOrnato } from "@/components/ui/Ornaments";
+
+const timeline = [
+  { anno: "1836", testo: "Fondazione della Confraternita del SS.mo Sacramento" },
+  { anno: "1933", testo: "Redazione del vecchio statuto associativo" },
+  {
+    anno: "2009",
+    testo: "Riforma dello statuto: le consorelle entrano ufficialmente nella confraternita",
+  },
+];
+
 export default function ChiSiamo() {
   return (
-    <section id="chi-siamo" className="py-24 bg-crema">
+    <section id="chi-siamo" className="py-28 bg-crema scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-primario text-sm uppercase tracking-widest mb-3">
+        <Reveal className="text-center mb-20">
+          <p className="text-primario text-sm uppercase tracking-[0.25em] mb-4">
             La nostra storia
           </p>
-          <h2 className="text-4xl md:text-5xl text-marrone mb-6">
-            Chi Siamo
-          </h2>
-          <div className="w-12 h-0.5 bg-oro mx-auto" />
-        </div>
+          <h2 className="text-4xl md:text-6xl text-marrone mb-6">Chi Siamo</h2>
+          <DivisoreOrnato className="w-48 h-6 text-oro mx-auto" />
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Image placeholder */}
-          <div className="relative">
-            <div
-              className="w-full aspect-[4/3] rounded-xl flex items-center justify-center"
-              style={{
-                background:
-                  "linear-gradient(135deg, #F0E4CF 0%, #E8D5B7 50%, #D4B896 100%)",
-              }}
-            >
-              <div className="text-center opacity-40">
-                <div className="text-6xl mb-3">⛪</div>
-                <p className="text-marrone-medio text-sm">
-                  Foto della comunità
-                </p>
-              </div>
-            </div>
-            {/* Decorative frame */}
-            <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-oro rounded-xl -z-10 opacity-30" />
-          </div>
-
-          {/* Text content */}
-          <div className="space-y-6">
-            <p className="text-marrone-medio leading-relaxed text-lg">
-              La <strong className="text-marrone">Confraternita del Santissimo Sacramento</strong> di
-              Monteprandone è una delle realtà associative più antiche del paese, fondata nel{" "}
-              <strong className="text-primario">1836</strong> e mai interrotta nel corso delle generazioni.
+        {/* Layout asimmetrico: testo prominente a sinistra (3/5), visual a destra (2/5) */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+          {/* Testo */}
+          <Reveal className="lg:col-span-3 space-y-6">
+            <p className="text-marrone-medio leading-relaxed text-xl md:text-2xl font-light">
+              La{" "}
+              <strong className="text-marrone font-semibold">
+                Confraternita del Santissimo Sacramento
+              </strong>{" "}
+              di Monteprandone è una delle realtà associative più antiche del
+              paese, fondata nel{" "}
+              <strong className="text-primario font-semibold">1836</strong> e mai
+              interrotta nel corso delle generazioni.
             </p>
 
-            <p className="text-marrone-medio leading-relaxed">
-              Oggi conta <strong className="text-marrone">24 confratelli e consorelle</strong> — un
-              dato che testimonia la vitalità di una comunità che, intorno al 2009, ha rinnovato il
-              proprio statuto per accogliere ufficialmente anche le donne, aprendo un nuovo capitolo
-              di fraternità.
+            <p className="text-marrone-medio leading-relaxed text-lg">
+              Oggi conta{" "}
+              <strong className="text-marrone">24 confratelli e consorelle</strong>{" "}
+              — un dato che testimonia la vitalità di una comunità che, intorno al
+              2009, ha rinnovato il proprio statuto per accogliere ufficialmente
+              anche le donne, aprendo un nuovo capitolo di fraternità.
             </p>
 
             <p className="text-marrone-medio leading-relaxed">
               La confraternita fa parte della{" "}
-              <strong className="text-marrone">Diocesi di San Benedetto del Tronto –
-              Ripatransone – Montalto Marche</strong> ed è guidata dal Priore{" "}
-              <strong className="text-marrone">Tonino Sciarroni</strong>, che coordina le attività
-              anche a livello diocesano.
+              <strong className="text-marrone">
+                Diocesi di San Benedetto del Tronto – Ripatransone – Montalto
+                Marche
+              </strong>{" "}
+              ed è guidata dal Priore{" "}
+              <strong className="text-marrone">Tonino Sciarroni</strong>, che
+              coordina le attività anche a livello diocesano.
             </p>
 
-            {/* Timeline */}
-            <div className="mt-8 space-y-4 border-l-2 border-crema-scuro pl-6">
-              <div>
-                <span className="text-primario font-bold text-lg">1836</span>
-                <p className="text-marrone-medio text-sm mt-1">
-                  Fondazione della Confraternita del SS.mo Sacramento
-                </p>
-              </div>
-              <div>
-                <span className="text-primario font-bold text-lg">1933</span>
-                <p className="text-marrone-medio text-sm mt-1">
-                  Redazione del vecchio statuto associativo
-                </p>
-              </div>
-              <div>
-                <span className="text-primario font-bold text-lg">2009</span>
-                <p className="text-marrone-medio text-sm mt-1">
-                  Riforma dello statuto: le consorelle entrano ufficialmente nella confraternita
-                </p>
+            {/* Citazione in evidenza */}
+            <blockquote className="border-l-4 border-oro pl-6 py-2 mt-8 italic text-marrone text-xl font-light font-[var(--font-playfair)]">
+              «Una fede trasmessa di generazione in generazione, senza mai
+              interrompersi.»
+            </blockquote>
+          </Reveal>
+
+          {/* Timeline visual */}
+          <Reveal delay={1} className="lg:col-span-2 relative">
+            <div className="relative bg-crema-scuro rounded-2xl p-8 hover-lift">
+              <AngoloOrnato className="absolute top-3 left-3 w-8 h-8 text-oro" />
+              <AngoloOrnato className="absolute top-3 right-3 w-8 h-8 text-oro rotate-90" />
+
+              <h3 className="text-marrone text-center text-lg uppercase tracking-widest mb-8 mt-2">
+                La nostra storia
+              </h3>
+
+              <div className="space-y-7 relative">
+                {/* Linea verticale */}
+                <div className="absolute left-[27px] top-2 bottom-2 w-px bg-oro/40" />
+                {timeline.map((t) => (
+                  <div key={t.anno} className="flex gap-5 relative">
+                    <div className="shrink-0 w-14 h-14 rounded-full bg-primario text-crema flex items-center justify-center font-bold text-sm shadow-md relative z-10">
+                      {t.anno}
+                    </div>
+                    <p className="text-marrone-medio text-sm leading-relaxed pt-3">
+                      {t.testo}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

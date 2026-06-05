@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPublishedArticles, getArticleBySlug, formatDate } from "@/lib/posts";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { DivisoreOrnato } from "@/components/ui/Ornaments";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -30,13 +31,13 @@ export default async function ArticlePage({ params }: Props) {
     <div className="min-h-screen bg-crema">
       {/* Header */}
       <div
-        className="py-32 px-6 text-crema"
+        className="py-32 px-6 text-crema relative overflow-hidden"
         style={{
           background:
             "linear-gradient(160deg, #3D1F0D 0%, #6B3A20 60%, #C4622D 100%)",
         }}
       >
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto relative z-10">
           <Link
             href="/notizie"
             className="text-oro text-sm hover:underline opacity-80 mb-6 inline-block"
@@ -49,9 +50,21 @@ export default async function ArticlePage({ params }: Props) {
           <h1 className="text-3xl md:text-5xl font-bold leading-tight">
             {article.title}
           </h1>
-          <div className="w-12 h-0.5 bg-oro mt-6" />
+          <DivisoreOrnato className="w-40 h-6 text-oro mt-6" />
         </div>
       </div>
+
+      {/* Immagine di copertina */}
+      {article.coverImage && (
+        <div className="max-w-4xl mx-auto px-6 -mt-16 relative z-20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={article.coverImage}
+            alt={article.title}
+            className="w-full aspect-[16/9] object-cover rounded-2xl shadow-2xl"
+          />
+        </div>
+      )}
 
       {/* Content */}
       <div className="max-w-3xl mx-auto px-6 py-16">

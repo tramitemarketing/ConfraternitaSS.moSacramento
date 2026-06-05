@@ -1,0 +1,23 @@
+// Configurazione centralizzata dei contatti e social della confraternita.
+// Compila qui i valori quando saranno disponibili: lasciando una stringa vuota ("")
+// il relativo link/icona NON verrà mostrato sul sito.
+
+export interface ContactConfig {
+  email: string;
+  telefono: string; // formato libero per la visualizzazione, es. "+39 0735 000000"
+  instagram: string; // URL completo, es. "https://instagram.com/..."
+  facebook: string; // URL completo, es. "https://facebook.com/..."
+}
+
+export const contatti: ContactConfig = {
+  email: "", // es. "confraternita@example.it"
+  telefono: "", // es. "+39 0735 000000"
+  instagram: "", // es. "https://instagram.com/confraternita.monteprandone"
+  facebook: "", // es. "https://facebook.com/confraternita.monteprandone"
+};
+
+// Indirizzo / luogo mostrato nella sezione contatti
+export const luogo = {
+  comune: "Monteprandone (AP)",
+  regione: "Marche, Italia",
+};
