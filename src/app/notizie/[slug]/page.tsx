@@ -37,6 +37,13 @@ export default async function ArticlePage({ params }: Props) {
             "linear-gradient(160deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
         }}
       >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)",
+          }}
+        />
         <div className="max-w-3xl mx-auto relative z-10">
           <Link
             href="/notizie"

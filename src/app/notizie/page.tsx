@@ -26,6 +26,13 @@ export default function NotizieIndex() {
           className="absolute inset-0 opacity-[0.07]"
           style={{ backgroundImage: patternFleur }}
         />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)",
+          }}
+        />
         <CroceOrnata className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] text-oro opacity-[0.06] float-slow" />
         <div className="relative z-10">
           <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
@@ -33,7 +40,7 @@ export default function NotizieIndex() {
           </p>
           <h1 className="text-5xl md:text-6xl font-bold mb-5">Notizie</h1>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
-          <p className="opacity-75 max-w-md mx-auto px-6">
+          <p className="text-bianco-soft/75 max-w-md mx-auto px-6">
             Aggiornamenti, eventi e comunicazioni dalla Confraternita del SS.mo
             Sacramento di Monteprandone.
           </p>
