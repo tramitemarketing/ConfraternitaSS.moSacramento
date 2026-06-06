@@ -17,25 +17,25 @@ const slides: Slide[] = [
   {
     titolo: "La nostra chiesa",
     descrizione: "Il cuore della vita liturgica della confraternita",
-    gradient: "linear-gradient(135deg, #6B3A20 0%, #C4622D 100%)",
+    gradient: "linear-gradient(135deg, #0A0A0B 0%, #6E561F 70%, #C9A24A 100%)",
     emoji: "⛪",
   },
   {
     titolo: "Adorazione Eucaristica",
     descrizione: "Il primo giovedì di ogni mese, riuniti in preghiera",
-    gradient: "linear-gradient(135deg, #3D1F0D 0%, #7A8C5C 100%)",
+    gradient: "linear-gradient(135deg, #15130E 0%, #8C6A2B 100%)",
     emoji: "🕯️",
   },
   {
     titolo: "Le processioni",
     descrizione: "Partecipazione attiva alla vita della parrocchia",
-    gradient: "linear-gradient(135deg, #9E4A1E 0%, #C8893A 100%)",
+    gradient: "linear-gradient(135deg, #0A0A0B 0%, #C9A24A 60%, #EBCB73 100%)",
     emoji: "✝",
   },
   {
     titolo: "La comunità",
     descrizione: "Confratelli e consorelle, una grande famiglia",
-    gradient: "linear-gradient(135deg, #6B3A20 0%, #A8BC88 100%)",
+    gradient: "linear-gradient(135deg, #15130E 0%, #6E561F 55%, #C9A24A 100%)",
     emoji: "🤝",
   },
 ];
@@ -58,14 +58,14 @@ export default function Galleria() {
     <section
       id="galleria"
       className="py-28 scroll-mt-20"
-      style={{ backgroundColor: "#F5EDE0" }}
+      style={{ backgroundColor: "#15130E" }}
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
-          <p className="text-primario text-sm uppercase tracking-[0.25em] mb-4">
+          <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
             Momenti di comunità
           </p>
-          <h2 className="text-4xl md:text-6xl text-marrone mb-6">Galleria</h2>
+          <h2 className="text-4xl md:text-6xl text-bianco mb-6">Galleria</h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto" />
         </div>
 
@@ -98,18 +98,18 @@ export default function Galleria() {
                 )}
 
                 {/* Cornici ornamentali agli angoli */}
-                <AngoloOrnato className="absolute top-5 left-5 w-10 h-10 text-crema/60" />
-                <AngoloOrnato className="absolute top-5 right-5 w-10 h-10 text-crema/60 rotate-90" />
-                <AngoloOrnato className="absolute bottom-5 left-5 w-10 h-10 text-crema/60 -rotate-90" />
-                <AngoloOrnato className="absolute bottom-5 right-5 w-10 h-10 text-crema/60 rotate-180" />
+                <AngoloOrnato className="absolute top-5 left-5 w-10 h-10 text-bianco-soft/60" />
+                <AngoloOrnato className="absolute top-5 right-5 w-10 h-10 text-bianco-soft/60 rotate-90" />
+                <AngoloOrnato className="absolute bottom-5 left-5 w-10 h-10 text-bianco-soft/60 -rotate-90" />
+                <AngoloOrnato className="absolute bottom-5 right-5 w-10 h-10 text-bianco-soft/60 rotate-180" />
 
                 {/* Overlay testo */}
-                <div className="absolute inset-0 bg-gradient-to-t from-marrone/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-nero/85 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-center">
-                  <h3 className="text-crema text-2xl md:text-4xl mb-2">
+                  <h3 className="text-bianco text-2xl md:text-4xl mb-2">
                     {slide.titolo}
                   </h3>
-                  <p className="text-crema/80 text-sm md:text-lg max-w-xl mx-auto">
+                  <p className="text-bianco-soft/80 text-sm md:text-lg max-w-xl mx-auto">
                     {slide.descrizione}
                   </p>
                 </div>
@@ -120,7 +120,7 @@ export default function Galleria() {
             <button
               onClick={prev}
               aria-label="Precedente"
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-crema/20 backdrop-blur-sm text-crema flex items-center justify-center hover:bg-crema hover:text-marrone transition-all duration-300 z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bianco-soft/15 backdrop-blur-sm text-bianco-soft flex items-center justify-center hover:bg-bianco-soft hover:text-nero transition-all duration-300 z-10"
             >
               <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
                 <path d="M15 6 L9 12 L15 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -129,7 +129,7 @@ export default function Galleria() {
             <button
               onClick={next}
               aria-label="Successivo"
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-crema/20 backdrop-blur-sm text-crema flex items-center justify-center hover:bg-crema hover:text-marrone transition-all duration-300 z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bianco-soft/15 backdrop-blur-sm text-bianco-soft flex items-center justify-center hover:bg-bianco-soft hover:text-nero transition-all duration-300 z-10"
             >
               <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
                 <path d="M9 6 L15 12 L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -146,15 +146,15 @@ export default function Galleria() {
                 aria-label={`Vai alla slide ${i + 1}`}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   i === current
-                    ? "w-8 bg-primario"
-                    : "w-2.5 bg-marrone/25 hover:bg-marrone/50"
+                    ? "w-8 bg-oro"
+                    : "w-2.5 bg-bianco-soft/25 hover:bg-bianco-soft/50"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        <p className="text-center text-marrone-medio/60 text-sm mt-8 italic">
+        <p className="text-center text-bianco-soft/50 text-sm mt-8 italic">
           Le immagini mostrate sono segnaposto — presto le sostituiremo con foto
           reali della nostra comunità.
         </p>
