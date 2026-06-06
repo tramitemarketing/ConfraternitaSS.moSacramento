@@ -1,11 +1,24 @@
 @import "tailwindcss";
 
 @theme {
+  /* ===== NUOVA PALETTE — nero / oro / bianco ===== */
+  /* Neri — superfici (dominante) */
+  --color-nero:        #0A0A0B;
+  --color-nero-soft:   #15130E;
+  --color-nero-bordo:  #2A2720;
+  /* Oro — accento */
+  --color-oro:         #C9A24A;
+  --color-oro-chiaro:  #EBCB73;
+  --color-oro-scuro:   #8C6A2B;
+  /* Bianchi/neutri — testo */
+  --color-bianco:      #FFFFFF;
+  --color-bianco-soft: #E8E6DF;
+  --color-grigio:      #9A968C;
+
+  /* ===== PALETTE VECCHIA — rimossa nel Task finale ===== */
   --color-primario: #C4622D;
   --color-primario-scuro: #9E4A1E;
   --color-primario-chiaro: #E8936B;
-  --color-oro: #C8893A;
-  --color-oro-chiaro: #E0B970;
   --color-crema: #FEFAF4;
   --color-crema-scuro: #F0E4CF;
   --color-marrone: #3D1F0D;
@@ -19,8 +32,8 @@ html {
 }
 
 body {
-  background-color: #FEFAF4;
-  color: #3D1F0D;
+  background-color: #0A0A0B;
+  color: #E8E6DF;
   font-family: var(--font-lato), system-ui, sans-serif;
 }
 
@@ -29,22 +42,22 @@ h1, h2, h3, h4, h5 {
 }
 
 .prose h1, .prose h2, .prose h3 {
-  color: #3D1F0D;
+  color: #FFFFFF;
   font-family: var(--font-playfair), Georgia, serif;
 }
 
 .prose p, .prose li {
-  color: #6B3A20;
+  color: #E8E6DF;
   line-height: 1.8;
 }
 
 .prose a {
-  color: #C4622D;
+  color: #C9A24A;
   text-decoration: underline;
 }
 
 .prose strong {
-  color: #3D1F0D;
+  color: #FFFFFF;
 }
 
 /* ============================================
@@ -152,7 +165,8 @@ h1, h2, h3, h4, h5 {
 }
 .hover-lift:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px -12px rgba(61, 31, 13, 0.25);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7),
+    0 8px 24px -12px rgba(201, 162, 74, 0.22);
 }
 
 .img-zoom-wrap {
