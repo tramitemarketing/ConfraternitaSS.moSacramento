@@ -13,13 +13,13 @@ export default function NotizieIndex() {
   const articles = getPublishedArticles();
 
   return (
-    <div className="min-h-screen bg-crema">
+    <div className="min-h-screen bg-nero">
       {/* Header */}
       <div
-        className="py-36 text-center text-crema relative overflow-hidden"
+        className="py-36 text-center text-bianco-soft relative overflow-hidden"
         style={{
           background:
-            "linear-gradient(160deg, #3D1F0D 0%, #6B3A20 60%, #C4622D 100%)",
+            "linear-gradient(160deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
         }}
       >
         <div
@@ -43,7 +43,7 @@ export default function NotizieIndex() {
       {/* Articles grid */}
       <div className="max-w-6xl mx-auto px-6 py-16">
         {articles.length === 0 ? (
-          <div className="text-center py-20 text-marrone-medio/60">
+          <div className="text-center py-20 text-bianco-soft/50">
             <CroceOrnata className="w-16 h-20 text-oro/40 mx-auto mb-4" />
             <p className="text-xl">Nessuna notizia pubblicata al momento.</p>
           </div>
