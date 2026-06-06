@@ -32,28 +32,28 @@ export default function LoginPage() {
       className="min-h-screen flex items-center justify-center px-4"
       style={{
         background:
-          "linear-gradient(160deg, #3D1F0D 0%, #6B3A20 60%, #C4622D 100%)",
+          "linear-gradient(160deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
       }}
     >
-      <div className="bg-crema rounded-2xl shadow-2xl p-10 w-full max-w-sm">
+      <div className="bg-nero-soft rounded-2xl shadow-2xl p-10 w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="text-oro text-4xl mb-3">✝</div>
-          <h1 className="text-2xl text-marrone">Area Riservata</h1>
-          <p className="text-marrone-medio text-sm mt-2 opacity-70">
+          <h1 className="text-2xl text-bianco">Area Riservata</h1>
+          <p className="text-bianco-soft/70 text-sm mt-2">
             Inserisci la password per accedere al pannello admin
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-xs uppercase tracking-wider text-marrone-medio mb-2">
+            <label className="block text-xs uppercase tracking-wider text-bianco-soft/70 mb-2">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-crema-scuro bg-crema focus:outline-none focus:border-primario text-marrone text-sm"
+              className="w-full px-4 py-3 rounded-lg border border-nero-bordo bg-nero focus:outline-none focus:border-oro text-bianco-soft text-sm"
               placeholder="••••••••••••"
               required
               autoFocus
@@ -67,7 +67,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primario text-crema font-semibold rounded-lg hover:bg-primario-scuro transition-colors disabled:opacity-50 tracking-wide"
+            className="w-full py-3 bg-oro text-nero font-semibold rounded-lg hover:bg-oro-chiaro transition-colors disabled:opacity-50 tracking-wide"
           >
             {loading ? "Accesso..." : "Accedi"}
           </button>
