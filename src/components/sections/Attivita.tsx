@@ -43,17 +43,17 @@ const altre = [
 
 export default function Attivita() {
   return (
-    <section id="attivita" className="py-28 bg-crema scroll-mt-20">
+    <section id="attivita" className="py-28 bg-nero scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal className="text-center mb-16">
-          <p className="text-primario text-sm uppercase tracking-[0.25em] mb-4">
+          <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
             La nostra vita comune
           </p>
-          <h2 className="text-4xl md:text-6xl text-marrone mb-6">
+          <h2 className="text-4xl md:text-6xl text-bianco mb-6">
             Attività e Spiritualità
           </h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
-          <p className="text-marrone-medio max-w-xl mx-auto leading-relaxed text-lg">
+          <p className="text-bianco-soft/70 max-w-xl mx-auto leading-relaxed text-lg">
             Il legame con Gesù Eucaristia è al centro di tutto. Da esso nasce il
             servizio verso gli altri e la cura della comunità.
           </p>
@@ -64,23 +64,23 @@ export default function Attivita() {
           {(() => {
             const Icon = Icone[featured.icon];
             return (
-              <div className="hover-lift relative overflow-hidden rounded-3xl p-10 md:p-14 text-crema grid md:grid-cols-[auto_1fr] gap-8 items-center"
+              <div className="hover-lift relative overflow-hidden rounded-3xl p-10 md:p-14 text-bianco-soft grid md:grid-cols-[auto_1fr] gap-8 items-center"
                 style={{
                   background:
-                    "linear-gradient(135deg, #3D1F0D 0%, #6B3A20 50%, #9E4A1E 100%)",
+                    "linear-gradient(135deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
                 }}
               >
                 <div className="shrink-0">
-                  <div className="w-28 h-28 rounded-full bg-crema/10 border border-oro/30 flex items-center justify-center">
+                  <div className="w-28 h-28 rounded-full bg-bianco-soft/10 border border-oro/30 flex items-center justify-center">
                     <Icon className="w-14 h-14 text-oro-chiaro" />
                   </div>
                 </div>
                 <div>
-                  <span className="inline-block bg-oro text-marrone text-xs font-bold px-3 py-1 rounded-full tracking-wide mb-4 uppercase">
+                  <span className="inline-block bg-oro text-nero text-xs font-bold px-3 py-1 rounded-full tracking-wide mb-4 uppercase">
                     In primo piano
                   </span>
                   <h3 className="text-3xl md:text-4xl mb-4">{featured.titolo}</h3>
-                  <p className="text-crema/85 leading-relaxed text-lg mb-5 max-w-2xl">
+                  <p className="text-bianco-soft/85 leading-relaxed text-lg mb-5 max-w-2xl">
                     {featured.descrizione}
                   </p>
                   <span className="inline-flex items-center gap-2 text-oro-chiaro font-semibold">
@@ -99,17 +99,17 @@ export default function Attivita() {
             const Icon = Icone[a.icon];
             return (
               <Reveal key={a.titolo} delay={(i + 1) as 1 | 2 | 3}>
-                <div className="hover-lift bg-crema-scuro rounded-2xl p-8 h-full border border-transparent hover:border-oro/40 transition-colors group">
-                  <div className="w-16 h-16 rounded-xl bg-crema flex items-center justify-center mb-5 group-hover:bg-primario transition-colors duration-300">
-                    <Icon className="w-9 h-9 text-primario group-hover:text-crema transition-colors duration-300" />
+                <div className="hover-lift bg-nero-soft rounded-2xl p-8 h-full border border-transparent hover:border-oro/40 transition-colors group">
+                  <div className="w-16 h-16 rounded-xl bg-nero flex items-center justify-center mb-5 group-hover:bg-oro transition-colors duration-300">
+                    <Icon className="w-9 h-9 text-oro group-hover:text-nero transition-colors duration-300" />
                   </div>
-                  <h3 className="text-xl text-marrone mb-3 group-hover:text-primario transition-colors">
+                  <h3 className="text-xl text-bianco mb-3 group-hover:text-oro transition-colors">
                     {a.titolo}
                   </h3>
-                  <p className="text-marrone-medio leading-relaxed text-sm mb-5">
+                  <p className="text-bianco-soft/70 leading-relaxed text-sm mb-5">
                     {a.descrizione}
                   </p>
-                  <span className="inline-block bg-crema text-primario text-xs font-semibold px-3 py-1 rounded-full tracking-wide">
+                  <span className="inline-block bg-nero-soft text-oro text-xs font-semibold px-3 py-1 rounded-full tracking-wide">
                     {a.dettaglio}
                   </span>
                 </div>
