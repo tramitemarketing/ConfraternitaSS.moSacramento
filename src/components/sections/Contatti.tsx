@@ -13,7 +13,7 @@ export default function Contatti() {
   const haSocial = contatti.instagram || contatti.facebook;
 
   return (
-    <section id="contatti" className="py-28 bg-marrone text-crema scroll-mt-20 relative overflow-hidden">
+    <section id="contatti" className="py-28 bg-nero text-bianco-soft scroll-mt-20 relative overflow-hidden">
       {/* Croce decorativa di sfondo */}
       <CroceOrnata className="absolute -right-16 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] text-oro opacity-[0.04] pointer-events-none" />
 
@@ -28,7 +28,7 @@ export default function Contatti() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
           <Reveal delay={1}>
-            <div className="bg-marrone-medio/30 rounded-2xl p-7 border border-marrone-medio h-full hover:border-oro/40 transition-colors">
+            <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
               <IconLuogo className="w-9 h-9 text-oro mx-auto mb-4" />
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 Dove siamo
@@ -42,7 +42,7 @@ export default function Contatti() {
           </Reveal>
 
           <Reveal delay={2}>
-            <div className="bg-marrone-medio/30 rounded-2xl p-7 border border-marrone-medio h-full hover:border-oro/40 transition-colors">
+            <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
               <CroceOrnata className="w-9 h-11 text-oro mx-auto mb-3" />
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 Priore
@@ -56,7 +56,7 @@ export default function Contatti() {
           </Reveal>
 
           <Reveal delay={3}>
-            <div className="bg-marrone-medio/30 rounded-2xl p-7 border border-marrone-medio h-full hover:border-oro/40 transition-colors">
+            <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
               <svg viewBox="0 0 24 24" fill="none" className="w-9 h-9 text-oro mx-auto mb-4" aria-hidden="true">
                 <path d="M12 2 L4 6 L4 11 C4 16 7.5 20.5 12 22 C16.5 20.5 20 16 20 11 L20 6 Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
               </svg>
@@ -83,7 +83,7 @@ export default function Contatti() {
                   {contatti.email && (
                     <a
                       href={`mailto:${contatti.email}`}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-oro text-marrone font-semibold hover:bg-oro-chiaro transition-colors text-sm"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-oro text-nero font-semibold hover:bg-oro-chiaro transition-colors text-sm"
                     >
                       <IconEmail className="w-4 h-4" />
                       {contatti.email}
@@ -92,7 +92,7 @@ export default function Contatti() {
                   {contatti.telefono && (
                     <a
                       href={`tel:${contatti.telefono.replace(/\s/g, "")}`}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-crema/50 text-crema font-semibold hover:bg-crema hover:text-marrone transition-colors text-sm"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-bianco-soft/50 text-bianco-soft font-semibold hover:bg-bianco-soft hover:text-nero transition-colors text-sm"
                     >
                       <IconTelefono className="w-4 h-4" />
                       {contatti.telefono}
@@ -102,7 +102,7 @@ export default function Contatti() {
               )}
               {haSocial && (
                 <div className="flex flex-col items-center gap-3">
-                  <p className="text-crema/60 text-xs uppercase tracking-widest">
+                  <p className="text-bianco-soft/60 text-xs uppercase tracking-widest">
                     Seguici
                   </p>
                   <SocialLinks size={22} className="text-oro" />
