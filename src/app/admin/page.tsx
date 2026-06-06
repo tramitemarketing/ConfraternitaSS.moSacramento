@@ -354,7 +354,7 @@ export default function AdminPage() {
                   />
                 </div>
               ) : (
-                <p className="text-sm text-red-500">
+                <p className="text-sm text-red-300">
                   ⚠️ Impossibile caricare questa immagine. Controlla che il link
                   sia corretto e pubblico.
                 </p>
