@@ -28,13 +28,13 @@ export default async function ArticlePage({ params }: Props) {
   if (!article || !article.published) notFound();
 
   return (
-    <div className="min-h-screen bg-crema">
+    <div className="min-h-screen bg-nero">
       {/* Header */}
       <div
-        className="py-32 px-6 text-crema relative overflow-hidden"
+        className="py-32 px-6 text-bianco-soft relative overflow-hidden"
         style={{
           background:
-            "linear-gradient(160deg, #3D1F0D 0%, #6B3A20 60%, #C4622D 100%)",
+            "linear-gradient(160deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
         }}
       >
         <div className="max-w-3xl mx-auto relative z-10">
@@ -68,17 +68,17 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* Content */}
       <div className="max-w-3xl mx-auto px-6 py-16">
-        <p className="text-marrone-medio text-lg leading-relaxed mb-10 border-l-4 border-primario-chiaro pl-5 italic">
+        <p className="text-bianco-soft/80 text-lg leading-relaxed mb-10 border-l-4 border-oro pl-5 italic">
           {article.excerpt}
         </p>
         <div className="prose prose-lg max-w-none">
           <MDXRemote source={article.content} />
         </div>
 
-        <div className="mt-16 pt-8 border-t border-crema-scuro">
+        <div className="mt-16 pt-8 border-t border-nero-bordo">
           <Link
             href="/notizie"
-            className="text-primario font-semibold hover:text-primario-scuro transition-colors"
+            className="text-oro font-semibold hover:text-oro-chiaro transition-colors"
           >
             ← Torna alle notizie
           </Link>
