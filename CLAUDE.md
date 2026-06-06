@@ -54,16 +54,17 @@ Definita in `globals.css` con `@theme`. Classi disponibili:
 
 | Classe | Hex | Uso |
 |---|---|---|
-| `bg/text-primario` | `#C4622D` | Terracotta — CTA, accenti |
-| `bg/text-primario-scuro` | `#9E4A1E` | Hover terracotta |
-| `bg/text-primario-chiaro` | `#E8936B` | Accenti leggeri |
-| `bg/text-oro` | `#C8893A` | Oro — decorativo, navbar |
-| `bg/text-crema` | `#FEFAF4` | Sfondo principale |
-| `bg/text-crema-scuro` | `#F0E4CF` | Sfondo sezioni alternate |
-| `bg/text-marrone` | `#3D1F0D` | Testo principale, footer |
-| `bg/text-marrone-medio` | `#6B3A20` | Testo secondario |
-| `bg/text-oliva` | `#7A8C5C` | Badge "pubblicato" |
-| `bg/text-oliva-chiaro` | `#A8BC88` | Badge chiaro |
+| `bg/text-nero` | `#0A0A0B` | Sfondo principale (tema scuro) |
+| `bg/text-nero-soft` | `#15130E` | Sezioni alternate, card, pannelli |
+| `bg/text-nero-bordo` | `#2A2720` | Bordi sottili su fondo scuro |
+| `bg/text-oro` | `#C9A24A` | Accento: CTA, link, ornamenti, badge "pubblicato" |
+| `bg/text-oro-chiaro` | `#EBCB73` | Punto luce gradienti, shimmer, hover |
+| `bg/text-oro-scuro` | `#8C6A2B` | Hover/ombre dorate |
+| `bg/text-bianco` | `#FFFFFF` | Titoli, alta enfasi |
+| `bg/text-bianco-soft` | `#E8E6DF` | Corpo testo |
+| `bg/text-grigio` | `#9A968C` | Stato "bozza" (uso minimo) |
+
+> Gradienti decorativi: nero→oro (vedi `docs/superpowers/specs/2026-06-06-redesign-colore-nero-oro-bianco-design.md`). Bottoni con sfondo oro → testo nero.
 
 ## Comandi
 

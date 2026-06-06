@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* ===== NUOVA PALETTE — nero / oro / bianco ===== */
   /* Neri — superfici (dominante) */
   --color-nero:        #0A0A0B;
   --color-nero-soft:   #15130E;
@@ -14,17 +13,6 @@
   --color-bianco:      #FFFFFF;
   --color-bianco-soft: #E8E6DF;
   --color-grigio:      #9A968C;
-
-  /* ===== PALETTE VECCHIA — rimossa nel Task finale ===== */
-  --color-primario: #C4622D;
-  --color-primario-scuro: #9E4A1E;
-  --color-primario-chiaro: #E8936B;
-  --color-crema: #FEFAF4;
-  --color-crema-scuro: #F0E4CF;
-  --color-marrone: #3D1F0D;
-  --color-marrone-medio: #6B3A20;
-  --color-oliva: #7A8C5C;
-  --color-oliva-chiaro: #A8BC88;
 }
 
 html {
