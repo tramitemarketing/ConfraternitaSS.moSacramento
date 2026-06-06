@@ -33,7 +33,7 @@ export default function Contatti() {
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 Dove siamo
               </h3>
-              <p className="opacity-80 leading-relaxed">
+              <p className="opacity-100 leading-relaxed">
                 {luogo.comune}
                 <br />
                 {luogo.regione}
@@ -47,7 +47,7 @@ export default function Contatti() {
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 Priore
               </h3>
-              <p className="opacity-80 leading-relaxed">
+              <p className="opacity-100 leading-relaxed">
                 Tonino Sciarroni
                 <br />
                 <span className="text-xs opacity-60">Coordinatore diocesano</span>
@@ -63,7 +63,7 @@ export default function Contatti() {
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 Diocesi
               </h3>
-              <p className="opacity-80 leading-relaxed text-xs">
+              <p className="opacity-100 leading-relaxed text-xs">
                 San Benedetto del Tronto
                 <br />
                 Ripatransone
@@ -102,7 +102,7 @@ export default function Contatti() {
               )}
               {haSocial && (
                 <div className="flex flex-col items-center gap-3">
-                  <p className="text-bianco-soft/60 text-xs uppercase tracking-widest">
+                  <p className="text-bianco-soft text-xs uppercase tracking-widest">
                     Seguici
                   </p>
                   <SocialLinks size={22} className="text-oro" />

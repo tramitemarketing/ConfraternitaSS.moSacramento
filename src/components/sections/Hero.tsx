@@ -59,7 +59,7 @@ export default function Hero() {
           <CroceOrnata className="w-14 h-18 text-oro-chiaro drop-shadow-lg" />
         </div>
 
-        <p className="hero-anim hero-delay-1 text-bianco-soft/70 tracking-[0.35em] uppercase text-sm mb-5">
+        <p className="hero-anim hero-delay-1 text-bianco-soft tracking-[0.35em] uppercase text-sm mb-5">
           Dal 1836
         </p>
 
@@ -69,15 +69,15 @@ export default function Hero() {
         <h1 className="hero-anim hero-delay-2 text-oro-chiaro text-3xl md:text-5xl lg:text-6xl font-bold italic leading-tight mb-3">
           SS.mo Sacramento
         </h1>
-        <p className="hero-anim hero-delay-3 text-bianco-soft/80 text-xl md:text-2xl tracking-[0.3em] uppercase mb-8">
+        <p className="hero-anim hero-delay-3 text-bianco-soft text-xl md:text-2xl tracking-[0.3em] uppercase mb-8">
           Monteprandone
         </p>
 
         <div className="hero-anim hero-delay-3 w-20 h-px bg-oro/60 mx-auto mb-8" />
 
-        <p className="hero-anim hero-delay-4 text-bianco-soft/85 text-lg md:text-2xl leading-relaxed max-w-2xl mx-auto mb-12 font-light">
+        <p className="hero-anim hero-delay-4 text-bianco-soft text-lg md:text-2xl leading-relaxed max-w-2xl mx-auto mb-12 font-light">
           Fede, fratellanza e servizio.
-          <span className="block mt-2 text-base md:text-lg text-bianco-soft/65">
+          <span className="block mt-2 text-base md:text-lg text-bianco-soft">
             Una comunità che cammina insieme da quasi due secoli.
           </span>
         </p>
@@ -103,7 +103,7 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         style={{ opacity: fade }}
       >
-        <span className="text-bianco-soft/60 text-xs tracking-widest uppercase">
+        <span className="text-bianco-soft text-xs tracking-widest uppercase">
           Scorri
         </span>
         <svg

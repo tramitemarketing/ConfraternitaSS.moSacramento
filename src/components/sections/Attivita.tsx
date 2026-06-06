@@ -53,7 +53,7 @@ export default function Attivita() {
             Attività e Spiritualità
           </h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
-          <p className="text-bianco-soft/70 max-w-xl mx-auto leading-relaxed text-lg">
+          <p className="text-bianco-soft max-w-xl mx-auto leading-relaxed text-lg">
             Il legame con Gesù Eucaristia è al centro di tutto. Da esso nasce il
             servizio verso gli altri e la cura della comunità.
           </p>
@@ -80,7 +80,7 @@ export default function Attivita() {
                     In primo piano
                   </span>
                   <h3 className="text-3xl md:text-4xl mb-4">{featured.titolo}</h3>
-                  <p className="text-bianco-soft/85 leading-relaxed text-lg mb-5 max-w-2xl">
+                  <p className="text-bianco-soft leading-relaxed text-lg mb-5 max-w-2xl">
                     {featured.descrizione}
                   </p>
                   <span className="inline-flex items-center gap-2 text-oro-chiaro font-semibold">
@@ -106,7 +106,7 @@ export default function Attivita() {
                   <h3 className="text-xl text-bianco mb-3 group-hover:text-oro transition-colors">
                     {a.titolo}
                   </h3>
-                  <p className="text-bianco-soft/70 leading-relaxed text-sm mb-5">
+                  <p className="text-bianco-soft leading-relaxed text-sm mb-5">
                     {a.descrizione}
                   </p>
                   <span className="inline-block bg-nero-soft text-oro text-xs font-semibold px-3 py-1 rounded-full tracking-wide">

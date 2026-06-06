@@ -55,7 +55,7 @@ export default function NotiziePreview() {
         </Reveal>
 
         {articles.length === 0 ? (
-          <div className="text-center py-16 text-bianco-soft/60">
+          <div className="text-center py-16 text-bianco-soft">
             <p className="text-xl">Nessuna notizia disponibile al momento.</p>
           </div>
         ) : (
@@ -75,14 +75,14 @@ export default function NotiziePreview() {
                       <span className="bg-oro text-nero text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
                         Ultima notizia
                       </span>
-                      <time className="text-xs text-bianco-soft/70 uppercase tracking-wider">
+                      <time className="text-xs text-bianco-soft uppercase tracking-wider">
                         {formatDate(primo.date)}
                       </time>
                     </div>
                     <h3 className="text-2xl md:text-3xl text-bianco mb-3 group-hover:text-oro transition-colors leading-snug">
                       {primo.title}
                     </h3>
-                    <p className="text-bianco-soft/70 leading-relaxed">
+                    <p className="text-bianco-soft leading-relaxed">
                       {primo.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-1 mt-5 text-oro font-semibold group-hover:gap-2 transition-all">

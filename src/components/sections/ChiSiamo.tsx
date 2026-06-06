@@ -26,7 +26,7 @@ export default function ChiSiamo() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
           {/* Testo */}
           <Reveal className="lg:col-span-3 space-y-6">
-            <p className="text-bianco-soft/70 leading-relaxed text-xl md:text-2xl font-light">
+            <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
               La{" "}
               <strong className="text-bianco font-semibold">
                 Confraternita del Santissimo Sacramento
@@ -37,7 +37,7 @@ export default function ChiSiamo() {
               interrotta nel corso delle generazioni.
             </p>
 
-            <p className="text-bianco-soft/70 leading-relaxed text-lg">
+            <p className="text-bianco-soft leading-relaxed text-lg">
               Oggi conta{" "}
               <strong className="text-bianco">24 confratelli e consorelle</strong>{" "}
               — un dato che testimonia la vitalità di una comunità che, intorno al
@@ -45,7 +45,7 @@ export default function ChiSiamo() {
               anche le donne, aprendo un nuovo capitolo di fraternità.
             </p>
 
-            <p className="text-bianco-soft/70 leading-relaxed">
+            <p className="text-bianco-soft leading-relaxed">
               La confraternita fa parte della{" "}
               <strong className="text-bianco">
                 Diocesi di San Benedetto del Tronto – Ripatransone – Montalto
@@ -81,7 +81,7 @@ export default function ChiSiamo() {
                     <div className="shrink-0 w-14 h-14 rounded-full bg-oro text-nero flex items-center justify-center font-bold text-sm shadow-md relative z-10">
                       {t.anno}
                     </div>
-                    <p className="text-bianco-soft/70 text-sm leading-relaxed pt-3">
+                    <p className="text-bianco-soft text-sm leading-relaxed pt-3">
                       {t.testo}
                     </p>
                   </div>

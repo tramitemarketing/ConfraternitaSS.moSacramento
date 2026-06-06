@@ -109,7 +109,7 @@ export default function Galleria() {
                   <h3 className="text-bianco text-2xl md:text-4xl mb-2">
                     {slide.titolo}
                   </h3>
-                  <p className="text-bianco-soft/80 text-sm md:text-lg max-w-xl mx-auto">
+                  <p className="text-bianco-soft text-sm md:text-lg max-w-xl mx-auto">
                     {slide.descrizione}
                   </p>
                 </div>
@@ -154,7 +154,7 @@ export default function Galleria() {
           </div>
         </div>
 
-        <p className="text-center text-bianco-soft/50 text-sm mt-8 italic">
+        <p className="text-center text-bianco-soft text-sm mt-8 italic">
           Le immagini mostrate sono segnaposto — presto le sostituiremo con foto
           reali della nostra comunità.
         </p>
