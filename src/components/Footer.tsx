@@ -4,7 +4,7 @@ import SocialLinks from "./ui/SocialLinks";
 
 export default function Footer() {
   return (
-    <footer className="bg-marrone text-crema border-t border-marrone-medio/50">
+    <footer className="bg-nero text-bianco-soft border-t border-nero-bordo">
       <div className="max-w-6xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
@@ -14,7 +14,7 @@ export default function Footer() {
                 SS.mo Sacramento
               </span>
             </div>
-            <p className="text-crema/70 text-sm leading-relaxed">
+            <p className="text-bianco-soft/70 text-sm leading-relaxed">
               Confraternita del Santissimo Sacramento di Monteprandone.
               <br />
               Fondata nel 1836, al servizio della comunità.
@@ -26,7 +26,7 @@ export default function Footer() {
             <h4 className="text-oro font-semibold mb-4 uppercase text-xs tracking-widest">
               Navigazione
             </h4>
-            <ul className="space-y-2 text-sm text-crema/80">
+            <ul className="space-y-2 text-sm text-bianco-soft/80">
               <li><Link href="/#chi-siamo" className="hover:text-oro transition-colors">Chi Siamo</Link></li>
               <li><Link href="/#galleria" className="hover:text-oro transition-colors">Galleria</Link></li>
               <li><Link href="/#attivita" className="hover:text-oro transition-colors">Attività</Link></li>
@@ -39,7 +39,7 @@ export default function Footer() {
             <h4 className="text-oro font-semibold mb-4 uppercase text-xs tracking-widest">
               Diocesi
             </h4>
-            <p className="text-sm text-crema/80 leading-relaxed">
+            <p className="text-sm text-bianco-soft/80 leading-relaxed">
               San Benedetto del Tronto
               <br />
               Ripatransone – Montalto Marche
@@ -49,7 +49,7 @@ export default function Footer() {
 
         <DivisoreOrnato className="w-40 h-6 text-oro/40 mx-auto mt-12 mb-6" />
 
-        <div className="text-center text-xs text-crema/50">
+        <div className="text-center text-xs text-bianco-soft/50">
           © {new Date().getFullYear()} Confraternita del SS.mo Sacramento di
           Monteprandone. Tutti i diritti riservati.
         </div>
