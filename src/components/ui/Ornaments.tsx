@@ -65,7 +65,7 @@ export function DivisoreOrnato({ className = "" }: BaseProps) {
       />
       {/* Rombo centrale */}
       <path d="M120 4 L126 12 L120 20 L114 12 Z" fill="currentColor" />
-      <circle cx="120" cy="12" r="2" fill="var(--color-crema)" />
+      <circle cx="120" cy="12" r="2" fill="var(--color-nero)" />
     </svg>
   );
 }
@@ -100,7 +100,7 @@ export function ArcoDecorativo({ className = "" }: BaseProps) {
 }
 
 /** Pattern di sfondo ripetibile (motivo a giglio stilizzato) come data-URL */
-export const patternFleur = `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C8893A' stroke-width='1' opacity='0.5'%3E%3Cpath d='M40 18 C36 26, 28 28, 28 36 C28 42, 34 44, 40 40 C46 44, 52 42, 52 36 C52 28, 44 26, 40 18 Z'/%3E%3Cline x1='40' y1='40' x2='40' y2='54'/%3E%3Cpath d='M32 48 C36 50, 40 50, 40 50 C40 50, 44 50, 48 48'/%3E%3C/g%3E%3C/svg%3E")`;
+export const patternFleur = `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C9A24A' stroke-width='1' opacity='0.5'%3E%3Cpath d='M40 18 C36 26, 28 28, 28 36 C28 42, 34 44, 40 40 C46 44, 52 42, 52 36 C52 28, 44 26, 40 18 Z'/%3E%3Cline x1='40' y1='40' x2='40' y2='54'/%3E%3Cpath d='M32 48 C36 50, 40 50, 40 50 C40 50, 44 50, 48 48'/%3E%3C/g%3E%3C/svg%3E")`;
 
 /** Angolo ornamentale (per cornici di card / immagini) */
 export function AngoloOrnato({ className = "" }: BaseProps) {
