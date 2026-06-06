@@ -26,7 +26,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-marrone/95 backdrop-blur-sm shadow-lg py-2"
+          ? "bg-nero/95 backdrop-blur-sm shadow-lg border-b border-oro/30 py-2"
           : "bg-transparent py-4"
       }`}
     >
@@ -34,10 +34,10 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <CroceOrnata className="w-5 h-7 text-oro transition-transform duration-500 group-hover:scale-110" />
           <div className="leading-tight">
-            <p className="text-crema font-semibold text-sm tracking-wide">
+            <p className="text-bianco-soft font-semibold text-sm tracking-wide">
               SS.mo Sacramento
             </p>
-            <p className="text-crema opacity-70 text-xs tracking-wider uppercase">
+            <p className="text-bianco-soft opacity-70 text-xs tracking-wider uppercase">
               Monteprandone
             </p>
           </div>
@@ -48,7 +48,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="nav-underline text-crema text-sm hover:text-oro transition-colors duration-200 tracking-wide"
+              className="nav-underline text-bianco-soft text-sm hover:text-oro transition-colors duration-200 tracking-wide"
             >
               {l.label}
             </Link>
@@ -56,7 +56,7 @@ export default function Navbar() {
         </nav>
 
         <button
-          className="md:hidden text-crema p-1"
+          className="md:hidden text-bianco-soft p-1"
           onClick={() => setOpen(!open)}
           aria-label="Menu"
         >
@@ -65,12 +65,12 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-marrone border-t border-marrone-medio px-6 pb-5 pt-2 mt-2">
+        <div className="md:hidden bg-nero border-t border-nero-bordo px-6 pb-5 pt-2 mt-2">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="block py-3 text-crema hover:text-oro transition-colors border-b border-marrone-medio last:border-0"
+              className="block py-3 text-bianco-soft hover:text-oro transition-colors border-b border-nero-bordo last:border-0"
               onClick={() => setOpen(false)}
             >
               {l.label}
