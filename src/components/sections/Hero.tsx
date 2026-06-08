@@ -50,8 +50,8 @@ export default function Hero() {
         style={{ transform: `translateY(${contentParallax}px)`, opacity: fade }}
       >
         {/* Badge 2026 */}
-        <div className="hero-anim hero-delay-1 inline-flex items-center gap-2 bg-oro/15 border border-oro/40 rounded-full px-4 py-1.5 mb-6">
-          <span className="text-oro text-xs font-bold tracking-widest uppercase">
+        <div className="hero-anim hero-delay-1 inline-flex items-center bg-oro/15 border border-oro/40 rounded-full px-4 py-1.5 mb-6 max-w-xs sm:max-w-none text-center">
+          <span className="text-oro text-xs font-bold tracking-wide uppercase leading-snug">
             2026 · Borghi più belli d&apos;Italia nelle Marche
           </span>
         </div>

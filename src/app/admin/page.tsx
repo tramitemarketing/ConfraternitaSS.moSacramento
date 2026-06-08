@@ -185,8 +185,8 @@ export default function AdminPage() {
   // ============ LISTA ARTICOLI ============
   if (view === "list") {
     return (
-      <div className="min-h-screen bg-nero">
-        <div className="bg-nero-soft text-bianco-soft px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+      <div className="min-h-screen bg-nero pt-16">
+        <div className="bg-nero-soft text-bianco-soft px-6 py-4 flex justify-between items-center sticky top-16 z-10">
           <div className="flex items-center gap-2">
             <span className="text-oro text-xl">✚</span>
             <span className="font-semibold">Pannello Gestione Notizie</span>
@@ -301,8 +301,8 @@ export default function AdminPage() {
   const showImgPreview = form.coverImage.trim() !== "" && !imgError;
 
   return (
-    <div className="min-h-screen bg-nero pb-20">
-      <div className="bg-nero-soft text-bianco-soft px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+    <div className="min-h-screen bg-nero pb-20 pt-16">
+      <div className="bg-nero-soft text-bianco-soft px-6 py-4 flex justify-between items-center sticky top-16 z-10">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setView("list")}
@@ -472,7 +472,10 @@ export default function AdminPage() {
                   <button
                     key={action.label}
                     title={action.title}
-                    onClick={() => insertFormatting(action.before, action.after)}
+                    onMouseDown={(e) => {
+                      e.preventDefault(); // keep textarea focused so selectionStart/End are preserved
+                      insertFormatting(action.before, action.after);
+                    }}
                     className="px-3 py-1.5 bg-nero-soft text-bianco text-xs font-semibold rounded hover:bg-oro hover:text-nero transition-colors flex items-center gap-1.5"
                   >
                     <span className="font-bold w-3 inline-block text-center">
@@ -563,21 +566,6 @@ export default function AdminPage() {
           </div>
         </Step>
 
-        <div className="flex justify-end gap-3 pt-2">
-          <button
-            onClick={() => setView("list")}
-            className="px-6 py-3 text-bianco-soft/70 hover:text-bianco transition-colors"
-          >
-            Annulla
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="px-8 py-3 bg-oro text-nero font-semibold rounded-xl hover:bg-oro-chiaro disabled:opacity-50 transition-colors shadow-md"
-          >
-            {saving ? "Salvataggio..." : "💾 Salva articolo"}
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -56,8 +56,8 @@ export default function Processione() {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
         <Reveal className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 bg-oro/10 border border-oro/30 rounded-full px-4 py-1.5 mb-6">
-            <span className="text-oro text-xs font-bold tracking-widest uppercase">
+          <div className="inline-flex items-center bg-oro/10 border border-oro/30 rounded-full px-4 py-1.5 mb-6">
+            <span className="text-oro text-xs font-bold tracking-wide uppercase">
               Venerdì Santo · ore 21:00
             </span>
           </div>
@@ -69,11 +69,12 @@ export default function Processione() {
           </h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
           <p className="text-bianco-soft max-w-2xl mx-auto leading-relaxed text-lg">
-            Oltre <strong className="text-oro">300 figuranti in costume storico</strong> percorrono
-            le vie medievali di Monteprandone in un corteo di straordinaria
-            suggestione. Una delle{" "}
-            <strong className="text-bianco">5 processioni più belle delle Marche</strong> secondo
-            &ldquo;Borghi più belli d&apos;Italia nelle Marche&rdquo; (2026).
+            Oltre{" "}
+            <strong className="text-oro">300 figuranti in costume storico</strong>{" "}
+            percorrono le vie medievali di Monteprandone in un corteo di
+            straordinaria suggestione. Una delle{" "}
+            <strong className="text-bianco">5 processioni più belle delle Marche</strong>{" "}
+            secondo &ldquo;Borghi più belli d&apos;Italia nelle Marche&rdquo; (2026).
           </p>
         </Reveal>
 
