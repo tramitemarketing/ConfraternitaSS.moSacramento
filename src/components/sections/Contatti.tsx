@@ -13,8 +13,10 @@ export default function Contatti() {
   const haSocial = contatti.instagram || contatti.facebook;
 
   return (
-    <section id="contatti" className="py-28 bg-nero text-bianco-soft scroll-mt-20 relative overflow-hidden">
-      {/* Croce decorativa di sfondo */}
+    <section
+      id="contatti"
+      className="py-28 bg-nero text-bianco-soft scroll-mt-20 relative overflow-hidden"
+    >
       <CroceOrnata className="absolute -right-16 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] text-oro opacity-[0.04] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
@@ -34,9 +36,11 @@ export default function Contatti() {
                 Dove siamo
               </h3>
               <p className="opacity-100 leading-relaxed">
+                Chiesa San Nicolò di Bari
+                <br />
                 {luogo.comune}
                 <br />
-                {luogo.regione}
+                <span className="text-xs opacity-60">{luogo.regione}</span>
               </p>
             </div>
           </Reveal>
@@ -45,38 +49,51 @@ export default function Contatti() {
             <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
               <CroceOrnata className="w-9 h-11 text-oro mx-auto mb-3" />
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
-                Priore
+                La Processione
               </h3>
               <p className="opacity-100 leading-relaxed">
-                Tonino Sciarroni
+                Venerdì Santo
                 <br />
-                <span className="text-xs opacity-60">Coordinatore diocesano</span>
+                ore 21:00
+                <br />
+                <span className="text-xs opacity-60">
+                  Bus gratuito dalle 20:30
+                </span>
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={3}>
             <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
-              <svg viewBox="0 0 24 24" fill="none" className="w-9 h-9 text-oro mx-auto mb-4" aria-hidden="true">
-                <path d="M12 2 L4 6 L4 11 C4 16 7.5 20.5 12 22 C16.5 20.5 20 16 20 11 L20 6 Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="w-9 h-9 text-oro mx-auto mb-4"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 2 L4 6 L4 11 C4 16 7.5 20.5 12 22 C16.5 20.5 20 16 20 11 L20 6 Z"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  strokeLinejoin="round"
+                />
               </svg>
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
-                Diocesi
+                Rifondata nel
               </h3>
-              <p className="opacity-100 leading-relaxed text-xs">
-                San Benedetto del Tronto
+              <p className="opacity-100 leading-relaxed">
+                9 giugno 2009
                 <br />
-                Ripatransone
-                <br />
-                Montalto Marche
+                <span className="text-xs opacity-60">
+                  Fondata nel XVII secolo
+                </span>
               </p>
             </div>
           </Reveal>
         </div>
 
-        {/* Contatti diretti + social */}
         <Reveal className="mt-12">
-          {(haContattiDiretti || haSocial) ? (
+          {haContattiDiretti || haSocial ? (
             <div className="flex flex-col items-center gap-6">
               {haContattiDiretti && (
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

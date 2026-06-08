@@ -21,3 +21,9 @@ export const luogo = {
   comune: "Monteprandone (AP)",
   regione: "Marche, Italia",
 };
+
+// Chiesa di riferimento della confraternita
+export const chiesa = {
+  nome: "Chiesa San Nicolò di Bari",
+  comune: "Monteprandone",
+};

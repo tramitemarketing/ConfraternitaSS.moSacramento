@@ -10,34 +10,34 @@ import {
 const Icone = { candela: IconCandela, chiesa: IconChiesa, mani: IconMani, rete: IconRete };
 
 const featured = {
-  icon: "candela" as keyof typeof Icone,
-  titolo: "Adorazione Eucaristica",
+  icon: "chiesa" as keyof typeof Icone,
+  titolo: "Processione del Venerdì Santo",
   descrizione:
-    "Il legame con Gesù Eucaristia è il cuore dello stile spirituale della confraternita. Ogni primo giovedì del mese la comunità si riunisce per un'ora di adorazione silenziosa, momento centrale della nostra vita di fede.",
-  dettaglio: "Ogni 1° giovedì del mese — ore 21:00",
+    "Il cuore della vita della confraternita. Ogni anno, la sera del Venerdì Santo, oltre 300 figuranti in costume storico animano le vie medievali di Monteprandone nella Processione del Cristo Morto — una delle più suggestive delle Marche.",
+  dettaglio: "Venerdì Santo · ore 21:00 · partenza da Chiesa San Nicolò di Bari",
 };
 
 const altre = [
   {
-    icon: "chiesa" as keyof typeof Icone,
-    titolo: "Servizio Liturgico",
+    icon: "candela" as keyof typeof Icone,
+    titolo: "Preparazione annuale",
     descrizione:
-      "Cura della chiesa e partecipazione attiva alle celebrazioni e alle processioni parrocchiali.",
+      "Tutto l'anno la confraternita cura i costumi storici, i gonfaloni, la Bara del Cristo Morto e organizza le prove dei canti tradizionali con le Pie Donne.",
     dettaglio: "Tutto l'anno",
   },
   {
     icon: "mani" as keyof typeof Icone,
-    titolo: "Carità Locale",
+    titolo: "Canti della tradizione",
     descrizione:
-      "Vicinanza concreta e discreta alle persone del paese in situazioni di reale bisogno.",
-    dettaglio: "Continuamente",
+      "Le Pie Donne tramandano il «Popule meus» (Improperia) e lo «Stava Maria» (Stabat Mater locale), canti polifonici tramandati oralmente da generazioni.",
+    dettaglio: "Tradizione orale secolare",
   },
   {
     icon: "rete" as keyof typeof Icone,
-    titolo: "Incontri Diocesani",
+    titolo: "Servizio e comunità",
     descrizione:
-      "Quattro incontri all'anno con i priori della diocesi per programmare attività e scambi.",
-    dettaglio: "4 volte all'anno",
+      "Partecipazione alle altre celebrazioni liturgiche della parrocchia e alla vita del paese, in spirito di fraternità e servizio.",
+    dettaglio: "Continuamente",
   },
 ];
 
@@ -54,17 +54,18 @@ export default function Attivita() {
           </h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
           <p className="text-bianco-soft max-w-xl mx-auto leading-relaxed text-lg">
-            Il legame con Gesù Eucaristia è al centro di tutto. Da esso nasce il
-            servizio verso gli altri e la cura della comunità.
+            La processione del Venerdì Santo è il centro della nostra vita
+            associativa. Attorno ad essa ruotano un anno di preparazione,
+            canto e fraternità.
           </p>
         </Reveal>
 
-        {/* Card featured grande */}
         <Reveal className="mb-8">
           {(() => {
             const Icon = Icone[featured.icon];
             return (
-              <div className="hover-lift relative overflow-hidden rounded-3xl p-10 md:p-14 text-bianco-soft grid md:grid-cols-[auto_1fr] gap-8 items-center"
+              <div
+                className="hover-lift relative overflow-hidden rounded-3xl p-10 md:p-14 text-bianco-soft grid md:grid-cols-[auto_1fr] gap-8 items-center"
                 style={{
                   background:
                     "linear-gradient(135deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
@@ -84,7 +85,7 @@ export default function Attivita() {
                     {featured.descrizione}
                   </p>
                   <span className="inline-flex items-center gap-2 text-oro-chiaro font-semibold">
-                    <IconCandela className="w-5 h-5" />
+                    <IconChiesa className="w-5 h-5" />
                     {featured.dettaglio}
                   </span>
                 </div>
@@ -93,7 +94,6 @@ export default function Attivita() {
           })()}
         </Reveal>
 
-        {/* Tre card più piccole */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {altre.map((a, i) => {
             const Icon = Icone[a.icon];
@@ -109,7 +109,7 @@ export default function Attivita() {
                   <p className="text-bianco-soft leading-relaxed text-sm mb-5">
                     {a.descrizione}
                   </p>
-                  <span className="inline-block bg-nero-soft text-oro text-xs font-semibold px-3 py-1 rounded-full tracking-wide">
+                  <span className="inline-block bg-nero-soft text-oro text-xs font-semibold px-3 py-1 rounded-full tracking-wide border border-oro/20">
                     {a.dettaglio}
                   </span>
                 </div>

@@ -6,6 +6,7 @@ import { CroceOrnata } from "./ui/Ornaments";
 
 const links = [
   { href: "/#chi-siamo", label: "Chi Siamo" },
+  { href: "/#processione", label: "Processione" },
   { href: "/#galleria", label: "Galleria" },
   { href: "/#attivita", label: "Attività" },
   { href: "/#notizie", label: "Notizie" },
@@ -35,7 +36,7 @@ export default function Navbar() {
           <CroceOrnata className="w-5 h-7 text-oro transition-transform duration-500 group-hover:scale-110" />
           <div className="leading-tight">
             <p className="text-bianco-soft font-semibold text-sm tracking-wide">
-              SS.mo Sacramento
+              Pietà e della Morte
             </p>
             <p className="text-bianco-soft opacity-70 text-xs tracking-wider uppercase">
               Monteprandone

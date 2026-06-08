@@ -2,11 +2,30 @@ import Reveal from "@/components/ui/Reveal";
 import { DivisoreOrnato, AngoloOrnato } from "@/components/ui/Ornaments";
 
 const timeline = [
-  { anno: "1836", testo: "Fondazione della Confraternita del SS.mo Sacramento" },
-  { anno: "1933", testo: "Redazione del vecchio statuto associativo" },
+  {
+    anno: "~1610",
+    testo:
+      "Fondazione ufficiale attestata nel decreto della Sacra Visita del vescovo Pompeo De-Nobili (episcopato 1591–1606)",
+  },
+  {
+    anno: "1846–59",
+    testo:
+      "Costruzione della Bara del Cristo Morto sotto il Priore Alessandro Sardi: scultura, cataletto ligneo, doratura e ricami in argento per 220 scudi romani",
+  },
+  {
+    anno: "1859",
+    testo:
+      "Prima processione del Venerdì Santo con la Bara del Cristo Morto — tradizione che continua ininterrotta da oltre 165 anni",
+  },
   {
     anno: "2009",
-    testo: "Riforma dello statuto: le consorelle entrano ufficialmente nella confraternita",
+    testo:
+      "Rifondazione ufficiale il 9 giugno, dopo circa 70 anni di inattività, con il ripristino della processione storica",
+  },
+  {
+    anno: "2026",
+    testo:
+      'Riconoscimento da "Borghi più belli d\'Italia nelle Marche" tra le 5 processioni del Venerdì Santo imperdibili della regione',
   },
 ];
 
@@ -22,63 +41,62 @@ export default function ChiSiamo() {
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto" />
         </Reveal>
 
-        {/* Layout asimmetrico: testo prominente a sinistra (3/5), visual a destra (2/5) */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
-          {/* Testo */}
           <Reveal className="lg:col-span-3 space-y-6">
             <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
               La{" "}
               <strong className="text-bianco font-semibold">
-                Confraternita del Santissimo Sacramento
+                Confraternita della Pietà e della Morte
               </strong>{" "}
-              di Monteprandone è una delle realtà associative più antiche del
-              paese, fondata nel{" "}
-              <strong className="text-oro font-semibold">1836</strong> e mai
-              interrotta nel corso delle generazioni.
+              di Monteprandone affonda le sue radici nei monaci dell&apos;Abbazia
+              di Farfa, presenti nel territorio già intorno all&apos;anno{" "}
+              <strong className="text-oro font-semibold">1000</strong>, e fu
+              formalmente istituita nel primo Seicento su impulso del vescovo{" "}
+              <strong className="text-bianco">Pompeo De-Nobili</strong>.
             </p>
 
             <p className="text-bianco-soft leading-relaxed text-lg">
-              Oggi conta{" "}
-              <strong className="text-bianco">24 confratelli e consorelle</strong>{" "}
-              — un dato che testimonia la vitalità di una comunità che, intorno al
-              2009, ha rinnovato il proprio statuto per accogliere ufficialmente
-              anche le donne, aprendo un nuovo capitolo di fraternità.
+              Tra il{" "}
+              <strong className="text-bianco">1846 e il 1859</strong>, sotto la
+              guida del Priore Alessandro Sardi, fu costruita la celebre{" "}
+              <strong className="text-oro">Bara del Cristo Morto</strong>: la
+              scultura del Cristo fu opera di{" "}
+              <strong className="text-bianco">Emidio Paci</strong>, il cataletto
+              ligneo di Sante Morelli da Montegiorgio, la doratura di Tito
+              Boccachiodi, e i ricami in oro e argento delle Monache di Santa
+              Caterina di Ripatransone. Un&apos;opera collettiva costata 220,21
+              scudi romani.
             </p>
 
             <p className="text-bianco-soft leading-relaxed">
-              La confraternita fa parte della{" "}
-              <strong className="text-bianco">
-                Diocesi di San Benedetto del Tronto – Ripatransone – Montalto
-                Marche
-              </strong>{" "}
-              ed è guidata dal Priore{" "}
-              <strong className="text-bianco">Tonino Sciarroni</strong>, che
-              coordina le attività anche a livello diocesano.
+              Dopo circa settant&apos;anni di inattività, la confraternita è
+              stata rifondata il{" "}
+              <strong className="text-bianco">9 giugno 2009</strong>, riportando
+              in vita la processione storica che oggi riunisce oltre{" "}
+              <strong className="text-oro">300 figuranti in costume</strong>{" "}
+              nel cuore medievale di Monteprandone ogni Venerdì Santo.
             </p>
 
-            {/* Citazione in evidenza */}
             <blockquote className="border-l-4 border-oro pl-6 py-2 mt-8 italic text-bianco text-xl font-light font-[var(--font-playfair)]">
-              «Una fede trasmessa di generazione in generazione, senza mai
-              interrompersi.»
+              «Una memoria viva che si rinnova ogni anno, tra preghiera,
+              canto e devozione popolare.»
             </blockquote>
           </Reveal>
 
-          {/* Timeline visual */}
           <Reveal delay={1} className="lg:col-span-2 relative">
             <div className="relative bg-nero-soft rounded-2xl p-8 hover-lift">
               <AngoloOrnato className="absolute top-3 left-3 w-8 h-8 text-oro" />
               <AngoloOrnato className="absolute top-3 right-3 w-8 h-8 text-oro rotate-90" />
 
               <h3 className="text-bianco text-center text-lg uppercase tracking-widest mb-8 mt-2">
-                La nostra storia
+                Tappe storiche
               </h3>
 
               <div className="space-y-7 relative">
-                {/* Linea verticale */}
                 <div className="absolute left-[27px] top-2 bottom-2 w-px bg-oro/40" />
                 {timeline.map((t) => (
                   <div key={t.anno} className="flex gap-5 relative">
-                    <div className="shrink-0 w-14 h-14 rounded-full bg-oro text-nero flex items-center justify-center font-bold text-sm shadow-md relative z-10">
+                    <div className="shrink-0 w-14 h-14 rounded-full bg-oro text-nero flex items-center justify-center font-bold text-[11px] text-center shadow-md relative z-10 leading-tight px-1">
                       {t.anno}
                     </div>
                     <p className="text-bianco-soft text-sm leading-relaxed pt-3">

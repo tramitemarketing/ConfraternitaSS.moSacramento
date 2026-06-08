@@ -2,9 +2,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { DivisoreOrnato, AngoloOrnato } from "@/components/ui/Ornaments";
 
-// Placeholder: ogni slide ha un gradiente e una didascalia.
-// Sostituisci `image` con un URL reale quando disponibile (resta retrocompatibile:
-// se `image` è presente viene mostrata, altrimenti si vede il gradiente segnaposto).
 interface Slide {
   titolo: string;
   descrizione: string;
@@ -15,28 +12,28 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    titolo: "La nostra chiesa",
-    descrizione: "Il cuore della vita liturgica della confraternita",
+    titolo: "La Bara del Cristo Morto",
+    descrizione: "Il capolavoro realizzato tra il 1846 e il 1859, portato in processione ogni Venerdì Santo",
     gradient: "linear-gradient(135deg, #0A0A0B 0%, #6E561F 70%, #C9A24A 100%)",
-    emoji: "⛪",
+    emoji: "✝",
   },
   {
-    titolo: "Adorazione Eucaristica",
-    descrizione: "Il primo giovedì di ogni mese, riuniti in preghiera",
+    titolo: "Il corteo storico",
+    descrizione: "Oltre 300 figuranti in costume storico percorrono le vie medievali di Monteprandone",
     gradient: "linear-gradient(135deg, #15130E 0%, #8C6A2B 100%)",
     emoji: "🕯️",
   },
   {
-    titolo: "Le processioni",
-    descrizione: "Partecipazione attiva alla vita della parrocchia",
+    titolo: "Le Pie Donne",
+    descrizione: "In abito nero, accompagnano la processione con i canti polifonici tradizionali",
     gradient: "linear-gradient(135deg, #0A0A0B 0%, #C9A24A 60%, #EBCB73 100%)",
-    emoji: "✝",
+    emoji: "♪",
   },
   {
-    titolo: "La comunità",
-    descrizione: "Confratelli e consorelle, una grande famiglia",
+    titolo: "Monteprandone medievale",
+    descrizione: "Il borgo, tra i più belli delle Marche, fa da sfondo a una delle processioni più suggestive della regione",
     gradient: "linear-gradient(135deg, #15130E 0%, #6E561F 55%, #C9A24A 100%)",
-    emoji: "🤝",
+    emoji: "🏰",
   },
 ];
 
@@ -63,13 +60,12 @@ export default function Galleria() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
-            Momenti di comunità
+            La processione in immagini
           </p>
           <h2 className="text-4xl md:text-6xl text-bianco mb-6">Galleria</h2>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto" />
         </div>
 
-        {/* Carosello */}
         <div className="relative">
           <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl">
             {slides.map((slide, i) => (
@@ -97,13 +93,11 @@ export default function Galleria() {
                   </div>
                 )}
 
-                {/* Cornici ornamentali agli angoli */}
                 <AngoloOrnato className="absolute top-5 left-5 w-10 h-10 text-bianco-soft/60" />
                 <AngoloOrnato className="absolute top-5 right-5 w-10 h-10 text-bianco-soft/60 rotate-90" />
                 <AngoloOrnato className="absolute bottom-5 left-5 w-10 h-10 text-bianco-soft/60 -rotate-90" />
                 <AngoloOrnato className="absolute bottom-5 right-5 w-10 h-10 text-bianco-soft/60 rotate-180" />
 
-                {/* Overlay testo */}
                 <div className="absolute inset-0 bg-gradient-to-t from-nero/85 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-center">
                   <h3 className="text-bianco text-2xl md:text-4xl mb-2">
@@ -116,7 +110,6 @@ export default function Galleria() {
               </div>
             ))}
 
-            {/* Frecce */}
             <button
               onClick={prev}
               aria-label="Precedente"
@@ -137,7 +130,6 @@ export default function Galleria() {
             </button>
           </div>
 
-          {/* Indicatori */}
           <div className="flex justify-center gap-3 mt-6">
             {slides.map((s, i) => (
               <button
@@ -155,8 +147,8 @@ export default function Galleria() {
         </div>
 
         <p className="text-center text-bianco-soft text-sm mt-8 italic">
-          Le immagini mostrate sono segnaposto — presto le sostituiremo con foto
-          reali della nostra comunità.
+          Le immagini mostrate sono segnaposto — presto le sostituiremo con le
+          foto della processione e della confraternita.
         </p>
       </div>
     </section>

@@ -1,5 +1,5 @@
 -- ============================================================
--- Schema per la Confraternita del SS.mo Sacramento
+-- Schema per la Confraternita della Pietà e della Morte
 -- Esegui questo script nella sezione "SQL Editor" di Supabase
 -- ============================================================
 
@@ -45,33 +45,33 @@ create policy "Leggi articoli pubblicati"
 -- Il service_role bypassa l'RLS automaticamente (usato dall'app Next.js)
 
 -- ============================================================
--- Dati iniziali (i 3 articoli di esempio)
+-- Dati iniziali (articoli di esempio)
 -- Esegui solo la prima volta, oppure salta se vuoi partire da zero
 -- ============================================================
 
 insert into notizie (slug, title, date, excerpt, content, published) values
 (
-  'adorazione-eucaristica-giugno-2025',
-  'Adorazione Eucaristica — Primo Giovedì di Giugno',
-  '2025-06-01',
-  'Ci ritroviamo come ogni primo giovedì del mese per l''adorazione eucaristica. Un momento di preghiera e raccoglimento aperto a tutta la comunità.',
-  E'## Appuntamento mensile\n\nCome ogni primo giovedì del mese, la Confraternita del SS.mo Sacramento si ritrova per l''adorazione eucaristica.\n\nL''adorazione è aperta a tutti i fedeli della parrocchia e si svolge nella chiesa di Monteprandone.\n\n### Orario\n\nL''adorazione inizia alle ore 21:00 e si conclude con la Benedizione Eucaristica.\n\n### Come partecipare\n\nTutti sono benvenuti. Non è richiesta nessuna iscrizione preventiva. Portate con voi il vostro cuore aperto e il desiderio di stare con il Signore.',
+  'processione-venerdi-santo-2026',
+  'Processione del Cristo Morto — Venerdì Santo 2026',
+  '2026-04-03',
+  'Il Venerdì Santo 2026 la Confraternita della Pietà e della Morte torna nelle vie medievali di Monteprandone con la tradizionale Processione del Cristo Morto. Partenza alle ore 21:00 dalla Chiesa San Nicolò di Bari.',
+  E'## La Processione del Cristo Morto\n\nAnche quest''anno la **Confraternita della Pietà e della Morte di Monteprandone** porta nelle strade del borgo la storica Processione del Cristo Morto.\n\n### Dettagli\n\n- **Data**: Venerdì Santo 2026\n- **Ora di partenza**: 21:00\n- **Luogo di partenza**: Chiesa San Nicolò di Bari, Monteprandone\n- **Bus gratuito**: dalle ore 20:30 da Centobuchi (piazzale Eurospin) e piazzale Santuario S. Maria delle Grazie\n\n### Il corteo\n\nOltre **300 figuranti in costume storico** accompagnano la Bara del Cristo Morto — costruita tra il 1846 e il 1859 — attraverso le vie medievali del borgo.\n\nLe **Pie Donne** intonano i canti tradizionali *«Popule meus»* (Improperia) e *«Stava Maria»*, tramandati oralmente da generazioni.\n\n### Riconoscimento 2026\n\nQuest''anno la processione è stata inserita da **Borghi più belli d''Italia nelle Marche** tra le 5 processioni del Venerdì Santo imperdibili della regione.',
   true
 ),
 (
-  'incontro-diocesano-priori-2025',
-  'Incontro Diocesano dei Priori — Primavera 2025',
-  '2025-04-15',
-  'Il Priore Tonino Sciarroni ha partecipato all''incontro diocesano dei priori, occasione di confronto e programmazione per le attività dell''anno.',
-  E'## Incontro dei Priori della Diocesi\n\nSi è tenuto l''incontro stagionale dei priori delle confraternite della Diocesi di San Benedetto del Tronto – Ripatransone – Montalto Marche.\n\n### Temi affrontati\n\n- Programmazione delle attività comuni\n- Scambi culturali e religiosi tra le confraternite\n- Iniziative di carità a livello diocesano',
+  'rifondazione-confraternita-2009',
+  'La rifondazione del 2009 — quindici anni di rinascita',
+  '2024-06-09',
+  'Il 9 giugno 2009 la Confraternita della Pietà e della Morte tornava in vita dopo circa settant''anni di inattività. Ripercorriamo quindici anni di storia rinata.',
+  E'## 9 giugno 2009: una nuova vita\n\nDopo circa settant''anni di inattività, il **9 giugno 2009** la Confraternita della Pietà e della Morte di Monteprandone è stata ufficialmente rifondata.\n\n### La storia\n\nLa confraternita, attestata almeno dal decreto della Sacra Visita del 1610 voluto dal vescovo Pompeo De-Nobili, aveva una tradizione secolare nella cura dei defunti e nell''organizzazione della processione del Venerdì Santo.\n\n### La Bara del Cristo Morto\n\nIl simbolo più prezioso della confraternita è la **Bara del Cristo Morto**, costruita tra il 1846 e il 1859 sotto il Priore Alessandro Sardi:\n\n- **1846**: scultura del Cristo in legno — Emidio Paci (33,21 scudi)\n- **1847**: cataletto ligneo — Sante Morelli di Montegiorgio (60 scudi)\n- **1851**: doratura — Tito Boccachiodi (55 scudi)\n- **1855**: ricami in oro e argento — Monache di Santa Caterina di Ripatransone (33 scudi)\n\nCosto totale: **220,21 scudi romani**. La prima processione con la Bara si tenne il Venerdì Santo del **1859**.',
   true
 ),
 (
-  'benvenuto-sul-nostro-sito',
-  'Benvenuti sul nostro sito!',
-  '2025-01-10',
-  'La Confraternita del SS.mo Sacramento di Monteprandone è ora online. Troverete qui notizie, eventi e informazioni sulla nostra comunità.',
-  E'## Siamo online!\n\nBenvenuti sul sito della **Confraternita del SS.mo Sacramento di Monteprandone**.\n\n### Cosa troverete qui\n\n- **Notizie** sulle attività della confraternita\n- **Informazioni** sulla nostra storia e spiritualità\n- **Aggiornamenti** sugli eventi parrocchiali e diocesani\n\nSiamo qui dal **1836** e continuiamo a camminare insieme, nella fede e nella fratellanza.\n\n*Il Priore Tonino Sciarroni e tutti i confratelli e le consorelle*',
+  'benvenuti-sul-nostro-sito',
+  'Benvenuti sul sito della Confraternita',
+  '2024-01-10',
+  'La Confraternita della Pietà e della Morte di Monteprandone è ora online. Troverete qui notizie, eventi e informazioni sulla nostra tradizione secolare.',
+  E'## Siamo online!\n\nBenvenuti sul sito della **Confraternita della Pietà e della Morte di Monteprandone**.\n\n### Cosa troverete qui\n\n- **Notizie** sulla processione del Venerdì Santo e sulle attività della confraternita\n- **La storia** delle nostre origini nel XVII secolo e della costruzione della Bara del Cristo Morto\n- **Informazioni pratiche** su orari, percorso e bus gratuito per la processione\n\nSiamo presenti in questo borgo fin dal XVII secolo, e ogni anno il **Venerdì Santo** torniamo a portare il Cristo Morto tra le vie medievali di Monteprandone.',
   true
 )
 on conflict (slug) do nothing;

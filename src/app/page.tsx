@@ -1,5 +1,6 @@
 import Hero from "@/components/sections/Hero";
 import ChiSiamo from "@/components/sections/ChiSiamo";
+import Processione from "@/components/sections/Processione";
 import Galleria from "@/components/sections/Galleria";
 import Attivita from "@/components/sections/Attivita";
 import NotiziePreview from "@/components/sections/NotiziePreview";
@@ -10,6 +11,7 @@ export default function Home() {
     <>
       <Hero />
       <ChiSiamo />
+      <Processione />
       <Galleria />
       <Attivita />
       <NotiziePreview />

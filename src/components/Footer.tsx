@@ -11,13 +11,13 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <CroceOrnata className="w-5 h-7 text-oro" />
               <span className="font-semibold tracking-wide">
-                SS.mo Sacramento
+                Pietà e della Morte
               </span>
             </div>
             <p className="text-bianco-soft/70 text-sm leading-relaxed">
-              Confraternita del Santissimo Sacramento di Monteprandone.
+              Confraternita della Pietà e della Morte di Monteprandone.
               <br />
-              Fondata nel 1836, al servizio della comunità.
+              La Processione del Cristo Morto — dal XVII secolo.
             </p>
             <SocialLinks size={18} className="text-oro mt-5" />
           </div>
@@ -28,6 +28,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-bianco-soft/80">
               <li><Link href="/#chi-siamo" className="hover:text-oro transition-colors">Chi Siamo</Link></li>
+              <li><Link href="/#processione" className="hover:text-oro transition-colors">Processione</Link></li>
               <li><Link href="/#galleria" className="hover:text-oro transition-colors">Galleria</Link></li>
               <li><Link href="/#attivita" className="hover:text-oro transition-colors">Attività</Link></li>
               <li><Link href="/notizie" className="hover:text-oro transition-colors">Notizie</Link></li>
@@ -37,12 +38,14 @@ export default function Footer() {
 
           <div>
             <h4 className="text-oro font-semibold mb-4 uppercase text-xs tracking-widest">
-              Diocesi
+              La Processione
             </h4>
             <p className="text-sm text-bianco-soft/80 leading-relaxed">
-              San Benedetto del Tronto
+              Venerdì Santo · ore 21:00
               <br />
-              Ripatransone – Montalto Marche
+              Chiesa San Nicolò di Bari
+              <br />
+              <span className="text-bianco-soft/50">Bus gratuito dalle 20:30</span>
             </p>
           </div>
         </div>
@@ -50,7 +53,7 @@ export default function Footer() {
         <DivisoreOrnato className="w-40 h-6 text-oro/40 mx-auto mt-12 mb-6" />
 
         <div className="text-center text-xs text-bianco-soft/50">
-          © {new Date().getFullYear()} Confraternita del SS.mo Sacramento di
+          © {new Date().getFullYear()} Confraternita della Pietà e della Morte di
           Monteprandone. Tutti i diritti riservati.
         </div>
       </div>

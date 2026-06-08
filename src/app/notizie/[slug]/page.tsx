@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
   const article = await getArticleBySlug(slug);
   if (!article) return {};
   return {
-    title: `${article.title} — SS.mo Sacramento Monteprandone`,
+    title: `${article.title} — Pietà e della Morte Monteprandone`,
     description: article.excerpt,
   };
 }

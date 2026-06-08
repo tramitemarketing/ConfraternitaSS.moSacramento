@@ -18,10 +18,17 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Confraternita del SS.mo Sacramento — Monteprandone",
+  title: "Confraternita della Pietà e della Morte — Monteprandone",
   description:
-    "Confraternita del SS.mo Sacramento di Monteprandone, fondata nel 1836. Fede, fratellanza e servizio nella diocesi di San Benedetto del Tronto.",
-  keywords: ["confraternita", "Monteprandone", "Sacramento", "fede", "diocesi"],
+    "Confraternita della Pietà e della Morte di Monteprandone. La storica Processione del Cristo Morto del Venerdì Santo, con oltre 300 figuranti in costume storico. Tra le 5 processioni più belle delle Marche secondo Borghi più belli d'Italia.",
+  keywords: [
+    "confraternita",
+    "Monteprandone",
+    "Processione del Cristo Morto",
+    "Venerdì Santo",
+    "Marche",
+    "Pietà e della Morte",
+  ],
 };
 
 export default function RootLayout({

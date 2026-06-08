@@ -1,8 +1,8 @@
 @AGENTS.md
 
-# Confraternita del SS.mo Sacramento — Monteprandone
+# Confraternita della Pietà e della Morte — Monteprandone
 
-Sito vetrina + blog per la Confraternita del SS.mo Sacramento di Monteprandone (fondata 1836).
+Sito vetrina + blog per la Confraternita della Pietà e della Morte di Monteprandone (fondata XVII sec., rifondata 2009).
 
 ## Stack
 
@@ -10,7 +10,7 @@ Sito vetrina + blog per la Confraternita del SS.mo Sacramento di Monteprandone (
 - **Tailwind CSS v4** — config via CSS `@theme` in `globals.css`
 - **TypeScript**
 - Font: Playfair Display (headings) + Lato (body) via `next/font/google`
-- Blog: articoli in `content/notizie.json`
+- Blog: articoli su Supabase PostgreSQL
 - Auth admin: cookie `admin_session`, password in `.env.local`
 
 ## Struttura directory
@@ -31,6 +31,7 @@ src/
       auth/route.ts           # POST login / DELETE logout
       notizie/route.ts        # GET lista / POST nuovo articolo
       notizie/[slug]/route.ts # PUT modifica / DELETE elimina
+      upload/route.ts         # Upload immagini → Supabase Storage
   components/
     Navbar.tsx                # Navbar fissa con scroll detection
     Footer.tsx
@@ -38,6 +39,8 @@ src/
     sections/
       Hero.tsx                # Sezione hero (fullscreen)
       ChiSiamo.tsx            # Storia e identità
+      Processione.tsx         # Sezione dedicata alla Processione del Cristo Morto
+      Galleria.tsx            # Carosello foto (placeholder → reali)
       Attivita.tsx            # Attività spirituali e caritative
       NotiziePreview.tsx      # Anteprima 3 ultimi articoli
       Contatti.tsx            # Info contatti (no form)
@@ -45,8 +48,7 @@ src/
     posts.ts                  # CRUD articoli su Supabase (async)
     supabase.ts               # Client Supabase (service role, server-only)
     imageUpload.ts            # Helper client: ridimensiona + carica immagini
-    site.ts                   # Config contatti/social
-  app/api/upload/route.ts     # Upload immagini → Supabase Storage (bucket "immagini")
+    site.ts                   # Config contatti/social/chiesa
   proxy.ts                    # Protegge /admin/* (ex middleware.ts, Next 16)
 supabase/
   schema.sql                  # DDL tabella notizie + RLS + dati iniziali
@@ -69,7 +71,7 @@ Definita in `globals.css` con `@theme`. Classi disponibili:
 | `bg/text-bianco-soft` | `#E8E6DF` | Corpo testo |
 | `bg/text-grigio` | `#9A968C` | Stato "bozza" (uso minimo) |
 
-> Gradienti decorativi: nero→oro (vedi `docs/superpowers/specs/2026-06-06-redesign-colore-nero-oro-bianco-design.md`). Bottoni con sfondo oro → testo nero.
+> Gradienti decorativi: nero→oro. Bottoni con sfondo oro → testo nero.
 
 ## Comandi
 
@@ -133,10 +135,28 @@ In `docs/reusable/` ci sono guide self-contained copiabili in altri progetti:
 
 ## Informazioni confraternita
 
-- **Nome**: Confraternita del SS.mo Sacramento di Monteprandone
-- **Diocesi**: San Benedetto del Tronto – Ripatransone – Montalto Marche
-- **Priore**: Tonino Sciarroni (coordina anche a livello diocesano)
-- **Fondazione**: 1836
-- **Riforma statuto**: ~2009 (accesso ufficiale delle consorelle)
-- **Adorazione eucaristica**: ogni 1° giovedì del mese
-- **Incontri diocesani**: 4 all'anno
+- **Nome**: Confraternita della Pietà e della Morte di Monteprandone
+- **Origini**: monaci dell'Abbazia di Farfa (~anno 1000); fondata formalmente da vescovo Pompeo De-Nobili (episcopato 1591–1606)
+- **Prima attestazione**: decreto Sacra Visita 1610
+- **Chiesa**: San Nicolò di Bari, Monteprandone
+- **Rifondazione**: 9 giugno 2009 (dopo ~70 anni di inattività)
+- **Riconoscimento 2026**: "Borghi più belli d'Italia nelle Marche" — 5 processioni imperdibili del Venerdì Santo
+
+### La Bara del Cristo Morto (1846–1859)
+
+Costruita sotto il Priore Alessandro Sardi — costo totale 220,21 scudi romani:
+- 1846: Cristo in legno — Emidio Paci (33,21 scudi)
+- 1847: Cataletto ligneo — Sante Morelli, Montegiorgio (60 scudi)
+- 1851: Doratura — Tito Boccachiodi (55 scudi)
+- 1855: Velluti, frange oro/argento (36 scudi)
+- 1855: Ricami in argento — Monache di Santa Caterina di Ripatransone (33 scudi)
+- Prima processione: Venerdì Santo 1859
+
+### La Processione del Venerdì Santo
+
+- **Orario**: ore 21:00, partenza da Chiesa San Nicolò di Bari
+- **Figuranti**: 300+ in costume storico
+- **Bus gratuito**: dalle 20:30 da Centobuchi (piazzale Eurospin) e piazzale Santuario S. Maria delle Grazie
+- **Ordine corteo**: Croce/simboli Passione → 7 gonfaloni rossi (ultime parole Cristo) → Vergini (bambine in bianco) → Pie Donne (abito nero, canti polifonici) → fanciulle con 7 spade → Banda (Istituto Comprensivo Musicale di Monteprandone) → clero + Padri Santuario S. Maria delle Grazie + autorità civili + Carabinieri Alta Uniforme → San Giovanni + Madonna Addolorata → Bara del Cristo Morto
+- **Percorso**: via Leopardi → via Roma → Piazza 14 Novembre → via Corso → via Tavernette → via Orti → Contrada Macigne → via Borgo da Monte → via Borgo da Sole → rientro in chiesa
+- **Canti**: «Popule meus» (Improperia) e «Stava Maria» (Stabat Mater locale, Pie Donne)
