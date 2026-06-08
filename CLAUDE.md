@@ -42,10 +42,15 @@ src/
       NotiziePreview.tsx      # Anteprima 3 ultimi articoli
       Contatti.tsx            # Info contatti (no form)
   lib/
-    posts.ts                  # Lettura/scrittura articoli da JSON
-  middleware.ts               # Protegge /admin/* (redirect a login)
-content/
-  notizie.json                # Articoli del blog
+    posts.ts                  # CRUD articoli su Supabase (async)
+    supabase.ts               # Client Supabase (service role, server-only)
+    imageUpload.ts            # Helper client: ridimensiona + carica immagini
+    site.ts                   # Config contatti/social
+  app/api/upload/route.ts     # Upload immagini → Supabase Storage (bucket "immagini")
+  proxy.ts                    # Protegge /admin/* (ex middleware.ts, Next 16)
+supabase/
+  schema.sql                  # DDL tabella notizie + RLS + dati iniziali
+docs/reusable/                # Pattern riutilizzabili per progetti futuri
 ```
 
 ## Palette colori (Tailwind)
@@ -81,13 +86,29 @@ Password default: `confraternita2024` (cambiare in `.env.local`)
 
 L'admin permette di:
 - Creare nuovi articoli con editor markdown + toolbar di formattazione
+- Caricare immagini di copertina (pulsante "Carica foto" → Supabase Storage)
 - Modificare articoli esistenti
 - Pubblicare/mettere in bozza
 - Eliminare articoli
 
-## Storage articoli
+## Storage (Supabase)
 
-Gli articoli sono in `content/notizie.json`. Formato:
+Articoli e immagini sono su **Supabase** (Postgres + Storage).
+
+- **Database**: tabella `notizie` (vedi `supabase/schema.sql`). CRUD in `lib/posts.ts`.
+- **Immagini**: bucket pubblico `immagini`, creato automaticamente al primo
+  upload da `app/api/upload/route.ts`. Le foto vengono ridimensionate nel
+  browser (max 1600px) prima dell'invio.
+
+Variabili d'ambiente richieste (Vercel + `.env.local`):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=eyJ...   # SEGRETO, solo server-side
+ADMIN_PASSWORD=...
+```
+
+Formato articolo (campi camelCase nell'app, snake_case nel DB):
 
 ```json
 {
@@ -96,11 +117,19 @@ Gli articoli sono in `content/notizie.json`. Formato:
   "date": "2025-06-01",
   "excerpt": "Breve descrizione...",
   "content": "Testo in **markdown**...",
+  "coverImage": "https://xxxx.supabase.co/storage/v1/object/public/immagini/...",
   "published": true
 }
 ```
 
-> **Nota produzione**: su Vercel il filesystem è read-only — il JSON viene letto ma non può essere scritto dalle API routes. Per la produzione servono: un database (es. Supabase, PlanetScale) o un CMS headless (Sanity, Contentful). Per ora funziona in locale e su hosting con filesystem persistente.
+> Le pagine pubbliche `/notizie` e `/notizie/[slug]` usano `force-dynamic`:
+> i contenuti sono sempre aggiornati senza rebuild.
+
+## Pattern riutilizzabili
+
+In `docs/reusable/` ci sono guide self-contained copiabili in altri progetti:
+- `supabase-image-upload.md` — pulsante "Carica foto" con Supabase Storage,
+  upload sicuro server-side e ridimensionamento client.
 
 ## Informazioni confraternita
 

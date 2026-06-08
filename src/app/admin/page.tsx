@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Article } from "@/lib/posts";
+import { uploadImage } from "@/lib/imageUpload";
 
 function slugify(text: string): string {
   return text
@@ -40,9 +41,11 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [msg, setMsg] = useState("");
 
   const [form, setForm] = useState(emptyForm);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadArticles = useCallback(async () => {
     const res = await fetch("/api/notizie");
@@ -113,6 +116,26 @@ export default function AdminPage() {
       ta.selectionStart = start + before.length;
       ta.selectionEnd = start + before.length + selected.length;
     }, 0);
+  }
+
+  async function handleFileSelected(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setImgError(false);
+    setMsg("");
+    try {
+      const url = await uploadImage(file);
+      setForm((f) => ({ ...f, coverImage: url }));
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Errore durante il caricamento.";
+      setMsg(`❌ ${message}`);
+    } finally {
+      setUploading(false);
+      // permette di ri-selezionare lo stesso file
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   }
 
   async function handleSave() {
@@ -329,22 +352,45 @@ export default function AdminPage() {
         <Step
           n={2}
           titolo="Immagine di copertina"
-          aiuto="Incolla qui il link a un'immagine. Puoi caricarla su Google Drive o un sito di hosting immagini e copiare il link diretto. Lascia vuoto per usare una grafica predefinita."
+          aiuto="Carica una foto dal tuo computer o telefono. Verrà ottimizzata e salvata automaticamente. Lascia vuoto per usare una grafica predefinita."
         >
+          {/* input file nascosto */}
           <input
-            type="url"
-            value={form.coverImage}
-            onChange={(e) => {
-              setImgError(false);
-              setForm((f) => ({ ...f, coverImage: e.target.value }));
-            }}
-            className="w-full px-4 py-3 rounded-xl border border-nero-bordo bg-nero-soft focus:outline-none focus:border-oro text-bianco text-sm"
-            placeholder="https://esempio.com/foto.jpg"
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+            onChange={handleFileSelected}
+            className="hidden"
           />
+
+          {/* pulsante carica */}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="inline-flex items-center gap-2 px-5 py-3 bg-oro text-nero font-semibold rounded-xl hover:bg-oro-chiaro disabled:opacity-50 transition-colors shadow-md"
+          >
+            {uploading ? (
+              <>
+                <span className="inline-block w-4 h-4 border-2 border-nero/40 border-t-nero rounded-full animate-spin" />
+                Caricamento…
+              </>
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" aria-hidden="true">
+                  <path d="M12 16 L12 4 M12 4 L8 8 M12 4 L16 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M4 16 L4 19 C4 19.5 4.5 20 5 20 L19 20 C19.5 20 20 19.5 20 19 L20 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+                {form.coverImage ? "Cambia foto" : "Carica foto"}
+              </>
+            )}
+          </button>
+
+          {/* anteprima */}
           {form.coverImage.trim() !== "" && (
-            <div className="mt-3">
+            <div className="mt-4">
               {showImgPreview ? (
-                <div className="rounded-xl overflow-hidden border border-nero-bordo aspect-[16/9] max-w-md">
+                <div className="relative rounded-xl overflow-hidden border border-nero-bordo aspect-[16/9] max-w-md group">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={form.coverImage}
@@ -352,15 +398,42 @@ export default function AdminPage() {
                     className="w-full h-full object-cover"
                     onError={() => setImgError(true)}
                   />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImgError(false);
+                      setForm((f) => ({ ...f, coverImage: "" }));
+                    }}
+                    className="absolute top-2 right-2 bg-nero/70 text-bianco text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-nero"
+                  >
+                    Rimuovi
+                  </button>
                 </div>
               ) : (
                 <p className="text-sm text-red-300">
-                  ⚠️ Impossibile caricare questa immagine. Controlla che il link
-                  sia corretto e pubblico.
+                  ⚠️ Impossibile mostrare questa immagine. Prova a caricarla di
+                  nuovo.
                 </p>
               )}
             </div>
           )}
+
+          {/* campo URL avanzato (facoltativo) */}
+          <details className="mt-4">
+            <summary className="text-xs text-bianco-soft/60 cursor-pointer hover:text-bianco-soft">
+              Oppure incolla un link a un&apos;immagine già online
+            </summary>
+            <input
+              type="url"
+              value={form.coverImage}
+              onChange={(e) => {
+                setImgError(false);
+                setForm((f) => ({ ...f, coverImage: e.target.value }));
+              }}
+              className="w-full mt-2 px-4 py-2.5 rounded-xl border border-nero-bordo bg-nero-soft focus:outline-none focus:border-oro text-bianco text-sm"
+              placeholder="https://esempio.com/foto.jpg"
+            />
+          </details>
         </Step>
 
         {/* PASSO 3 — Introduzione */}
