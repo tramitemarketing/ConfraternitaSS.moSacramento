@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllArticles, saveArticles, Article } from "@/lib/posts";
+import { getAllArticles, createArticle, Article } from "@/lib/posts";
 import { cookies } from "next/headers";
 
 async function isAuthenticated(): Promise<boolean> {
@@ -8,7 +8,8 @@ async function isAuthenticated(): Promise<boolean> {
 }
 
 export async function GET() {
-  return NextResponse.json(getAllArticles());
+  const articles = await getAllArticles();
+  return NextResponse.json(articles);
 }
 
 export async function POST(req: NextRequest) {
@@ -17,26 +18,34 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { title, excerpt, content, date, published, slug } = body;
+  const { title, excerpt, content, date, published, slug, coverImage } = body;
 
   if (!title || !content || !slug) {
-    return NextResponse.json({ error: "Campi obbligatori mancanti" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Campi obbligatori mancanti" },
+      { status: 400 }
+    );
   }
 
-  const articles = getAllArticles();
-  if (articles.find((a) => a.slug === slug)) {
-    return NextResponse.json({ error: "Slug già esistente" }, { status: 409 });
+  try {
+    const newArticle: Article = {
+      slug,
+      title,
+      excerpt: excerpt ?? "",
+      content,
+      date: date ?? new Date().toISOString().split("T")[0],
+      published: published ?? false,
+      coverImage: coverImage || undefined,
+    };
+
+    const created = await createArticle(newArticle);
+    return NextResponse.json(created, { status: 201 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Errore sconosciuto";
+    // Supabase restituisce un codice 23505 per violazione unique constraint
+    if (message.includes("23505") || message.includes("unique")) {
+      return NextResponse.json({ error: "Slug già esistente" }, { status: 409 });
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const newArticle: Article = {
-    slug,
-    title,
-    excerpt: excerpt ?? "",
-    content,
-    date: date ?? new Date().toISOString().split("T")[0],
-    published: published ?? false,
-  };
-
-  saveArticles([newArticle, ...articles]);
-  return NextResponse.json(newArticle, { status: 201 });
 }

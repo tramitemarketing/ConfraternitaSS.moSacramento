@@ -1,20 +1,19 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPublishedArticles, getArticleBySlug, formatDate } from "@/lib/posts";
+import { getArticleBySlug, formatDate } from "@/lib/posts";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { DivisoreOrnato } from "@/components/ui/Ornaments";
+
+// Articoli renderizzati dinamicamente — sempre aggiornati da Supabase
+export const dynamic = "force-dynamic";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return getPublishedArticles().map((a) => ({ slug: a.slug }));
-}
-
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) return {};
   return {
     title: `${article.title} — SS.mo Sacramento Monteprandone`,
@@ -24,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article || !article.published) notFound();
 
   return (

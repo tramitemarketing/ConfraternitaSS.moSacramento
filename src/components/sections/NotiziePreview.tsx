@@ -26,8 +26,8 @@ function FeaturedCover({ coverImage, title }: { coverImage?: string; title: stri
   );
 }
 
-export default function NotiziePreview() {
-  const articles = getPublishedArticles();
+export default async function NotiziePreview() {
+  const articles = await getPublishedArticles();
   const [primo, ...resto] = articles;
   const secondari = resto.slice(0, 2);
 

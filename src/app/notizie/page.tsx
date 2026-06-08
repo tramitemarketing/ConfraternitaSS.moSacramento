@@ -3,14 +3,16 @@ import ArticleCard from "@/components/ArticleCard";
 import Reveal from "@/components/ui/Reveal";
 import { DivisoreOrnato, CroceOrnata, patternFleur } from "@/components/ui/Ornaments";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Notizie — SS.mo Sacramento Monteprandone",
   description:
     "Ultime notizie e aggiornamenti dalla Confraternita del SS.mo Sacramento di Monteprandone.",
 };
 
-export default function NotizieIndex() {
-  const articles = getPublishedArticles();
+export default async function NotizieIndex() {
+  const articles = await getPublishedArticles();
 
   return (
     <div className="min-h-screen bg-nero">

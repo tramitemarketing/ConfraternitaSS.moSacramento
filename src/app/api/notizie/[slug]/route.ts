@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllArticles, saveArticles } from "@/lib/posts";
+import { updateArticle, deleteArticle } from "@/lib/posts";
 import { cookies } from "next/headers";
 
 async function isAuthenticated(): Promise<boolean> {
@@ -18,16 +18,20 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   const { slug } = await params;
   const body = await req.json();
-  const articles = getAllArticles();
-  const idx = articles.findIndex((a) => a.slug === slug);
 
-  if (idx === -1) {
-    return NextResponse.json({ error: "Articolo non trovato" }, { status: 404 });
+  try {
+    const updated = await updateArticle(slug, body);
+    return NextResponse.json(updated);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Errore sconosciuto";
+    if (message.includes("No rows")) {
+      return NextResponse.json(
+        { error: "Articolo non trovato" },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  articles[idx] = { ...articles[idx], ...body, slug };
-  saveArticles(articles);
-  return NextResponse.json(articles[idx]);
 }
 
 export async function DELETE(_req: NextRequest, { params }: Params) {
@@ -36,13 +40,12 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   }
 
   const { slug } = await params;
-  const articles = getAllArticles();
-  const filtered = articles.filter((a) => a.slug !== slug);
 
-  if (filtered.length === articles.length) {
-    return NextResponse.json({ error: "Articolo non trovato" }, { status: 404 });
+  try {
+    await deleteArticle(slug);
+    return NextResponse.json({ ok: true });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Errore sconosciuto";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  saveArticles(filtered);
-  return NextResponse.json({ ok: true });
 }
