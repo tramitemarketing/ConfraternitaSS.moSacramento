@@ -1,5 +1,16 @@
 import Reveal from "@/components/ui/Reveal";
 import { DivisoreOrnato, CroceOrnata } from "@/components/ui/Ornaments";
+import Teschio from "@/components/ui/Teschio";
+
+// ── MAPPA DEL PERCORSO ──────────────────────────────────────────────
+// Per mostrare il percorso tracciato:
+// 1. Crea una mappa su Google My Maps (https://mymaps.google.com) e disegna il percorso.
+// 2. Apri "⋮ → Incorpora sul mio sito", copia SOLO l'URL dentro src="..." dell'iframe.
+// 3. Incollalo qui sotto tra le virgolette.
+// Finché resta vuoto, viene mostrata una mappa Google centrata sulla chiesa (senza tracciato).
+const MYMAPS_EMBED_URL = "";
+const FALLBACK_MAP_URL =
+  "https://maps.google.com/maps?q=Chiesa%20San%20Nicol%C3%B2%20di%20Bari%20Monteprandone&z=15&output=embed";
 
 const ordineProcessione = [
   { label: "Croce e simboli della Passione", note: "apertura del corteo" },
@@ -50,8 +61,8 @@ export default function Processione() {
       className="py-28 scroll-mt-20 relative overflow-hidden"
       style={{ backgroundColor: "#0D0C09" }}
     >
-      {/* Croce decorativa di sfondo */}
-      <CroceOrnata className="absolute -left-20 top-1/2 -translate-y-1/2 w-[50vh] h-[50vh] text-oro opacity-[0.04] pointer-events-none" />
+      {/* Teschio decorativo di sfondo */}
+      <Teschio className="absolute -left-20 top-1/2 -translate-y-1/2 w-[45vh] h-[45vh] object-contain text-oro opacity-[0.04] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
@@ -193,6 +204,32 @@ export default function Processione() {
             </Reveal>
           </div>
         </div>
+
+        {/* Mappa del percorso */}
+        <Reveal className="mt-16">
+          <h3 className="text-oro text-xs font-bold uppercase tracking-widest mb-5 flex items-center justify-center gap-3 text-center">
+            <span className="w-8 h-px bg-oro/60 inline-block" />
+            Il percorso sulla mappa
+            <span className="w-8 h-px bg-oro/60 inline-block" />
+          </h3>
+          <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[16/11] sm:aspect-[16/9] md:aspect-[21/9] bg-nero-soft">
+            <iframe
+              src={MYMAPS_EMBED_URL || FALLBACK_MAP_URL}
+              title="Mappa del percorso della Processione del Cristo Morto a Monteprandone"
+              className="w-full h-full"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+          {!MYMAPS_EMBED_URL && (
+            <p className="text-center text-bianco-soft/50 text-xs mt-4 italic">
+              Mappa centrata sulla Chiesa San Nicolò di Bari. Il tracciato
+              completo del percorso sarà presto disponibile.
+            </p>
+          )}
+        </Reveal>
 
         {/* Bara del Cristo Morto — dettaglio storico */}
         <Reveal className="mt-16">

@@ -17,18 +17,78 @@ const lato = Lato({
   weight: ["300", "400", "700"],
 });
 
+// URL pubblico del sito — usato per i metadati Open Graph (anteprime social).
+// Quando avrai il dominio definitivo, impostalo nella variabile d'ambiente
+// NEXT_PUBLIC_SITE_URL su Vercel (es. https://www.confraternitapietaemorte.it).
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://confraternita-pieta-morte.vercel.app";
+
+// Immagine usata per favicon e anteprime social (logo della confraternita).
+// Carica il file in /public con questo nome.
+const OG_IMAGE = "/logo-confraternita.png";
+
 export const metadata: Metadata = {
-  title: "Confraternita della Pietà e della Morte — Monteprandone",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default:
+      "Processione del Cristo Morto a Monteprandone | Venerdì Santo",
+    template: "%s | Confraternita della Pietà e della Morte",
+  },
   description:
-    "Confraternita della Pietà e della Morte di Monteprandone. La storica Processione del Cristo Morto del Venerdì Santo, con oltre 300 figuranti in costume storico. Tra le 5 processioni più belle delle Marche secondo Borghi più belli d'Italia.",
+    "La storica Processione del Cristo Morto del Venerdì Santo a Monteprandone (AP): oltre 300 figuranti in costume, percorso, orari e bus gratuito. Tra le 5 processioni più belle delle Marche secondo Borghi più belli d'Italia.",
   keywords: [
-    "confraternita",
-    "Monteprandone",
     "Processione del Cristo Morto",
-    "Venerdì Santo",
-    "Marche",
-    "Pietà e della Morte",
+    "Processione Venerdì Santo Monteprandone",
+    "Confraternita della Pietà e della Morte",
+    "Monteprandone",
+    "Venerdì Santo Marche",
+    "Bara del Cristo Morto",
+    "processioni Marche",
+    "Borghi più belli d'Italia Marche",
+    "Settimana Santa Ascoli Piceno",
   ],
+  authors: [
+    { name: "Confraternita della Pietà e della Morte di Monteprandone" },
+  ],
+  category: "Religione e tradizioni",
+  icons: {
+    icon: OG_IMAGE,
+    apple: OG_IMAGE,
+  },
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    url: SITE_URL,
+    siteName: "Confraternita della Pietà e della Morte di Monteprandone",
+    title:
+      "Processione del Cristo Morto a Monteprandone — Venerdì Santo",
+    description:
+      "La storica Processione del Cristo Morto del Venerdì Santo a Monteprandone: oltre 300 figuranti in costume storico. Percorso, orari e bus gratuito.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 800,
+        height: 800,
+        alt: "Sigillo della Confraternita della Pietà e della Morte di Monteprandone",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title:
+      "Processione del Cristo Morto a Monteprandone — Venerdì Santo",
+    description:
+      "La storica Processione del Cristo Morto del Venerdì Santo a Monteprandone: oltre 300 figuranti in costume. Percorso, orari e bus gratuito.",
+    images: [OG_IMAGE],
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

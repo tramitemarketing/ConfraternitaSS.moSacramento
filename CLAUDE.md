@@ -108,7 +108,31 @@ Variabili d'ambiente richieste (Vercel + `.env.local`):
 NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJ...   # SEGRETO, solo server-side
 ADMIN_PASSWORD=...
+NEXT_PUBLIC_SITE_URL=https://...   # URL pubblico, per i metadati Open Graph (anteprime social)
 ```
+
+## Asset grafici (logo)
+
+Da caricare in `public/` (consumati con fallback automatico alla croce ornamentale):
+
+- `public/logo-confraternita.png` — sigillo circolare completo. Usato nella
+  navbar, nel footer, come favicon e immagine Open Graph. Ideale: PNG quadrato
+  con sfondo trasparente, ≥512px.
+- `public/teschio.png` — teschio centrale ritagliato. Usato come elemento
+  decorativo nei punti principali (sfondo hero, sezione processione, contatti).
+  Ideale: PNG con sfondo trasparente, monocromatico (oro/bianco).
+
+Componenti: `components/ui/Logo.tsx` e `components/ui/Teschio.tsx` (client,
+con `onError` → croce ornamentale finché i file non sono presenti).
+
+## SEO
+
+- Metadati centralizzati in `app/layout.tsx`: `title` con `template`,
+  `description`, `keywords`, Open Graph + Twitter Card, `canonical`.
+- `app/notizie/page.tsx` e `app/notizie/[slug]/page.tsx` hanno metadati propri;
+  gli articoli generano Open Graph `type: article` con immagine di copertina.
+- Mappa percorso: embed Google My Maps in `components/sections/Processione.tsx`
+  (costante `MYMAPS_EMBED_URL`; fallback a mappa keyless centrata sulla chiesa).
 
 Formato articolo (campi camelCase nell'app, snake_case nel DB):
 

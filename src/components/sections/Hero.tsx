@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { CroceOrnata, patternFleur } from "@/components/ui/Ornaments";
+import { patternFleur } from "@/components/ui/Ornaments";
+import Teschio from "@/components/ui/Teschio";
 
 export default function Hero() {
   const [offset, setOffset] = useState(0);
@@ -15,6 +16,18 @@ export default function Hero() {
   const contentParallax = Math.min(offset * 0.35, 250);
   const bgParallax = offset * 0.15;
   const fade = Math.max(1 - offset / 600, 0);
+
+  // Scroll esplicito: su Safari mobile lo scroll-to-hash nativo è inaffidabile
+  // quando il target è già parzialmente visibile. scrollIntoView rispetta lo
+  // scroll-margin CSS (scroll-mt-20), quindi allinea sempre la sezione sotto la navbar.
+  function scrollToSection(e: React.MouseEvent, id: string) {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${id}`);
+    }
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -43,7 +56,7 @@ export default function Hero() {
         }}
       />
 
-      <CroceOrnata className="hero-ornament absolute w-[60vh] h-[60vh] text-oro opacity-[0.06] float-slow pointer-events-none" />
+      <Teschio className="hero-ornament absolute w-[55vh] h-[55vh] object-contain text-oro opacity-[0.06] float-slow pointer-events-none" />
 
       <div
         className="relative z-10 text-center px-6 max-w-4xl mx-auto"
@@ -78,12 +91,14 @@ export default function Hero() {
         <div className="hero-anim hero-delay-5 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/#processione"
+            onClick={(e) => scrollToSection(e, "processione")}
             className="btn-shimmer px-8 py-3.5 bg-oro text-nero font-semibold rounded-full hover:bg-oro-chiaro transition-colors duration-300 tracking-wide shadow-lg"
           >
             La Processione
           </Link>
           <Link
             href="/#chi-siamo"
+            onClick={(e) => scrollToSection(e, "chi-siamo")}
             className="px-8 py-3.5 border border-bianco-soft/70 text-bianco-soft font-semibold rounded-full hover:bg-bianco-soft hover:text-nero transition-all duration-300 tracking-wide"
           >
             La nostra storia

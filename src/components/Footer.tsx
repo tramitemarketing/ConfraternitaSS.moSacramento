@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CroceOrnata, DivisoreOrnato } from "./ui/Ornaments";
+import { DivisoreOrnato } from "./ui/Ornaments";
+import Logo from "./ui/Logo";
 import SocialLinks from "./ui/SocialLinks";
 
 export default function Footer() {
@@ -9,7 +10,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <CroceOrnata className="w-5 h-7 text-oro" />
+              <Logo
+                className="w-10 h-10 rounded-full shrink-0"
+                fallbackClassName="w-5 h-7 text-oro shrink-0"
+              />
               <span className="font-semibold tracking-wide">
                 Pietà e della Morte
               </span>

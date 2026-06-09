@@ -1,5 +1,6 @@
 import Reveal from "@/components/ui/Reveal";
-import { DivisoreOrnato, CroceOrnata } from "@/components/ui/Ornaments";
+import { DivisoreOrnato } from "@/components/ui/Ornaments";
+import Teschio from "@/components/ui/Teschio";
 import SocialLinks from "@/components/ui/SocialLinks";
 import { contatti, luogo } from "@/lib/site";
 import {
@@ -17,7 +18,7 @@ export default function Contatti() {
       id="contatti"
       className="py-28 bg-nero text-bianco-soft scroll-mt-20 relative overflow-hidden"
     >
-      <CroceOrnata className="absolute -right-16 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] text-oro opacity-[0.04] pointer-events-none" />
+      <Teschio className="absolute -right-16 top-1/2 -translate-y-1/2 w-[36vh] h-[36vh] object-contain text-oro opacity-[0.04] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
         <Reveal>
@@ -47,7 +48,7 @@ export default function Contatti() {
 
           <Reveal delay={2}>
             <div className="bg-nero-soft/60 rounded-2xl p-7 border border-nero-bordo h-full hover:border-oro/40 transition-colors">
-              <CroceOrnata className="w-9 h-11 text-oro mx-auto mb-3" />
+              <Teschio className="w-10 h-10 object-contain text-oro mx-auto mb-3" />
               <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-3">
                 La Processione
               </h3>

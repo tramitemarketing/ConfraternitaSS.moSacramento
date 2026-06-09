@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { CroceOrnata } from "./ui/Ornaments";
+import Logo from "./ui/Logo";
 
 const links = [
   { href: "/#chi-siamo", label: "Chi Siamo" },
@@ -32,13 +32,16 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <CroceOrnata className="w-5 h-7 text-oro transition-transform duration-500 group-hover:scale-110" />
-          <div className="leading-tight">
-            <p className="text-bianco-soft font-semibold text-sm tracking-wide">
-              Pietà e della Morte
+        <Link href="/" className="flex items-center gap-3 group min-w-0">
+          <Logo
+            className="w-11 h-11 rounded-full shrink-0 transition-transform duration-500 group-hover:scale-105"
+            fallbackClassName="w-5 h-7 text-oro shrink-0 transition-transform duration-500 group-hover:scale-110"
+          />
+          <div className="leading-tight min-w-0">
+            <p className="text-bianco-soft font-semibold text-xs sm:text-sm tracking-wide truncate">
+              Confraternita della Pietà e della Morte
             </p>
-            <p className="text-bianco-soft opacity-70 text-xs tracking-wider uppercase">
+            <p className="text-bianco-soft opacity-70 text-[10px] sm:text-xs tracking-wider uppercase">
               Monteprandone
             </p>
           </div>

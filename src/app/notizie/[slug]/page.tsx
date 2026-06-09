@@ -16,8 +16,25 @@ export async function generateMetadata({ params }: Props) {
   const article = await getArticleBySlug(slug);
   if (!article) return {};
   return {
-    title: `${article.title} — Pietà e della Morte Monteprandone`,
+    title: article.title,
     description: article.excerpt,
+    alternates: { canonical: `/notizie/${article.slug}` },
+    openGraph: {
+      type: "article",
+      title: article.title,
+      description: article.excerpt,
+      publishedTime: article.date,
+      url: `/notizie/${article.slug}`,
+      images: article.coverImage
+        ? [{ url: article.coverImage, alt: article.title }]
+        : undefined,
+    },
+    twitter: {
+      card: article.coverImage ? "summary_large_image" : "summary",
+      title: article.title,
+      description: article.excerpt,
+      images: article.coverImage ? [article.coverImage] : undefined,
+    },
   };
 }
 

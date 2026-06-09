@@ -6,9 +6,10 @@ import { DivisoreOrnato, CroceOrnata, patternFleur } from "@/components/ui/Ornam
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Notizie — SS.mo Sacramento Monteprandone",
+  title: "Notizie ed eventi della processione",
   description:
-    "Ultime notizie e aggiornamenti dalla Confraternita del SS.mo Sacramento di Monteprandone.",
+    "Notizie, date ed eventi della Confraternita della Pietà e della Morte di Monteprandone: appuntamenti della Processione del Cristo Morto del Venerdì Santo e vita della comunità.",
+  alternates: { canonical: "/notizie" },
 };
 
 export default async function NotizieIndex() {
@@ -43,8 +44,8 @@ export default async function NotizieIndex() {
           <h1 className="text-5xl md:text-6xl font-bold mb-5">Notizie</h1>
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto mb-6" />
           <p className="text-bianco-soft/75 max-w-md mx-auto px-6">
-            Aggiornamenti, eventi e comunicazioni dalla Confraternita del SS.mo
-            Sacramento di Monteprandone.
+            Aggiornamenti, eventi e comunicazioni dalla Confraternita della
+            Pietà e della Morte di Monteprandone.
           </p>
         </div>
       </div>
