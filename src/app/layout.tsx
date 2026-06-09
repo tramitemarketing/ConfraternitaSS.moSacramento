@@ -24,8 +24,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://confraternita-pieta-morte.vercel.app";
 
-// Immagine usata per favicon e anteprime social (logo della confraternita).
-// Carica il file in /public con questo nome.
+// Immagine usata per le anteprime social (logo della confraternita).
+// Il favicon del browser è gestito dai file src/app/icon.png e
+// src/app/apple-icon.png (convenzione automatica di Next.js App Router).
 const OG_IMAGE = "/logo-confraternita.png";
 
 export const metadata: Metadata = {
@@ -52,10 +53,6 @@ export const metadata: Metadata = {
     { name: "Confraternita della Pietà e della Morte di Monteprandone" },
   ],
   category: "Religione e tradizioni",
-  icons: {
-    icon: OG_IMAGE,
-    apple: OG_IMAGE,
-  },
   openGraph: {
     type: "website",
     locale: "it_IT",
