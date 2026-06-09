@@ -2,6 +2,7 @@ import Reveal from "@/components/ui/Reveal";
 import { DivisoreOrnato, CroceOrnata } from "@/components/ui/Ornaments";
 import Teschio from "@/components/ui/Teschio";
 import MappaProcessione from "@/components/ui/MappaProcessione";
+import PercorsoFoto from "@/components/ui/PercorsoFoto";
 
 const ordineProcessione = [
   { label: "Croce e simboli della Passione", note: "apertura del corteo" },
@@ -203,12 +204,26 @@ export default function Processione() {
             Il percorso sulla mappa
             <span className="w-8 h-px bg-oro/60 inline-block" />
           </h3>
-          <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[16/11] sm:aspect-[16/9] md:aspect-[21/9] bg-nero-soft">
-            <MappaProcessione />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Mappa con la chiesa di partenza */}
+            <div>
+              <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[4/3] bg-nero-soft">
+                <MappaProcessione />
+              </div>
+              <p className="text-center text-bianco-soft/50 text-xs mt-3 italic">
+                Chiesa San Nicolò di Bari, punto di partenza · © OpenStreetMap
+              </p>
+            </div>
+            {/* Foto illustrata del percorso */}
+            <div>
+              <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[4/3] bg-nero-soft">
+                <PercorsoFoto />
+              </div>
+              <p className="text-center text-bianco-soft/50 text-xs mt-3 italic">
+                Il tracciato completo della processione
+              </p>
+            </div>
           </div>
-          <p className="text-center text-bianco-soft/50 text-xs mt-4 italic">
-            Percorso tracciato nel centro storico di Monteprandone · © OpenStreetMap
-          </p>
         </Reveal>
 
         {/* Bara del Cristo Morto — dettaglio storico */}

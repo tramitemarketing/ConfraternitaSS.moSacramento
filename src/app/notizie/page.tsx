@@ -1,7 +1,8 @@
 import { getPublishedArticles } from "@/lib/posts";
 import ArticleCard from "@/components/ArticleCard";
 import Reveal from "@/components/ui/Reveal";
-import { DivisoreOrnato, CroceOrnata, patternFleur } from "@/components/ui/Ornaments";
+import { DivisoreOrnato, patternFleur } from "@/components/ui/Ornaments";
+import Teschio from "@/components/ui/Teschio";
 
 export const dynamic = "force-dynamic";
 
@@ -36,7 +37,7 @@ export default async function NotizieIndex() {
               "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)",
           }}
         />
-        <CroceOrnata className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] text-oro opacity-[0.06] float-slow" />
+        <Teschio className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[40vh] h-[40vh] object-contain text-oro opacity-[0.06] float-slow pointer-events-none" />
         <div className="relative z-10">
           <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
             Dalla comunità
@@ -54,7 +55,7 @@ export default async function NotizieIndex() {
       <div className="max-w-6xl mx-auto px-6 py-16">
         {articles.length === 0 ? (
           <div className="text-center py-20 text-bianco-soft/50">
-            <CroceOrnata className="w-16 h-20 text-oro/40 mx-auto mb-4" />
+            <Teschio className="w-16 h-20 object-contain text-oro/40 mx-auto mb-4" />
             <p className="text-xl">Nessuna notizia pubblicata al momento.</p>
           </div>
         ) : (
