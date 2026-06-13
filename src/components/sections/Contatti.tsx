@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/Icons";
 
 export default function Contatti() {
-  const haContattiDiretti = contatti.email || contatti.telefono;
   const haSocial = contatti.instagram || contatti.facebook;
 
   return (
@@ -93,49 +92,90 @@ export default function Contatti() {
           </Reveal>
         </div>
 
-        <Reveal className="mt-12">
-          {haContattiDiretti || haSocial ? (
-            <div className="flex flex-col items-center gap-6">
-              {haContattiDiretti && (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  {contatti.email && (
-                    <a
-                      href={`mailto:${contatti.email}`}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-oro text-nero font-semibold hover:bg-oro-chiaro transition-colors text-sm"
-                    >
-                      <IconEmail className="w-4 h-4" />
-                      {contatti.email}
-                    </a>
-                  )}
-                  {contatti.telefono && (
-                    <a
-                      href={`tel:${contatti.telefono.replace(/\s/g, "")}`}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-bianco-soft/50 text-bianco-soft font-semibold hover:bg-bianco-soft hover:text-nero transition-colors text-sm"
-                    >
-                      <IconTelefono className="w-4 h-4" />
-                      {contatti.telefono}
-                    </a>
-                  )}
-                </div>
-              )}
-              {haSocial && (
-                <div className="flex flex-col items-center gap-3">
-                  <p className="text-bianco-soft text-xs uppercase tracking-widest">
-                    Seguici
-                  </p>
-                  <SocialLinks size={22} className="text-oro" />
-                </div>
-              )}
+        {/* Recapiti diretti: telefono ed email (con segnaposto se non compilati) */}
+        <Reveal className="mt-10">
+          <div className="max-w-xl mx-auto bg-nero-soft/60 rounded-2xl p-7 sm:p-8 border border-nero-bordo">
+            <h3 className="text-oro font-semibold uppercase tracking-wider text-xs mb-6 flex items-center justify-center gap-3">
+              <span className="w-8 h-px bg-oro/60 inline-block" />
+              Recapiti diretti
+              <span className="w-8 h-px bg-oro/60 inline-block" />
+            </h3>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              {/* Telefono */}
+              <div className="flex-1">
+                {contatti.telefono ? (
+                  <a
+                    href={`tel:${contatti.telefono.replace(/\s/g, "")}`}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-nero-bordo hover:border-oro/50 transition-colors text-left"
+                  >
+                    <IconTelefono className="w-5 h-5 text-oro shrink-0" />
+                    <span>
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                        Telefono
+                      </span>
+                      <span className="text-bianco-soft font-medium">
+                        {contatti.telefono}
+                      </span>
+                    </span>
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-nero-bordo">
+                    <IconTelefono className="w-5 h-5 text-oro/50 shrink-0" />
+                    <span>
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                        Telefono
+                      </span>
+                      <span className="text-bianco-soft/40 italic text-sm">
+                        Presto disponibile
+                      </span>
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="flex-1">
+                {contatti.email ? (
+                  <a
+                    href={`mailto:${contatti.email}`}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-nero-bordo hover:border-oro/50 transition-colors text-left"
+                  >
+                    <IconEmail className="w-5 h-5 text-oro shrink-0" />
+                    <span>
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                        Email
+                      </span>
+                      <span className="text-bianco-soft font-medium break-all">
+                        {contatti.email}
+                      </span>
+                    </span>
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-nero-bordo">
+                    <IconEmail className="w-5 h-5 text-oro/50 shrink-0" />
+                    <span>
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                        Email
+                      </span>
+                      <span className="text-bianco-soft/40 italic text-sm">
+                        Presto disponibile
+                      </span>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
-          ) : (
-            <p className="text-sm opacity-50">
-              Per informazioni, rivolgiti alla parrocchia di Monteprandone.
-              <br />
-              <span className="text-xs">
-                I recapiti social e diretti saranno presto disponibili.
-              </span>
-            </p>
-          )}
+
+            {haSocial && (
+              <div className="flex flex-col items-center gap-3 mt-7 pt-7 border-t border-nero-bordo">
+                <p className="text-bianco-soft text-xs uppercase tracking-widest">
+                  Seguici
+                </p>
+                <SocialLinks size={22} className="text-oro" />
+              </div>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>

@@ -3,34 +3,7 @@ import { DivisoreOrnato, CroceOrnata } from "@/components/ui/Ornaments";
 import Teschio from "@/components/ui/Teschio";
 import MappaProcessione from "@/components/ui/MappaProcessione";
 import PercorsoFoto from "@/components/ui/PercorsoFoto";
-
-const ordineProcessione = [
-  { label: "Croce e simboli della Passione", note: "apertura del corteo" },
-  { label: "7 gonfaloni rossi", note: "le ultime parole di Cristo" },
-  {
-    label: "Le Vergini",
-    note: "bambine in abito bianco con velo",
-  },
-  {
-    label: "Le Pie Donne",
-    note: "abito nero, canti polifonici tradizionali",
-  },
-  { label: "Fanciulle con 7 spade", note: "simbolo dei dolori della Madonna" },
-  {
-    label: "La Banda",
-    note: "alunni dell'Istituto Comprensivo Musicale di Monteprandone",
-  },
-  {
-    label: "Clero e autorità civili",
-    note:
-      "Padri del Santuario S. Maria delle Grazie · Carabinieri in Alta Uniforme",
-  },
-  { label: "Statua di San Giovanni e Madonna Addolorata", note: "" },
-  {
-    label: "La Bara del Cristo Morto",
-    note: "chiude solennemente il corteo",
-  },
-];
+import OrdineCorteo from "@/components/ui/OrdineCorteo";
 
 const percorso = [
   "Chiesa San Nicolò di Bari (partenza ore 21:00)",
@@ -91,25 +64,10 @@ export default function Processione() {
                 Ordine del corteo
                 <span className="w-8 h-px bg-oro/60 inline-block" />
               </h3>
-              <ol className="space-y-4">
-                {ordineProcessione.map((el, i) => (
-                  <li key={i} className="flex gap-4 items-start">
-                    <span className="shrink-0 w-7 h-7 rounded-full bg-oro/15 border border-oro/40 text-oro text-xs font-bold flex items-center justify-center mt-0.5">
-                      {i + 1}
-                    </span>
-                    <div>
-                      <p className="text-bianco-soft font-medium leading-snug">
-                        {el.label}
-                      </p>
-                      {el.note && (
-                        <p className="text-bianco-soft/50 text-xs mt-0.5">
-                          {el.note}
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <p className="text-bianco-soft/50 text-xs mb-5">
+                Tocca le voci con la freccetta per scoprire i dettagli.
+              </p>
+              <OrdineCorteo />
             </div>
           </Reveal>
 

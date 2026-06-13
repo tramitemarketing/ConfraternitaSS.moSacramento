@@ -1,5 +1,9 @@
 import Reveal from "@/components/ui/Reveal";
-import { DivisoreOrnato, AngoloOrnato } from "@/components/ui/Ornaments";
+import {
+  DivisoreOrnato,
+  AngoloOrnato,
+  CroceOrnata,
+} from "@/components/ui/Ornaments";
 
 const timeline = [
   {
@@ -29,6 +33,22 @@ const timeline = [
   },
 ];
 
+const opereDiBene = [
+  "Opere di manutenzione della Bara",
+  "Restauro dei panneggi della Bara (a cura delle Suore di Clausura di Offida)",
+  "Nuovo impianto di illuminazione a led della Bara",
+  "Abbigliamento per i componenti della Banda, per gli «Incappucciati» e per le «Vergini»",
+  "Mantelle e gonfalone della Confraternita",
+  "Radiotrasmittenti per il servizio d'ordine",
+  "Megafoni donati alla parrocchia per le processioni",
+  "Armadio per conservare tutti gli oggetti sacri della processione",
+  "Contributo alla realizzazione del portone della sala S. Leonardo",
+  "Restauro della statua di S. Giovanni",
+  "Nuovo velo bianco del Cristo",
+  "Giochi da giardino donati alla Scuola Materna delle Suore di Centobuchi",
+  "Giubbini per il servizio d'ordine",
+];
+
 export default function ChiSiamo() {
   return (
     <section id="chi-siamo" className="py-28 bg-nero scroll-mt-20">
@@ -55,7 +75,7 @@ export default function ChiSiamo() {
               <strong className="text-bianco">Pompeo De-Nobili</strong>.
             </p>
 
-            <p className="text-bianco-soft leading-relaxed text-lg">
+            <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
               Tra il{" "}
               <strong className="text-bianco">1846 e il 1859</strong>, sotto la
               guida del Priore Alessandro Sardi, fu costruita la celebre{" "}
@@ -68,7 +88,7 @@ export default function ChiSiamo() {
               scudi romani.
             </p>
 
-            <p className="text-bianco-soft leading-relaxed">
+            <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
               Dopo circa settant&apos;anni di inattività, la confraternita è
               stata rifondata il{" "}
               <strong className="text-bianco">9 giugno 2009</strong>, riportando
@@ -108,6 +128,49 @@ export default function ChiSiamo() {
             </div>
           </Reveal>
         </div>
+
+        {/* Opere di bene realizzate grazie alle offerte */}
+        <Reveal className="mt-24">
+          <div className="relative bg-nero-soft rounded-3xl p-8 md:p-14 border border-nero-bordo overflow-hidden">
+            <AngoloOrnato className="absolute top-4 left-4 w-9 h-9 text-oro/70" />
+            <AngoloOrnato className="absolute top-4 right-4 w-9 h-9 text-oro/70 rotate-90" />
+            <AngoloOrnato className="absolute bottom-4 left-4 w-9 h-9 text-oro/70 -rotate-90" />
+            <AngoloOrnato className="absolute bottom-4 right-4 w-9 h-9 text-oro/70 rotate-180" />
+
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <p className="text-oro text-sm uppercase tracking-[0.25em] mb-4">
+                Grazie alla vostra generosità
+              </p>
+              <h3 className="text-3xl md:text-4xl text-bianco mb-6">
+                Le Opere di Bene
+              </h3>
+              <DivisoreOrnato className="w-40 h-5 text-oro mx-auto mb-7" />
+              <p className="text-bianco-soft leading-relaxed text-lg font-light">
+                La{" "}
+                <strong className="text-bianco font-semibold">
+                  Confraternita della Pietà e della Morte
+                </strong>{" "}
+                di Monteprandone, ricostituita il{" "}
+                <strong className="text-oro">9 giugno 2009</strong> dopo
+                settant&apos;anni, ringrazia di cuore i cittadini per le offerte
+                che hanno reso possibili le seguenti opere:
+              </p>
+            </div>
+
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 max-w-4xl mx-auto">
+              {opereDiBene.map((opera, i) => (
+                <li key={i} className="flex gap-4 items-start">
+                  <span className="shrink-0 mt-0.5 w-8 h-8 rounded-full bg-oro/10 border border-oro/30 flex items-center justify-center">
+                    <CroceOrnata className="w-3.5 h-4 text-oro" />
+                  </span>
+                  <span className="text-bianco-soft leading-relaxed pt-1">
+                    {opera}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
