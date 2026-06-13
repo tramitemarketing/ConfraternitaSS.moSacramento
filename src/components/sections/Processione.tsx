@@ -169,7 +169,7 @@ export default function Processione() {
                 <MappaProcessione />
               </div>
               <p className="text-center text-bianco-soft/50 text-xs mt-3 italic">
-                Chiesa San Nicolò di Bari, punto di partenza · © OpenStreetMap
+                Chiesa San Nicolò di Bari, punto di partenza · Google Maps
               </p>
             </div>
             {/* Foto illustrata del percorso */}
