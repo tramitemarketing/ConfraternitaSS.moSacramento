@@ -79,11 +79,13 @@ export default function Hero() {
           </span>
         </div>
 
-        <h1 className="hero-anim hero-delay-2 text-bianco text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-2">
-          Confraternita della
-        </h1>
-        <h1 className="hero-anim hero-delay-2 text-oro-chiaro text-3xl md:text-5xl lg:text-6xl font-bold italic leading-tight mb-3">
-          Pietà e della Morte
+        <h1 className="hero-anim hero-delay-2 font-bold mb-3">
+          <span className="block text-bianco text-4xl md:text-6xl lg:text-7xl leading-[1.05] mb-2">
+            Confraternita della
+          </span>
+          <span className="block text-oro-chiaro text-3xl md:text-5xl lg:text-6xl italic leading-tight">
+            Pietà e della Morte
+          </span>
         </h1>
         <p className="hero-anim hero-delay-3 text-bianco-soft text-xl md:text-2xl tracking-[0.3em] uppercase mb-8">
           Monteprandone
@@ -109,7 +111,7 @@ export default function Hero() {
           <Link
             href="/#chi-siamo"
             onClick={(e) => scrollToSection(e, "chi-siamo")}
-            className="btn btn-outline btn-sm"
+            className="btn btn-outline text-sm px-6 py-2.5 md:text-lg md:px-10 md:py-4"
           >
             La nostra storia
           </Link>
