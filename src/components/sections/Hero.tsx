@@ -109,7 +109,7 @@ export default function Hero() {
           <Link
             href="/#chi-siamo"
             onClick={(e) => scrollToSection(e, "chi-siamo")}
-            className="btn btn-outline btn-sm"
+            className="btn btn-outline text-sm px-6 py-2.5 md:text-lg md:px-10 md:py-4"
           >
             La nostra storia
           </Link>

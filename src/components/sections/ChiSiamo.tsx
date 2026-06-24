@@ -19,12 +19,12 @@ const timeline = [
   {
     anno: "1859",
     testo:
-      "Prima processione del Venerdì Santo con la Bara del Cristo Morto — tradizione che continua ininterrotta da oltre 165 anni",
+      "Prima processione del Venerdì Santo con la Bara del Cristo Morto. Una tradizione rimasta ininterrotta per oltre 165 anni: durante i conflitti mondiali la gestione passa alla parrocchia e sono le donne a portare la struttura a spalla",
   },
   {
     anno: "2009",
     testo:
-      "Rifondazione ufficiale il 9 giugno, dopo circa 70 anni di inattività, con il ripristino della processione storica",
+      "Rifondazione ufficiale della Confraternita il 9 giugno, dopo circa 70 anni di inattività dell'associazione, che torna a occuparsi in prima persona dell'organizzazione della processione",
   },
   {
     anno: "2026",
@@ -79,22 +79,31 @@ export default function ChiSiamo() {
               Tra il{" "}
               <strong className="text-bianco">1846 e il 1859</strong>, sotto la
               guida del Priore Alessandro Sardi, fu costruita la celebre{" "}
-              <strong className="text-oro">Bara del Cristo Morto</strong>: la
-              scultura del Cristo fu opera di{" "}
-              <strong className="text-bianco">Emidio Paci</strong>, il cataletto
-              ligneo di Sante Morelli da Montegiorgio, la doratura di Tito
-              Boccachiodi, e i ricami in oro e argento delle Monache di Santa
-              Caterina di Ripatransone. Un&apos;opera collettiva costata 220,21
-              scudi romani.
+              <strong className="text-oro">Bara del Cristo Morto</strong>:
+              un&apos;opera collettiva costata 220,21 scudi romani che vide la
+              scultura di <strong className="text-bianco">Emidio Paci</strong>, il
+              cataletto ligneo di Sante Morelli da Montegiorgio, la doratura di
+              Tito Boccachiodi e i ricami in oro e argento delle Monache di Santa
+              Caterina di Ripatransone.
             </p>
 
             <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
-              Dopo circa settant&apos;anni di inattività, la confraternita è
-              stata rifondata il{" "}
-              <strong className="text-bianco">9 giugno 2009</strong>, riportando
-              in vita la processione storica che oggi riunisce oltre{" "}
-              <strong className="text-oro">300 figuranti in costume</strong>{" "}
-              nel cuore medievale di Monteprandone ogni Venerdì Santo.
+              Da allora, la secolare{" "}
+              <strong className="text-oro">processione del Venerdì Santo</strong>{" "}
+              non ha mai subito interruzioni. Persino nei momenti più drammatici
+              delle guerre mondiali, con gli uomini al fronte, la continuità del
+              rito fu garantita dalla parrocchia e dal{" "}
+              <strong className="text-bianco">coraggio delle donne</strong>, che
+              portarono a spalla la monumentale Bara.
+            </p>
+
+            <p className="text-bianco-soft leading-relaxed text-xl md:text-2xl font-light">
+              Dopo circa settant&apos;anni di inattività, il{" "}
+              <strong className="text-bianco">9 giugno 2009</strong> la
+              Confraternita è stata ufficialmente rifondata, assumendo nuovamente
+              la regia principale della storica sfilata che oggi riunisce oltre{" "}
+              <strong className="text-oro">300 figuranti in costume</strong> nel
+              cuore medievale di Monteprandone.
             </p>
 
             <blockquote className="border-l-4 border-oro pl-6 py-2 mt-8 italic text-bianco text-xl font-light font-[var(--font-playfair)]">

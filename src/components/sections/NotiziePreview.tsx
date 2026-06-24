@@ -48,7 +48,7 @@ export default async function NotiziePreview() {
           </div>
           <Link
             href="/notizie"
-            className="btn btn-outline-oro btn-sm btn-shimmer self-start md:self-auto"
+            className="btn btn-outline-oro btn-shimmer text-sm px-6 py-2.5 self-start md:self-auto"
           >
             Tutte le notizie →
           </Link>
