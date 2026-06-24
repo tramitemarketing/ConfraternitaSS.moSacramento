@@ -39,6 +39,7 @@ const slides: Slide[] = [
 
 export default function Galleria() {
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const next = useCallback(
     () => setCurrent((c) => (c + 1) % slides.length),
@@ -46,10 +47,14 @@ export default function Galleria() {
   );
   const prev = () => setCurrent((c) => (c - 1 + slides.length) % slides.length);
 
+  // Avanzamento automatico: in pausa al passaggio del mouse / focus da tastiera
+  // e disattivato se l'utente preferisce ridurre il movimento.
   useEffect(() => {
+    if (paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, paused]);
 
   return (
     <section
@@ -66,7 +71,13 @@ export default function Galleria() {
           <DivisoreOrnato className="w-48 h-6 text-oro mx-auto" />
         </div>
 
-        <div className="relative">
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
           <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl">
             {slides.map((slide, i) => (
               <div
