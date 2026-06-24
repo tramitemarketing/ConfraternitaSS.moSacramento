@@ -49,14 +49,14 @@ export default function Footer() {
               <br />
               Chiesa San Nicolò di Bari
               <br />
-              <span className="text-bianco-soft/50">Bus gratuito dalle 20:30</span>
+              <span className="text-bianco-soft/65">Bus gratuito dalle 20:30</span>
             </p>
           </div>
         </div>
 
         <DivisoreOrnato className="w-40 h-6 text-oro/40 mx-auto mt-12 mb-6" />
 
-        <div className="text-center text-xs text-bianco-soft/50">
+        <div className="text-center text-xs text-bianco-soft/65">
           © {new Date().getFullYear()} Confraternita della Pietà e della Morte di
           Monteprandone. Tutti i diritti riservati.
         </div>

@@ -64,7 +64,7 @@ export default function Processione() {
                 Ordine del corteo
                 <span className="w-8 h-px bg-oro/60 inline-block" />
               </h3>
-              <p className="text-bianco-soft/50 text-xs mb-5">
+              <p className="text-bianco-soft/70 text-xs mb-5">
                 Tocca le voci con la freccetta per scoprire i dettagli.
               </p>
               <OrdineCorteo />
@@ -137,7 +137,7 @@ export default function Processione() {
                     <p className="text-bianco font-semibold italic font-[var(--font-playfair)]">
                       Popule meus
                     </p>
-                    <p className="text-bianco-soft/60 text-xs">
+                    <p className="text-bianco-soft/70 text-xs">
                       Improperia — antifona della liturgia del Venerdì Santo
                     </p>
                   </div>
@@ -145,7 +145,7 @@ export default function Processione() {
                     <p className="text-bianco font-semibold italic font-[var(--font-playfair)]">
                       Stava Maria
                     </p>
-                    <p className="text-bianco-soft/60 text-xs">
+                    <p className="text-bianco-soft/70 text-xs">
                       Adattamento locale dello Stabat Mater, tramandato dalle Pie Donne
                     </p>
                   </div>
@@ -168,7 +168,7 @@ export default function Processione() {
               <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[4/3] bg-nero-soft">
                 <MappaProcessione />
               </div>
-              <p className="text-center text-bianco-soft/50 text-xs mt-3 italic">
+              <p className="text-center text-bianco-soft/70 text-xs mt-3 italic">
                 Chiesa San Nicolò di Bari, punto di partenza · Google Maps
               </p>
             </div>
@@ -177,7 +177,7 @@ export default function Processione() {
               <div className="rounded-3xl overflow-hidden border border-nero-bordo shadow-2xl aspect-[4/3] bg-nero-soft">
                 <PercorsoFoto />
               </div>
-              <p className="text-center text-bianco-soft/50 text-xs mt-3 italic">
+              <p className="text-center text-bianco-soft/70 text-xs mt-3 italic">
                 Il tracciato completo della processione
               </p>
             </div>
