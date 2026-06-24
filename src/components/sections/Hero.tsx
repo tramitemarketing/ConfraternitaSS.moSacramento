@@ -56,6 +56,16 @@ export default function Hero() {
         }}
       />
 
+      {/* Attenua la fascia bassa (oro brillante del gradiente) così che
+          testo bianco e indicatore "Scorri" restino sempre leggibili */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(10,10,11,0.9) 0%, rgba(10,10,11,0) 100%)",
+        }}
+      />
+
       <Teschio className="hero-ornament absolute w-[55vh] h-[55vh] object-contain text-oro opacity-[0.06] float-slow pointer-events-none" />
 
       <div
@@ -88,18 +98,18 @@ export default function Hero() {
           </span>
         </p>
 
-        <div className="hero-anim hero-delay-5 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="hero-anim hero-delay-5 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href="/#processione"
             onClick={(e) => scrollToSection(e, "processione")}
-            className="btn-shimmer px-8 py-3.5 bg-oro text-nero font-semibold rounded-full hover:bg-oro-chiaro transition-colors duration-300 tracking-wide shadow-lg"
+            className="btn btn-primary btn-shimmer text-base md:text-lg md:px-10 md:py-4"
           >
-            La Processione
+            Scopri la Processione
           </Link>
           <Link
             href="/#chi-siamo"
             onClick={(e) => scrollToSection(e, "chi-siamo")}
-            className="px-8 py-3.5 border border-bianco-soft/70 text-bianco-soft font-semibold rounded-full hover:bg-bianco-soft hover:text-nero transition-all duration-300 tracking-wide"
+            className="btn btn-outline btn-sm"
           >
             La nostra storia
           </Link>

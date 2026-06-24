@@ -40,7 +40,7 @@ export default function Contatti() {
                 <br />
                 {luogo.comune}
                 <br />
-                <span className="text-xs opacity-60">{luogo.regione}</span>
+                <span className="text-xs opacity-75">{luogo.regione}</span>
               </p>
             </div>
           </Reveal>
@@ -56,7 +56,7 @@ export default function Contatti() {
                 <br />
                 ore 21:00
                 <br />
-                <span className="text-xs opacity-60">
+                <span className="text-xs opacity-75">
                   Bus gratuito dalle 20:30
                 </span>
               </p>
@@ -84,7 +84,7 @@ export default function Contatti() {
               <p className="opacity-100 leading-relaxed">
                 9 giugno 2009
                 <br />
-                <span className="text-xs opacity-60">
+                <span className="text-xs opacity-75">
                   Fondata nel XVII secolo
                 </span>
               </p>
@@ -111,7 +111,7 @@ export default function Contatti() {
                   >
                     <IconTelefono className="w-5 h-5 text-oro shrink-0" />
                     <span>
-                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/70">
                         Telefono
                       </span>
                       <span className="text-bianco-soft font-medium">
@@ -123,10 +123,10 @@ export default function Contatti() {
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-nero-bordo">
                     <IconTelefono className="w-5 h-5 text-oro/50 shrink-0" />
                     <span>
-                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/70">
                         Telefono
                       </span>
-                      <span className="text-bianco-soft/40 italic text-sm">
+                      <span className="text-bianco-soft/60 italic text-sm">
                         Presto disponibile
                       </span>
                     </span>
@@ -143,7 +143,7 @@ export default function Contatti() {
                   >
                     <IconEmail className="w-5 h-5 text-oro shrink-0" />
                     <span>
-                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/70">
                         Email
                       </span>
                       <span className="text-bianco-soft font-medium break-all">
@@ -155,10 +155,10 @@ export default function Contatti() {
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-nero-bordo">
                     <IconEmail className="w-5 h-5 text-oro/50 shrink-0" />
                     <span>
-                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/50">
+                      <span className="block text-[10px] uppercase tracking-widest text-bianco-soft/70">
                         Email
                       </span>
-                      <span className="text-bianco-soft/40 italic text-sm">
+                      <span className="text-bianco-soft/60 italic text-sm">
                         Presto disponibile
                       </span>
                     </span>

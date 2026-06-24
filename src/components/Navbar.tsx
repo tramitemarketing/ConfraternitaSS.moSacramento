@@ -16,11 +16,33 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scrollspy: evidenzia nella navbar la sezione attualmente visibile.
+  // Sulle pagine senza queste sezioni (es. /notizie) l'observer non trova
+  // nulla e semplicemente non evidenzia alcuna voce.
+  useEffect(() => {
+    const sections = links
+      .map((l) => document.getElementById(l.href.split("#")[1]))
+      .filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   // Al click: se la sezione è in pagina, scrolla manualmente e rimuove subito
@@ -65,24 +87,34 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-7">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={(e) => handleNavClick(e, l.href)}
-              className="nav-underline text-bianco-soft text-sm hover:text-oro transition-colors duration-200 tracking-wide"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {links.map((l) => {
+            const id = l.href.split("#")[1];
+            const isActive = active === id;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={(e) => handleNavClick(e, l.href)}
+                aria-current={isActive ? "true" : undefined}
+                className={`nav-underline text-sm transition-colors duration-200 tracking-wide ${
+                  isActive
+                    ? "nav-active"
+                    : "text-bianco-soft hover:text-oro"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <button
-          className="md:hidden text-bianco-soft p-1"
+          className="md:hidden text-bianco-soft flex items-center justify-center min-w-[44px] min-h-[44px] -mr-2"
           onClick={() => setOpen(!open)}
           aria-label="Menu"
+          aria-expanded={open}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
