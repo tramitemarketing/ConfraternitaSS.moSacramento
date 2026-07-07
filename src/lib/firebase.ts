@@ -35,8 +35,10 @@ function getFirebaseApp(): App {
     return app;
   }
 
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  // trim(): rimuove spazi/a-capo accidentali incollati su Vercel, che gRPC
+  // rifiuterebbe (es. "projects/ <id>" → "contains illegal characters").
+  const projectId = process.env.FIREBASE_PROJECT_ID?.trim();
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL?.trim();
   const privateKey = normalizePrivateKey(process.env.FIREBASE_PRIVATE_KEY);
 
   if (!projectId || !clientEmail || !privateKey) {
