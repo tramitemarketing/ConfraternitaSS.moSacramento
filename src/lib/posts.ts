@@ -1,4 +1,5 @@
-import { supabase } from "./supabase";
+import { FieldValue } from "firebase-admin/firestore";
+import { getDb } from "./firebase";
 
 export interface Article {
   slug: string;
@@ -10,105 +11,104 @@ export interface Article {
   coverImage?: string;
 }
 
-// Mappa le colonne snake_case del DB ai campi camelCase dell'interfaccia
+const COLLECTION = "notizie";
+
+// Il doc ID su Firestore è lo slug: unicità naturale + lookup O(1).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapRow(row: any): Article {
+function mapDoc(id: string, data: any): Article {
   return {
-    slug: row.slug,
-    title: row.title,
-    date: row.date,
-    excerpt: row.excerpt ?? "",
-    content: row.content ?? "",
-    published: row.published,
-    coverImage: row.cover_image ?? undefined,
+    slug: id,
+    title: data.title,
+    date: data.date,
+    excerpt: data.excerpt ?? "",
+    content: data.content ?? "",
+    published: data.published ?? false,
+    coverImage: data.coverImage ?? undefined,
   };
 }
 
 export async function getAllArticles(): Promise<Article[]> {
-  const { data, error } = await supabase
-    .from("notizie")
-    .select("*")
-    .order("date", { ascending: false });
-
-  if (error) {
-    console.error("[posts] getAllArticles:", error.message);
+  try {
+    const snap = await getDb()
+      .collection(COLLECTION)
+      .orderBy("date", "desc")
+      .get();
+    return snap.docs.map((d) => mapDoc(d.id, d.data()));
+  } catch (err) {
+    console.error("[posts] getAllArticles:", (err as Error).message);
     return [];
   }
-  return (data ?? []).map(mapRow);
 }
 
 export async function getPublishedArticles(): Promise<Article[]> {
-  const { data, error } = await supabase
-    .from("notizie")
-    .select("*")
-    .eq("published", true)
-    .order("date", { ascending: false });
-
-  if (error) {
-    console.error("[posts] getPublishedArticles:", error.message);
+  try {
+    // Filtro su singolo campo + ordinamento in memoria: evita di dover creare
+    // un indice composto su Firestore. Adeguato al volume di un blog.
+    const snap = await getDb()
+      .collection(COLLECTION)
+      .where("published", "==", true)
+      .get();
+    return snap.docs
+      .map((d) => mapDoc(d.id, d.data()))
+      .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  } catch (err) {
+    console.error("[posts] getPublishedArticles:", (err as Error).message);
     return [];
   }
-  return (data ?? []).map(mapRow);
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const { data, error } = await supabase
-    .from("notizie")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-
-  if (error || !data) return null;
-  return mapRow(data);
+  try {
+    const doc = await getDb().collection(COLLECTION).doc(slug).get();
+    if (!doc.exists) return null;
+    return mapDoc(doc.id, doc.data());
+  } catch (err) {
+    console.error("[posts] getArticleBySlug:", (err as Error).message);
+    return null;
+  }
 }
 
 export async function createArticle(article: Article): Promise<Article> {
-  const { data, error } = await supabase
-    .from("notizie")
-    .insert({
-      slug: article.slug,
-      title: article.title,
-      date: article.date,
-      excerpt: article.excerpt,
-      content: article.content,
-      published: article.published,
-      cover_image: article.coverImage || null,
-    })
-    .select()
-    .single();
-
-  if (error) throw new Error(error.message);
-  return mapRow(data);
+  const ref = getDb().collection(COLLECTION).doc(article.slug);
+  // .create() fallisce se il documento esiste già (slug duplicato).
+  await ref.create({
+    title: article.title,
+    date: article.date,
+    excerpt: article.excerpt,
+    content: article.content,
+    published: article.published,
+    coverImage: article.coverImage ?? null,
+    createdAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
+  });
+  return { ...article, coverImage: article.coverImage || undefined };
 }
 
 export async function updateArticle(
   slug: string,
   updates: Partial<Article>
 ): Promise<Article> {
+  const ref = getDb().collection(COLLECTION).doc(slug);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dbUpdates: Record<string, any> = {};
+  const dbUpdates: Record<string, any> = { updatedAt: FieldValue.serverTimestamp() };
   if (updates.title !== undefined) dbUpdates.title = updates.title;
   if (updates.date !== undefined) dbUpdates.date = updates.date;
   if (updates.excerpt !== undefined) dbUpdates.excerpt = updates.excerpt;
   if (updates.content !== undefined) dbUpdates.content = updates.content;
   if (updates.published !== undefined) dbUpdates.published = updates.published;
   if (updates.coverImage !== undefined)
-    dbUpdates.cover_image = updates.coverImage || null;
+    dbUpdates.coverImage = updates.coverImage || null;
 
-  const { data, error } = await supabase
-    .from("notizie")
-    .update(dbUpdates)
-    .eq("slug", slug)
-    .select()
-    .single();
+  // update() lancia se il documento non esiste ("No document to update").
+  await ref.update(dbUpdates);
 
-  if (error) throw new Error(error.message);
-  return mapRow(data);
+  const doc = await ref.get();
+  return mapDoc(doc.id, doc.data());
 }
 
 export async function deleteArticle(slug: string): Promise<void> {
-  const { error } = await supabase.from("notizie").delete().eq("slug", slug);
-  if (error) throw new Error(error.message);
+  await getDb().collection(COLLECTION).doc(slug).delete();
 }
 
 export function formatDate(dateStr: string): string {

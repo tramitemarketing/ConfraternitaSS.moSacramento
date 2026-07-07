@@ -4,7 +4,7 @@ import { getArticleBySlug, formatDate } from "@/lib/posts";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { DivisoreOrnato } from "@/components/ui/Ornaments";
 
-// Articoli renderizzati dinamicamente — sempre aggiornati da Supabase
+// Articoli renderizzati dinamicamente — sempre aggiornati da Firestore
 export const dynamic = "force-dynamic";
 
 interface Props {

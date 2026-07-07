@@ -10,7 +10,7 @@ Sito vetrina + blog per la Confraternita della Pietà e della Morte di Montepran
 - **Tailwind CSS v4** — config via CSS `@theme` in `globals.css`
 - **TypeScript**
 - Font: Playfair Display (headings) + Lato (body) via `next/font/google`
-- Blog: articoli su Supabase PostgreSQL
+- Blog: articoli su Firebase Firestore
 - Auth admin: cookie `admin_session`, password in `.env.local`
 
 ## Struttura directory
@@ -31,7 +31,7 @@ src/
       auth/route.ts           # POST login / DELETE logout
       notizie/route.ts        # GET lista / POST nuovo articolo
       notizie/[slug]/route.ts # PUT modifica / DELETE elimina
-      upload/route.ts         # Upload immagini → Supabase Storage
+      upload/route.ts         # Upload immagini → Firebase Storage
   components/
     Navbar.tsx                # Navbar fissa con scroll detection
     Footer.tsx
@@ -45,13 +45,13 @@ src/
       NotiziePreview.tsx      # Anteprima 3 ultimi articoli
       Contatti.tsx            # Info contatti (no form)
   lib/
-    posts.ts                  # CRUD articoli su Supabase (async)
-    supabase.ts               # Client Supabase (service role, server-only)
+    posts.ts                  # CRUD articoli su Firestore (async)
+    firebase.ts               # Client Firebase Admin (service account, server-only)
     imageUpload.ts            # Helper client: ridimensiona + carica immagini
     site.ts                   # Config contatti/social/chiesa
   proxy.ts                    # Protegge /admin/* (ex middleware.ts, Next 16)
-supabase/
-  schema.sql                  # DDL tabella notizie + RLS + dati iniziali
+scripts/
+  seed-firestore.mjs          # Seed articoli iniziali su Firestore
 docs/reusable/                # Pattern riutilizzabili per progetti futuri
 ```
 
@@ -88,25 +88,31 @@ Password default: `confraternita2024` (cambiare in `.env.local`)
 
 L'admin permette di:
 - Creare nuovi articoli con editor markdown + toolbar di formattazione
-- Caricare immagini di copertina (pulsante "Carica foto" → Supabase Storage)
+- Caricare immagini di copertina (pulsante "Carica foto" → Firebase Storage)
 - Modificare articoli esistenti
 - Pubblicare/mettere in bozza
 - Eliminare articoli
 
-## Storage (Supabase)
+## Storage (Firebase)
 
-Articoli e immagini sono su **Supabase** (Postgres + Storage).
+Articoli e immagini sono su **Firebase** (Firestore + Storage), via
+**Admin SDK** server-side (`lib/firebase.ts`, init lazy).
 
-- **Database**: tabella `notizie` (vedi `supabase/schema.sql`). CRUD in `lib/posts.ts`.
-- **Immagini**: bucket pubblico `immagini`, creato automaticamente al primo
-  upload da `app/api/upload/route.ts`. Le foto vengono ridimensionate nel
-  browser (max 1600px) prima dell'invio.
+- **Database**: collezione `notizie` su Firestore, **doc ID = slug**. CRUD in
+  `lib/posts.ts`. Dati iniziali via `scripts/seed-firestore.mjs`
+  (`node scripts/seed-firestore.mjs`).
+- **Immagini**: caricate nella cartella `immagini/` del bucket Storage da
+  `app/api/upload/route.ts`. URL pubblico permanente tramite
+  `firebaseStorageDownloadTokens` (nessuna configurazione ACL/IAM). Le foto
+  vengono ridimensionate nel browser (max 1600px) prima dell'invio.
 
-Variabili d'ambiente richieste (Vercel + `.env.local`):
+Variabili d'ambiente richieste (Vercel + `.env.local`, vedi `.env.example`):
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=eyJ...   # SEGRETO, solo server-side
+FIREBASE_PROJECT_ID=...
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@<project>.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"  # SEGRETO
+FIREBASE_STORAGE_BUCKET=<project>.appspot.com
 ADMIN_PASSWORD=...
 NEXT_PUBLIC_SITE_URL=https://...   # URL pubblico, per i metadati Open Graph (anteprime social)
 ```
@@ -134,7 +140,7 @@ con `onError` → croce ornamentale finché i file non sono presenti).
 - Mappa percorso: embed Google My Maps in `components/sections/Processione.tsx`
   (costante `MYMAPS_EMBED_URL`; fallback a mappa keyless centrata sulla chiesa).
 
-Formato articolo (campi camelCase nell'app, snake_case nel DB):
+Formato articolo (documento Firestore nella collezione `notizie`, doc ID = slug):
 
 ```json
 {
@@ -143,7 +149,7 @@ Formato articolo (campi camelCase nell'app, snake_case nel DB):
   "date": "2025-06-01",
   "excerpt": "Breve descrizione...",
   "content": "Testo in **markdown**...",
-  "coverImage": "https://xxxx.supabase.co/storage/v1/object/public/immagini/...",
+  "coverImage": "https://firebasestorage.googleapis.com/v0/b/<bucket>/o/immagini%2F...?alt=media&token=...",
   "published": true
 }
 ```
@@ -154,7 +160,7 @@ Formato articolo (campi camelCase nell'app, snake_case nel DB):
 ## Pattern riutilizzabili
 
 In `docs/reusable/` ci sono guide self-contained copiabili in altri progetti:
-- `supabase-image-upload.md` — pulsante "Carica foto" con Supabase Storage,
+- `firebase-image-upload.md` — pulsante "Carica foto" con Firebase Storage,
   upload sicuro server-side e ridimensionamento client.
 
 ## Informazioni confraternita

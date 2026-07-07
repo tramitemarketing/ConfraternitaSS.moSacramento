@@ -42,8 +42,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(created, { status: 201 });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";
-    // Supabase restituisce un codice 23505 per violazione unique constraint
-    if (message.includes("23505") || message.includes("unique")) {
+    // Firestore .create() su un doc esistente → errore ALREADY_EXISTS
+    if (/already\s*exists/i.test(message)) {
       return NextResponse.json({ error: "Slug già esistente" }, { status: 409 });
     }
     return NextResponse.json({ error: message }, { status: 500 });
