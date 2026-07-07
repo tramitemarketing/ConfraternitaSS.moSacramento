@@ -208,14 +208,22 @@ h1, h2, h3, h4, h5 {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
-/* --- Scroll reveal (attivato via JS aggiungendo .is-visible) --- */
+/* --- Scroll reveal ---
+   I contenuti sono VISIBILI di default: senza JavaScript, o se l'idratazione
+   è lenta/fallisce, restano leggibili (niente sezioni vuote o bottoni bloccati).
+   L'animazione d'entrata si attiva solo quando il JS è pronto: uno script
+   sincrono aggiunge `.js` su <html> (e `.reveal-all` come rete di sicurezza
+   dopo 2.5s, per rivelare tutto anche se un observer non scatta). */
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal.is-visible {
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+html.js .reveal.is-visible,
+html.reveal-all .reveal {
   opacity: 1;
   transform: translateY(0);
 }

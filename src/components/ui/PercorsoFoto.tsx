@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 // Foto del percorso caricata nella repo: public/percorso-processione.png
+// next/image la ottimizza (webp/avif + ridimensionamento) → LCP molto più basso.
 // Finché il file non è presente, viene mostrato un placeholder.
 export default function PercorsoFoto() {
   const [err, setErr] = useState(false);
@@ -29,12 +31,15 @@ export default function PercorsoFoto() {
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/percorso-processione.png"
-      alt="Mappa illustrata del percorso della Processione del Cristo Morto a Monteprandone"
-      className="w-full h-full object-contain bg-bianco-soft"
-      onError={() => setErr(true)}
-    />
+    <div className="relative w-full h-full bg-bianco-soft">
+      <Image
+        src="/percorso-processione.png"
+        alt="Mappa illustrata del percorso della Processione del Cristo Morto a Monteprandone"
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className="object-contain"
+        onError={() => setErr(true)}
+      />
+    </div>
   );
 }

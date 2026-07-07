@@ -4,8 +4,9 @@ import { getArticleBySlug, formatDate } from "@/lib/posts";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { DivisoreOrnato } from "@/components/ui/Ornaments";
 
-// Articoli renderizzati dinamicamente — sempre aggiornati da Firestore
-export const dynamic = "force-dynamic";
+// ISR: articolo servito statico e rigenerato al massimo ogni ora; le modifiche
+// appaiono subito grazie alla revalidazione on-demand dall'admin.
+export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ slug: string }>;

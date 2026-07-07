@@ -38,7 +38,15 @@ export default function Reveal({
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Rete di sicurezza: se per qualche motivo l'observer non scatta (edge case
+    // del browser, elemento fuori flusso...), rivela comunque dopo 2s.
+    const fallback = window.setTimeout(() => setVisible(true), 2000);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   const delayClass = delay ? `reveal-delay-${delay}` : "";

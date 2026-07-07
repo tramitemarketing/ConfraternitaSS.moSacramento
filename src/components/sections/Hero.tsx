@@ -1,21 +1,48 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { patternFleur } from "@/components/ui/Ornaments";
 import Teschio from "@/components/ui/Teschio";
 
 export default function Hero() {
-  const [offset, setOffset] = useState(0);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const patternRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
 
+  // Parallasse via requestAnimationFrame che scrive direttamente sullo stile
+  // degli elementi: nessun setState → nessun re-render ad ogni frame di scroll
+  // (fluido anche su cellulari datati). Disattivato con prefers-reduced-motion.
   useEffect(() => {
-    const onScroll = () => setOffset(window.scrollY);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const offset = window.scrollY;
+      const fade = String(Math.max(1 - offset / 600, 0));
+      if (bgRef.current)
+        bgRef.current.style.transform = `translateY(${offset * 0.15}px)`;
+      if (patternRef.current)
+        patternRef.current.style.transform = `translateY(${offset * 0.075}px)`;
+      if (contentRef.current) {
+        contentRef.current.style.transform = `translateY(${Math.min(
+          offset * 0.35,
+          250
+        )}px)`;
+        contentRef.current.style.opacity = fade;
+      }
+      if (scrollHintRef.current) scrollHintRef.current.style.opacity = fade;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const contentParallax = Math.min(offset * 0.35, 250);
-  const bgParallax = offset * 0.15;
-  const fade = Math.max(1 - offset / 600, 0);
 
   // Scroll esplicito: su Safari mobile lo scroll-to-hash nativo è inaffidabile
   // quando il target è già parzialmente visibile. scrollIntoView rispetta lo
@@ -32,20 +59,18 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div
-        className="absolute inset-0 scale-110"
+        ref={bgRef}
+        className="absolute inset-0 scale-110 will-change-transform"
         style={{
           background:
             "linear-gradient(160deg, #0A0A0B 0%, #15130E 42%, #6E561F 78%, #C9A24A 93%, #EBCB73 100%)",
-          transform: `translateY(${bgParallax}px)`,
         }}
       />
 
       <div
-        className="absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage: patternFleur,
-          transform: `translateY(${bgParallax * 0.5}px)`,
-        }}
+        ref={patternRef}
+        className="absolute inset-0 opacity-[0.07] will-change-transform"
+        style={{ backgroundImage: patternFleur }}
       />
 
       <div
@@ -69,8 +94,8 @@ export default function Hero() {
       <Teschio className="hero-ornament absolute w-[55vh] h-[55vh] object-contain text-oro opacity-[0.06] float-slow pointer-events-none" />
 
       <div
-        className="relative z-10 text-center px-6 max-w-4xl mx-auto"
-        style={{ transform: `translateY(${contentParallax}px)`, opacity: fade }}
+        ref={contentRef}
+        className="relative z-10 text-center px-6 max-w-4xl mx-auto will-change-transform"
       >
         {/* Badge 2026 */}
         <div className="hero-anim hero-delay-1 inline-flex items-center bg-oro/15 border border-oro/40 rounded-full px-4 py-1.5 mb-6 max-w-xs sm:max-w-none text-center">
@@ -119,8 +144,8 @@ export default function Hero() {
       </div>
 
       <div
+        ref={scrollHintRef}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ opacity: fade }}
       >
         <span className="text-bianco-soft text-xs tracking-widest uppercase">
           Scorri

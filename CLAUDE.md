@@ -31,7 +31,7 @@ src/
       auth/route.ts           # POST login / DELETE logout
       notizie/route.ts        # GET lista / POST nuovo articolo
       notizie/[slug]/route.ts # PUT modifica / DELETE elimina
-      upload/route.ts         # Upload immagini → Firebase Storage
+      upload/route.ts         # Upload immagini → Cloudinary
   components/
     Navbar.tsx                # Navbar fissa con scroll detection
     Footer.tsx
@@ -88,23 +88,24 @@ Password default: `confraternita2024` (cambiare in `.env.local`)
 
 L'admin permette di:
 - Creare nuovi articoli con editor markdown + toolbar di formattazione
-- Caricare immagini di copertina (pulsante "Carica foto" → Firebase Storage)
+- Caricare immagini di copertina (pulsante "Carica foto" → Cloudinary)
 - Modificare articoli esistenti
 - Pubblicare/mettere in bozza
 - Eliminare articoli
 
-## Storage (Firebase)
+## Storage
 
-Articoli e immagini sono su **Firebase** (Firestore + Storage), via
-**Admin SDK** server-side (`lib/firebase.ts`, init lazy).
+Articoli su **Firestore**, immagini su **Cloudinary** (entrambi piano gratuito,
+nessuna carta richiesta — Firebase Storage è stato evitato perché richiede il
+piano Blaze).
 
-- **Database**: collezione `notizie` su Firestore, **doc ID = slug**. CRUD in
-  `lib/posts.ts`. Dati iniziali via `scripts/seed-firestore.mjs`
-  (`node scripts/seed-firestore.mjs`).
-- **Immagini**: caricate nella cartella `immagini/` del bucket Storage da
-  `app/api/upload/route.ts`. URL pubblico permanente tramite
-  `firebaseStorageDownloadTokens` (nessuna configurazione ACL/IAM). Le foto
-  vengono ridimensionate nel browser (max 1600px) prima dell'invio.
+- **Database**: collezione `notizie` su Firestore via **Admin SDK** server-side
+  (`lib/firebase.ts`, init lazy). **Doc ID = slug**. CRUD in `lib/posts.ts`.
+  Dati iniziali via `scripts/seed-firestore.mjs` (`node scripts/seed-firestore.mjs`).
+- **Immagini**: upload server-side su **Cloudinary** da `app/api/upload/route.ts`
+  (cartella `confraternita/`). L'URL salvato include `f_auto,q_auto` → consegna
+  automatica in webp/avif ottimizzato. Le foto vengono ridimensionate nel
+  browser (max 1600px) prima dell'invio.
 
 Variabili d'ambiente richieste (Vercel + `.env.local`, vedi `.env.example`):
 
@@ -112,10 +113,15 @@ Variabili d'ambiente richieste (Vercel + `.env.local`, vedi `.env.example`):
 FIREBASE_PROJECT_ID=...
 FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@<project>.iam.gserviceaccount.com
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"  # SEGRETO
-FIREBASE_STORAGE_BUCKET=<project>.appspot.com
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...           # SEGRETO
 ADMIN_PASSWORD=...
-NEXT_PUBLIC_SITE_URL=https://...   # URL pubblico, per i metadati Open Graph (anteprime social)
+NEXT_PUBLIC_SITE_URL=https://...    # URL pubblico: Open Graph, canonical, sitemap
 ```
+
+> Pagine pubbliche in **ISR** (`export const revalidate`): servite statiche/CDN
+> e rigenerate on-demand quando pubblichi dall'admin (`revalidatePath`).
 
 ## Asset grafici (logo)
 
@@ -149,19 +155,20 @@ Formato articolo (documento Firestore nella collezione `notizie`, doc ID = slug)
   "date": "2025-06-01",
   "excerpt": "Breve descrizione...",
   "content": "Testo in **markdown**...",
-  "coverImage": "https://firebasestorage.googleapis.com/v0/b/<bucket>/o/immagini%2F...?alt=media&token=...",
+  "coverImage": "https://res.cloudinary.com/<cloud>/image/upload/f_auto,q_auto/confraternita/...",
   "published": true
 }
 ```
 
-> Le pagine pubbliche `/notizie` e `/notizie/[slug]` usano `force-dynamic`:
-> i contenuti sono sempre aggiornati senza rebuild.
+> Le pagine pubbliche (home, `/notizie`, `/notizie/[slug]`) usano **ISR**
+> (`export const revalidate`): servite statiche/CDN e rigenerate on-demand
+> alla pubblicazione dall'admin (`revalidatePath`).
 
 ## Pattern riutilizzabili
 
 In `docs/reusable/` ci sono guide self-contained copiabili in altri progetti:
-- `firebase-image-upload.md` — pulsante "Carica foto" con Firebase Storage,
-  upload sicuro server-side e ridimensionamento client.
+- `cloudinary-image-upload.md` — pulsante "Carica foto" con Cloudinary,
+  upload sicuro server-side, ridimensionamento client e consegna ottimizzata.
 
 ## Informazioni confraternita
 
