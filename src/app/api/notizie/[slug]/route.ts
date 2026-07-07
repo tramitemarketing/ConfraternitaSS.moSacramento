@@ -24,7 +24,8 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json(updated);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";
-    if (message.includes("No rows")) {
+    // Firestore update() su un doc inesistente → "No document to update"
+    if (/no document to update/i.test(message) || message.includes("NOT_FOUND")) {
       return NextResponse.json(
         { error: "Articolo non trovato" },
         { status: 404 }

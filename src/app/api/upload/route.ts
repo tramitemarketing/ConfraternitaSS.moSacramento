@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { supabase } from "@/lib/supabase";
+import { randomUUID } from "crypto";
+import { getBucket } from "@/lib/firebase";
 
-// Bucket pubblico dove vengono salvate le immagini caricate dall'admin.
-const BUCKET = "immagini";
+// Cartella dentro il bucket Storage dove finiscono le immagini caricate.
+const FOLDER = "immagini";
 // Limite lato server (le immagini sono già ridimensionate dal browser,
 // ma teniamo un margine sotto il limite di Vercel ~4.5MB).
 const MAX_SIZE = 4 * 1024 * 1024;
@@ -18,21 +19,6 @@ const EXT_BY_TYPE: Record<string, string> = {
 async function isAuthenticated(): Promise<boolean> {
   const jar = await cookies();
   return jar.get("admin_session")?.value === "1";
-}
-
-// Crea il bucket pubblico la prima volta; idempotente.
-async function ensureBucket() {
-  const { data } = await supabase.storage.getBucket(BUCKET);
-  if (data) return;
-  const { error } = await supabase.storage.createBucket(BUCKET, {
-    public: true,
-    fileSizeLimit: MAX_SIZE,
-    allowedMimeTypes: Object.keys(EXT_BY_TYPE),
-  });
-  // Ignora l'errore se il bucket esiste già (es. richieste in parallelo)
-  if (error && !/exist/i.test(error.message)) {
-    throw new Error(error.message);
-  }
 }
 
 export async function POST(req: NextRequest) {
@@ -66,24 +52,30 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await ensureBucket();
-
-    const filename = `${Date.now()}-${Math.random()
+    const filename = `${FOLDER}/${Date.now()}-${Math.random()
       .toString(36)
       .slice(2, 8)}.${ext}`;
-    const bytes = await file.arrayBuffer();
+    const bytes = Buffer.from(await file.arrayBuffer());
 
-    const { error } = await supabase.storage
-      .from(BUCKET)
-      .upload(filename, bytes, {
-        contentType: file.type,
-        upsert: false,
-      });
+    // Token di download permanente: permette un URL pubblico stabile senza
+    // dover configurare ACL/IAM del bucket (uniform bucket-level access ok).
+    const token = randomUUID();
 
-    if (error) throw new Error(error.message);
+    const bucket = getBucket();
+    await bucket.file(filename).save(bytes, {
+      contentType: file.type,
+      resumable: false,
+      metadata: {
+        cacheControl: "public, max-age=31536000, immutable",
+        metadata: { firebaseStorageDownloadTokens: token },
+      },
+    });
 
-    const { data } = supabase.storage.from(BUCKET).getPublicUrl(filename);
-    return NextResponse.json({ url: data.publicUrl });
+    const url = `https://firebasestorage.googleapis.com/v0/b/${
+      bucket.name
+    }/o/${encodeURIComponent(filename)}?alt=media&token=${token}`;
+
+    return NextResponse.json({ url });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";
     return NextResponse.json({ error: message }, { status: 500 });
