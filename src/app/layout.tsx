@@ -3,6 +3,7 @@ import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SITE_URL } from "@/lib/site";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -16,13 +17,6 @@ const lato = Lato({
   variable: "--font-lato",
   weight: ["300", "400", "700"],
 });
-
-// URL pubblico del sito — usato per i metadati Open Graph (anteprime social).
-// Quando avrai il dominio definitivo, impostalo nella variabile d'ambiente
-// NEXT_PUBLIC_SITE_URL su Vercel (es. https://www.confraternitapietaemorte.it).
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://confraternita-pieta-morte.vercel.app";
 
 // Immagine usata per le anteprime social (logo della confraternita).
 // Il favicon del browser è gestito dai file src/app/icon.png e
@@ -96,6 +90,16 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${playfair.variable} ${lato.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
+        {/* Script sincrono (primo nel body, prima del paint): abilita le
+            animazioni d'entrata solo se il JS è attivo e garantisce che tutti
+            i contenuti diventino comunque visibili entro 2.5s, così le sezioni
+            e i bottoni non restano mai bloccati/invisibili. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('reveal-all')},2500);",
+          }}
+        />
         <a href="#main-content" className="skip-link">
           Salta al contenuto
         </a>

@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { updateArticle, deleteArticle } from "@/lib/posts";
 import { cookies } from "next/headers";
+
+// Rigenera le pagine pubbliche che mostrano l'articolo modificato/eliminato.
+function revalidateArticle(slug: string) {
+  revalidatePath("/");
+  revalidatePath("/notizie");
+  revalidatePath(`/notizie/${slug}`);
+}
 
 async function isAuthenticated(): Promise<boolean> {
   const jar = await cookies();
@@ -21,6 +29,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const updated = await updateArticle(slug, body);
+    revalidateArticle(slug);
     return NextResponse.json(updated);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";
@@ -44,6 +53,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
 
   try {
     await deleteArticle(slug);
+    revalidateArticle(slug);
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";

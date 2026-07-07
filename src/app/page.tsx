@@ -6,8 +6,10 @@ import Attivita from "@/components/sections/Attivita";
 import NotiziePreview from "@/components/sections/NotiziePreview";
 import Contatti from "@/components/sections/Contatti";
 
-// force server-render on every request so article changes are immediately reflected
-export const dynamic = "force-dynamic";
+// ISR: la pagina viene servita statica (veloce, cache CDN) e rigenerata al
+// massimo ogni ora. Le modifiche agli articoli appaiono subito grazie alla
+// revalidazione on-demand innescata dall'admin (revalidatePath in api/notizie).
+export const revalidate = 3600;
 
 export default function Home() {
   return (

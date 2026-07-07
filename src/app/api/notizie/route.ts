@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAllArticles, createArticle, Article } from "@/lib/posts";
 import { cookies } from "next/headers";
 
@@ -39,6 +40,9 @@ export async function POST(req: NextRequest) {
     };
 
     const created = await createArticle(newArticle);
+    // Rigenera subito le pagine che mostrano gli articoli.
+    revalidatePath("/");
+    revalidatePath("/notizie");
     return NextResponse.json(created, { status: 201 });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Errore sconosciuto";

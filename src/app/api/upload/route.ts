@@ -1,24 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { randomUUID } from "crypto";
-import { getBucket } from "@/lib/firebase";
+import { v2 as cloudinary } from "cloudinary";
 
-// Cartella dentro il bucket Storage dove finiscono le immagini caricate.
-const FOLDER = "immagini";
+// Cartella dentro Cloudinary dove finiscono le immagini caricate dall'admin.
+const FOLDER = "confraternita";
 // Limite lato server (le immagini sono già ridimensionate dal browser,
 // ma teniamo un margine sotto il limite di Vercel ~4.5MB).
 const MAX_SIZE = 4 * 1024 * 1024;
-const EXT_BY_TYPE: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-  "image/gif": "gif",
-  "image/avif": "avif",
-};
+const ALLOWED = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "image/avif",
+]);
 
 async function isAuthenticated(): Promise<boolean> {
   const jar = await cookies();
   return jar.get("admin_session")?.value === "1";
+}
+
+// Configura Cloudinary a runtime (le env var non servono in fase di build).
+function configureCloudinary() {
+  const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
+  const api_key = process.env.CLOUDINARY_API_KEY;
+  const api_secret = process.env.CLOUDINARY_API_SECRET;
+  if (!cloud_name || !api_key || !api_secret) {
+    throw new Error(
+      "Variabili d'ambiente Cloudinary mancanti: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY e CLOUDINARY_API_SECRET"
+    );
+  }
+  cloudinary.config({ cloud_name, api_key, api_secret, secure: true });
 }
 
 export async function POST(req: NextRequest) {
@@ -30,14 +42,10 @@ export async function POST(req: NextRequest) {
   const file = formData.get("file");
 
   if (!file || !(file instanceof File)) {
-    return NextResponse.json(
-      { error: "Nessun file ricevuto" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Nessun file ricevuto" }, { status: 400 });
   }
 
-  const ext = EXT_BY_TYPE[file.type];
-  if (!ext) {
+  if (!ALLOWED.has(file.type)) {
     return NextResponse.json(
       { error: "Formato non supportato. Usa JPG, PNG, WEBP, GIF o AVIF." },
       { status: 400 }
@@ -52,28 +60,28 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const filename = `${FOLDER}/${Date.now()}-${Math.random()
-      .toString(36)
-      .slice(2, 8)}.${ext}`;
-    const bytes = Buffer.from(await file.arrayBuffer());
+    configureCloudinary();
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Token di download permanente: permette un URL pubblico stabile senza
-    // dover configurare ACL/IAM del bucket (uniform bucket-level access ok).
-    const token = randomUUID();
+    const result = await new Promise<{ secure_url: string }>(
+      (resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: FOLDER, resource_type: "image" },
+          (error, res) => {
+            if (error || !res) return reject(error ?? new Error("Upload fallito"));
+            resolve(res as { secure_url: string });
+          }
+        );
+        stream.end(buffer);
+      }
+    );
 
-    const bucket = getBucket();
-    await bucket.file(filename).save(bytes, {
-      contentType: file.type,
-      resumable: false,
-      metadata: {
-        cacheControl: "public, max-age=31536000, immutable",
-        metadata: { firebaseStorageDownloadTokens: token },
-      },
-    });
-
-    const url = `https://firebasestorage.googleapis.com/v0/b/${
-      bucket.name
-    }/o/${encodeURIComponent(filename)}?alt=media&token=${token}`;
+    // Inserisce f_auto,q_auto nell'URL di delivery: Cloudinary serve la foto
+    // nel formato migliore (webp/avif) e con qualità ottimizzata → LCP più basso.
+    const url = result.secure_url.replace(
+      "/upload/",
+      "/upload/f_auto,q_auto/"
+    );
 
     return NextResponse.json({ url });
   } catch (err: unknown) {

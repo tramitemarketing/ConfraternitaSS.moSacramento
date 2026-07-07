@@ -4,7 +4,8 @@ import Reveal from "@/components/ui/Reveal";
 import { DivisoreOrnato, patternFleur } from "@/components/ui/Ornaments";
 import Teschio from "@/components/ui/Teschio";
 
-export const dynamic = "force-dynamic";
+// ISR + revalidazione on-demand dall'admin (vedi api/notizie).
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Notizie ed eventi della processione",
