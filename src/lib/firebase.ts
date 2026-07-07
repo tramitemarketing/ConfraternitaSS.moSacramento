@@ -9,6 +9,23 @@ import { getFirestore, type Firestore } from "firebase-admin/firestore";
 
 let app: App | undefined;
 
+// Normalizza la private key presa dalle env var, tollerando i due errori più
+// comuni quando la si incolla su Vercel:
+//  1) virgolette di wrapping (" o ') incollate insieme al valore;
+//  2) a-capo scritti come "\n" letterali invece che reali.
+function normalizePrivateKey(raw?: string): string | undefined {
+  if (!raw) return raw;
+  let key = raw.trim();
+  if (
+    (key.startsWith('"') && key.endsWith('"')) ||
+    (key.startsWith("'") && key.endsWith("'"))
+  ) {
+    key = key.slice(1, -1);
+  }
+  // Converte i \n letterali in a-capo reali (se sono già reali, non fa nulla).
+  return key.replace(/\\n/g, "\n");
+}
+
 function getFirebaseApp(): App {
   if (app) return app;
 
@@ -20,8 +37,7 @@ function getFirebaseApp(): App {
 
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  // La private key nelle env var ha i "\n" letterali: vanno riconvertiti.
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  const privateKey = normalizePrivateKey(process.env.FIREBASE_PRIVATE_KEY);
 
   if (!projectId || !clientEmail || !privateKey) {
     throw new Error(
